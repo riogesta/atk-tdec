@@ -1,41 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-</head>
-<body>
-    <div class="ui fixed inverted menu">
-        <div class="ui container">
-          <a href="#" class="header item">
-            <img class="logo" src="assets/images/logo.png">
-            Project Name
-          </a>
-          <a href="#" class="item">Home</a>
-          <div class="ui simple dropdown item">
-            Dropdown <i class="dropdown icon"></i>
-            <div class="menu">
-              <a class="item" href="#">Link Item</a>
-              <a class="item" href="#">Link Item</a>
-              <div class="divider"></div>
-              <div class="header">Header Item</div>
-              <div class="item">
-                <i class="dropdown icon"></i>
-                Sub Menu
-                <div class="menu">
-                  <a class="item" href="#">Link Item</a>
-                  <a class="item" href="#">Link Item</a>
-                </div>
-              </div>
-              <a class="item" href="#">Link Item</a>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="ui main container">
 
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-</body>
-</html>
+  <div class="ui right aligned grid">
+    <div class="left floated left aligned six wide column">
+      <h2 class="ui header">
+        Pengajuan
+        <div class="sub header">Alat Tulis kantor</div>
+      </h2>
+    </div>
+    <div class="right floated right aligned six wide column">
+      <a href="/pengajuan" class="ui labeled blue icon button">
+        <i class="plus icon"></i>
+        Pengajuan
+      </a>
+    </div>
+  </div>
+
+  <?= session()->getFlashdata('msg') ?>
+
+  <table class="ui selectable celled table">
+    <thead>
+      <tr>
+        <th>Barang</th>
+        <th>satuan</th>
+        <th>jumlah</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach($ajuan as $row): ?>
+      <tr>
+        <td><?= esc($row["barang"]) ?></td>
+        <td><?= esc($row["satuan"]) ?></td>
+        <td><?= esc($row["jumlah"]) ?></td>
+      </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  setInterval(function () {
+    $(document).ready(function () {
+      $("#message").fadeOut("slow");
+    });
+  }, 3000)
+</script>
