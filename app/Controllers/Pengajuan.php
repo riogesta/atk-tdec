@@ -7,6 +7,13 @@ use App\Models\PengajuanModel;
 
 class Pengajuan extends BaseController
 {
+
+    protected $model;
+
+    function __construct(){
+        $this->model = new PengajuanModel;
+    }
+
     public function index()
     {
         //session_start();
@@ -15,11 +22,9 @@ class Pengajuan extends BaseController
         //    return redirect()->to('/');
         //}
 
-        $model = new PengajuanModel();
-
         $data = [
-            'title' => 'Barang',
-            'ajuan' => $model->getPengajuan()->getResultArray()
+            'title' => 'Beranda',
+            'ajuan' => $this->model->getPengajuan()->getResultArray()
         ];
 
         // var_dump($data['barang']);die();
@@ -32,9 +37,8 @@ class Pengajuan extends BaseController
 
     public function tambah(){
 
-        $model = new PengajuanModel();
-
         if ($this->request->getMethod() == 'post') {
+
             $input = [
                 'id_barang' => $this->request->getPost('barang'),
                 'id_unit_prodi' => $this->request->getPost('unit-prodi'),
@@ -42,22 +46,31 @@ class Pengajuan extends BaseController
                 'jumlah' => $this->request->getPost('jumlah')
             ];
 
-            if ($model->add($input)) {
+            $id = $this->model->getPengajuan($input['id_unit_prodi'])->getRowArray();
+
+            if ($id) {
+                
+                // to get id pengajuan
+                $this->model->edit($id['id_ajuan'], $input);
+                session()->setFlashdata('msg', $this->flash());
+                return redirect()->to('/');           
+            }
+            
+            
+            if ($this->model->add($input)) {
                 session()->setFlashdata('msg', $this->flash());
                 return redirect()->to('/');           
             } else {
                 session()->setFlashdata('msg', $this->flash('red', 'Tidak Terkirim', 'Ajuan tidak terkirim'));
                 return redirect()->to('/'); 
-            };
-
-
+            };         
 
         } else {
             $data = [
                 'title' => 'pengajuan barang',
-                'barang' => $model->getBarang()->getResultArray(),
-                'unit' => $model->getUnitProdi()->getResultArray(),
-                'satuan' => $model->getSatuan()->getResultArray()
+                'barang' => $this->model->getBarang()->getResultArray(),
+                'unit' => $this->model->getUnitProdi()->getResultArray(),
+                'satuan' => $this->model->getSatuan()->getResultArray()
             ];
     
             return view('layout/head.php', $data)
@@ -69,7 +82,7 @@ class Pengajuan extends BaseController
 
 
     // default success flashdata can customize
-    private function flash($color = 'success', $title = 'Terkirim', $msg = 'Ajuan Terkirim') {
+    protected function flash($color = 'success', $title = 'Terkirim', $msg = 'Ajuan Terkirim') {
         
 
         $icon = 'check';
@@ -91,4 +104,9 @@ class Pengajuan extends BaseController
 
         return $message;
     }
+
+    // public function getToday(){
+    //     $today = Time::today('Asia/Jakarta');
+    //     return var_dump($today);die();
+    // }
 }
