@@ -37,6 +37,10 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Pengajuan::index');
 $routes->match(['get','post'],'/pengajuan', 'Pengajuan::tambah');
+$routes->get('/barang', 'Barang::index');
+$routes->post('/barang/tambah', 'Barang::tambah');
+$routes->post('/satuan/tambah', 'Barang::tambahSatuan');
+
 
 /*
  * --------------------------------------------------------------------
