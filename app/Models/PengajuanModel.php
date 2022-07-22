@@ -7,25 +7,35 @@ use CodeIgniter\Model;
 class PengajuanModel extends Model
 {
     
-    protected $table = 'ajuan';
+    protected $table = 'pengajuan';
+    protected $primaryKey = 'id_pengajuan';
     protected $allowedFields = ['id_barang', 'id_unit_prodi', 'id_satuan', 'jumlah'];
 
-    public function getPengajuan() {
-        return $this->db->query("
-        SELECT barang.* , satuan.*, unit_prodi.*, ajuan.jumlah
-        FROM ajuan
-        LEFT JOIN barang ON ajuan.id_barang = barang.id_barang
-        LEFT JOIN satuan ON ajuan.id_satuan = satuan.id_satuan
-        LEFT JOIN unit_prodi ON ajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-        ");
+    public function getPengajuan($id = null) {
+
+        if ($id == null) {
+            return $this->db->query("
+            SELECT barang.* , satuan.*, unit_prodi.*, pengajuan.*
+            FROM pengajuan
+            LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+            LEFT JOIN satuan ON pengajuan.id_satuan = satuan.id_satuan
+            LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+            ORDER BY id_pengajuan DESC");
+        }
+
+        return $this->db->query("SELECT * FROM pengajuan WHERE id_unit_prodi='$id'");
     }
 
     public function getBarang(){
         return $this->db->query("SELECT * FROM barang");
     }
 
-    public function getUnitProdi(){
-        return $this->db->query("SELECT * FROM unit_prodi");
+    public function getUnitProdi($id = null){
+        if ($id == null) {
+            return $this->db->query("SELECT * FROM unit_prodi");
+        }
+
+        return $this->db->query("SELECT * FROM unit_prodi WHERE id_unit_prodi='$id'");
     }
 
     public function getSatuan(){
@@ -34,5 +44,9 @@ class PengajuanModel extends Model
 
     public function add($input = null){
         return $this->save($input);
+    }
+
+    public function edit($id, $input){
+        return $this->update($id, $input);
     }
 }
