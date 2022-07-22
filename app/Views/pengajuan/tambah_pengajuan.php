@@ -15,7 +15,7 @@
             <div class="three fields">
                 <div class="field">
                     <label>Barang</label>
-                    <select class="ui fluid dropdown" name="barang">
+                    <select class="ui fluid search dropdown" name="barang">
                         <option value="">Pilih Barang</option>
                         <?php foreach($barang as $val): ?>
                         <option value="<?= $val['id_barang'] ?>"><?= $val['barang'] ?></option>
@@ -51,6 +51,11 @@
 </div>
 
 <script>
-    $('form :select')
-        .dropdown();
+    $(document).ready(function () {
+        $('select.ui.search.dropdown')
+            .dropdown({
+                clearable: true,
+                placeholder: 'Pilih Barang'
+            });
+    })
 </script>
