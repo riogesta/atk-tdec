@@ -51,7 +51,7 @@ class Pengajuan extends BaseController
             if ($id) {
                 
                 // to get id pengajuan
-                $this->model->edit($id['id_ajuan'], $input);
+                $this->model->edit($id['id_pengajuan'], $input);
                 session()->setFlashdata('msg', $this->flash());
                 return redirect()->to('/');           
             }
@@ -83,8 +83,7 @@ class Pengajuan extends BaseController
 
     // default success flashdata can customize
     protected function flash($color = 'success', $title = 'Terkirim', $msg = 'Ajuan Terkirim') {
-        
-
+    
         $icon = 'check';
         if ($color != 'success') {
             $icon = 'x icon';
@@ -104,9 +103,4 @@ class Pengajuan extends BaseController
 
         return $message;
     }
-
-    // public function getToday(){
-    //     $today = Time::today('Asia/Jakarta');
-    //     return var_dump($today);die();
-    // }
 }
