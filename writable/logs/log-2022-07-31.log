@@ -1,0 +1,228 @@
+CRITICAL - 2022-07-31 21:06:25 --> Undefined variable $barang
+in APPPATH/Views/unit_prodi/unit_prodi.php on line 30.
+ 1 APPPATH/Views/unit_prodi/unit_prodi.php(30): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(213): include('APPPATH/Views/unit_prodi/unit_prodi.php')
+ 3 SYSTEMPATH/View/View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1135): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/UnitProdi.php(25): view()
+ 6 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\UnitProdi->index()
+ 7 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 21:24:30 --> syntax error, unexpected single-quoted string "unitProdi", expecting "]"
+in APPPATH/Controllers/UnitProdi.php on line 24.
+ 1 SYSTEMPATH/Autoloader/Autoloader.php(261): CodeIgniter\Autoloader\Autoloader->includeFile()
+ 2 SYSTEMPATH/Autoloader/Autoloader.php(239): CodeIgniter\Autoloader\Autoloader->loadInNamespace()
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass()
+ 4 SYSTEMPATH/CodeIgniter.php(846): class_exists()
+ 5 SYSTEMPATH/CodeIgniter.php(453): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+ERROR - 2022-07-31 21:31:41 --> Table 'db_atk.unitprodis' doesn't exist
+CRITICAL - 2022-07-31 21:31:41 --> Table 'db_atk.unitprodis' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 292.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(292): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(695): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(609): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query()
+ 5 SYSTEMPATH/Model.php(222): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH/BaseModel.php(584): CodeIgniter\Model->doFindAll()
+ 7 APPPATH/Models/UnitProdiModel.php(13): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH/Controllers/UnitProdi.php(25): App\Models\UnitProdiModel->getUnitProdi()
+ 9 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\UnitProdi->index()
+10 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+11 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+12 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 21:33:03 --> Undefined variable $barang
+in APPPATH/Views/unit_prodi/unit_prodi.php on line 30.
+ 1 APPPATH/Views/unit_prodi/unit_prodi.php(30): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(213): include('APPPATH/Views/unit_prodi/unit_prodi.php')
+ 3 SYSTEMPATH/View/View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1135): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/UnitProdi.php(31): view()
+ 6 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\UnitProdi->index()
+ 7 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 21:34:55 --> Undefined variable $unit_prodi
+in APPPATH/Views/unit_prodi/unit_prodi.php on line 29.
+ 1 APPPATH/Views/unit_prodi/unit_prodi.php(29): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(213): include('APPPATH/Views/unit_prodi/unit_prodi.php')
+ 3 SYSTEMPATH/View/View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1135): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/UnitProdi.php(31): view()
+ 6 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\UnitProdi->index()
+ 7 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 21:36:17 --> Undefined variable $unit_prodi
+in APPPATH/Views/unit_prodi/unit_prodi.php on line 29.
+ 1 APPPATH/Views/unit_prodi/unit_prodi.php(29): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(213): include('APPPATH/Views/unit_prodi/unit_prodi.php')
+ 3 SYSTEMPATH/View/View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1135): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/UnitProdi.php(31): view()
+ 6 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\UnitProdi->index()
+ 7 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 21:36:27 --> Undefined variable $satuan
+in APPPATH/Views/unit_prodi/unit_prodi.php on line 130.
+ 1 APPPATH/Views/unit_prodi/unit_prodi.php(130): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/View/View.php(213): include('APPPATH/Views/unit_prodi/unit_prodi.php')
+ 3 SYSTEMPATH/View/View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH/Common.php(1135): CodeIgniter\View\View->render()
+ 5 APPPATH/Controllers/UnitProdi.php(31): view()
+ 6 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\UnitProdi->index()
+ 7 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 8 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 9 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:07:56 --> Call to a member function unitProdi() on null
+in APPPATH/Controllers/Rekapitulasi.php on line 19.
+ 1 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\Rekapitulasi->index()
+ 2 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:07:59 --> Call to a member function unitProdi() on null
+in APPPATH/Controllers/Rekapitulasi.php on line 19.
+ 1 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\Rekapitulasi->index()
+ 2 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:33:59 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:34:07 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:34:11 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:34:13 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:34:31 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:34:43 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:34:56 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:42:18 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:42:21 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:44:59 --> You must supply the parameters: from, to.
+in SYSTEMPATH/Router/RouteCollection.php on line 859.
+ 1 APPPATH/Config/Routes.php(64): CodeIgniter\Router\RouteCollection->match()
+ 2 SYSTEMPATH/Router/RouteCollection.php(637): CodeIgniter\CodeIgniter::Config\{closure}()
+ 3 APPPATH/Config/Routes.php(65): CodeIgniter\Router\RouteCollection->group()
+ 4 SYSTEMPATH/CodeIgniter.php(758): require('APPPATH/Config/Routes.php')
+ 5 SYSTEMPATH/CodeIgniter.php(415): CodeIgniter\CodeIgniter->tryToRouteIt()
+ 6 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:58:22 --> Call to a member function unitProdi() on null
+in APPPATH/Controllers/Rekapitulasi.php on line 19.
+ 1 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\Rekapitulasi->index()
+ 2 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:58:36 --> Call to a member function unitProdi() on null
+in APPPATH/Controllers/Rekapitulasi.php on line 19.
+ 1 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\Rekapitulasi->index()
+ 2 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 22:59:10 --> Call to a member function unitProdi() on null
+in APPPATH/Controllers/Rekapitulasi.php on line 19.
+ 1 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\Rekapitulasi->index()
+ 2 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-07-31 23:18:14 --> Call to a member function unitProdi() on null
+in APPPATH/Controllers/Rekapitulasi.php on line 19.
+ 1 SYSTEMPATH/CodeIgniter.php(896): App\Controllers\Rekapitulasi->index()
+ 2 SYSTEMPATH/CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')

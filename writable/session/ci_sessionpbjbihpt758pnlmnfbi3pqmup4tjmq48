@@ -1,0 +1,11 @@
+__ci_last_regenerate|i:1659600322;_ci_previous_url|s:46:"http://192.168.10.241:8080/index.php/pengajuan";USER|s:4:"agus";ID-UNIT-PRODI|s:1:"2";ROLE|s:1:"0";UNIT-PRODI|s:14:"Teknik Elektro";msg|s:298:"
+        <div class='ui icon success message' id='message'>
+            <i class='check icon'></i>
+            <div class='content'>
+                <div class='header'>
+                    Terkirim
+                </div>
+            <p>Ajuan Terkirim</p>
+            </div>
+        </div>
+        ";__ci_vars|a:1:{s:3:"msg";s:3:"old";}

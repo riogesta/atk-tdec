@@ -1,160 +1,228 @@
-<article class="ui main container">
+<!-- Content -->
 
-    <div class="ui right aligned grid">
-        <div class="left floated left aligned six wide column">
-            <h2 class="ui header">
-                Barang
-                <div class="sub header">Data Barang</div>
-            </h2>
-        </div>
-    </div>
+<div class="container-xxl flex-grow-1 container-p-y">
+	<!-- Small table -->
 
-    <?= session()->getFlashdata('msg') ?>
+	<div class="card overflow-hidden" style="height: 14%;">
+		<div class="card-header d-flex align-items-center justify-content-between">
+			<h5 class="mb-0">Data Barang</h5>
+			<button type="button" class="btn rounded-pill btn-primary float-end" data-bs-target="#tambah-barang"
+				data-bs-toggle="modal">
+				<i class='bx bx-plus-circle'></i>
+				Tambah
+			</button>
+			<!-- <small class="text-muted ">Default label</small> -->
+		</div>
+		<div class="table-responsive" id="vertical-example">
+			<table class="table align-items-center mb-0">
+				<thead>
+					<tr>
+						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">No
+						</th>
+						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
+						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Satuan</th>
+						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+					</tr>
+				</thead>
+				<tbody class="table-border-bottom-0">
+					<?php
+         		$i = 1;
+               foreach($barang as $barang): ?>
+					<tr>
+						<td class="mb-0 text-xs text-center"><strong><?= $i++ ?></strong></td>
+						<td class="mb-0 text-xs"><?= esc($barang['barang']) ?></td>
+						<td class="mb-0 text-xs"><?= esc($barang['satuan']) ?></td>
+						<td class="mb-0 text-xs">
+							<div class="clearfix d-flex">
+								<button type="button" class="rounded-pill btn btn-sm btn-success" data-bs-toggle="modal"
+									data-bs-target="#staticBackdrop<?= esc($barang['id_barang']) ?>">Edit</button>&nbsp;
 
-    <section class="three column stackable ui grid ">
-        <div class="column">
-            <a href="#" class="ui fluid card" id="pengajuan">
-                <div class="content">
-                    <div class="ui header">Barang</div>
-                    <div class="meta">
-                        <div class="ui label">
-                            <i class="file alternate outline icon"></i>Total Barang
-                            <?= esc($count) ?>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="column">
-            <div class="ui fluid card">
-                <div class="content">
-                    <div class="ui header">Elliot Fu</div>
-                    <div class="meta">Friend</div>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="ui fluid card">
-                <div class="content">
-                    <div class="ui header">Elliot Fu</div>
-                    <div class="meta">Friend</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="ui segment">
-        <div class="ui top attached  label">Daftar Barang</div>
-        <table class="ui celled table">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Barang</th>
-                    <th>Satuan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $no = 1;
-                foreach($barang as $row): ?>
-                <tr>
-                    <td><?= $no++ ?></td>
-                    <td><?= esc($row['barang']) ?></td>
-                    <td><?= esc($row['satuan']) ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </section>
-</article>
+								<input type="hidden" name="id" value="<?= esc($barang['id_barang']) ?>">
+								<button type="button" id="delete" class="rounded-pill btn btn-sm btn-danger"
+									data-val="<?= esc($barang['id_barang']) ?>">Hapus</button>
 
-<!-- modals -->
-<div class="ui standard test modal" id="pengajuan">
-    <div class="header">
-        <div id="context2">
-            <div class="ui secondary menu">
-                <a class="item active" data-tab="barang">Barang</a>
-                <a class="item" data-tab="satuan">Satuan</a>
-            </div>
-        </div>
-    </div>
-    <div class="content">
+							</div>
+						</td>
+					</tr>
 
-        <div class="ui active tab" data-tab="barang">
-            <form action="/barang/tambah" method="post">
-                <?= csrf_field() ?>
-                <div class="ui form">
-                    <div class="two fields">
-                        <div class="field focus">
-                            <label>Barang</label>
-                            <input type="text" placeholder="Barang" name="barang">
-                        </div>
-                        <div class="field">
-                            <label>Satuan</label>
-                            <select name="satuan" id="" class="ui search dropdown">
-                                <?php foreach($satuan as $row): ?>
-                                <option value="<?= $row['id_satuan'] ?>"><?= $row['satuan'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <button submit="submit" class="ui button blue">simpan barang</button>
-                </div>
-            </form>
-        </div>
-        <div class="ui tab" data-tab="satuan">
-            <form action="/satuan/tambah" method="post">
-                <?= csrf_field() ?>
-                <input type="hidden" name="isStatus" value="true">
-                <div class="ui form">
-                    <div class="field focus">
-                        <label>Satuan</label>
-                        <input type="text" placeholder="Satuan" name="satuan">
-                    </div>
-                    <button submit="submit" class="ui button blue">Simpan Satuan</button>
-                </div>
-            </form>
-        </div>
+					<!-- modals edit barang-->
+					<div class="modal fade" id="staticBackdrop<?= esc($barang['id_barang']) ?>" data-bs-backdrop="static"
+						data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header text-center">
+									<h5 class="modal-title" id="staticBackdropLabel">Edit Barang</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<form action="/barang/edit" method="post">
+										<?= csrf_field() ?>
+										<div>
+											<div class="mb-3">
+												<input type="hidden" name="id" value="<?= esc($barang['id_barang']) ?>">
+												<label for="barang" class="form-label">Nama Barang</label>
+												<input type="text" class="form-control" name="barang" id="barang"
+													placeholder="Nama Barang" value="<?= esc($barang['barang']) ?>"
+													aria-describedby="defaultFormControlHelp">
+												<div id="barang" class="form-text">We'll never share your details with
+													anyone else.</div>
+											</div>
+											<div class="md-3">
+												<label for="satuan" class="form-label">Satuan</label>
+												<select id="collapsible-state" class="select2 form-select" name="satuan"
+													data-allow-clear="true">
+													<?php foreach($satuan as $s): ?>
+													<option
+														<?= $selected = $s['id_satuan'] == $barang['id_satuan'] ? 'selected' : '' ?>
+														value="<?= esc($s['id_satuan']) ?>">
+														<?= esc($s['satuan']) ?></option>
+													<?php endforeach; ?>
+												</select>
+											</div>
 
-    </div>
-    <div class="actions">
-        <div class="ui black deny button">
-            Tutup
-        </div>
-    </div>
+
+										</div>
+								</div>
+								<div class="modal-footer">
+
+									<button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- / modals edit barang -->
+					<?php endforeach; ?>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- modal tambah barang -->
+	<div class="modal modal-top fade" id="tambah-barang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<ul class="nav nav-pills " role="tablist">
+						<li class="nav-item">
+							<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+								data-bs-target="#form-barang" aria-controls="form-barang" aria-selected="true">Barang</button>
+						</li>
+						<li class="nav-item">
+							<button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+								data-bs-target="#navs-pills-within-card-link" aria-controls="navs-pills-within-card-link"
+								aria-selected="false">Satuan</button>
+						</li>
+					</ul>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="tab-content p-0">
+						<div class="tab-pane fade show active" id="form-barang" role="tabpanel">
+							<form action="/barang" method="post">
+								<?= csrf_field() ?>
+								<div class="mb-3">
+									<label for="barang" class="form-label">Nama Barang</label>
+									<input type="text" name="barang" class="form-control" id="barang" placeholder="Nama Barang">
+								</div>
+								<div class="md-3">
+									<label for="satuan" class="form-label">Satuan</label>
+									<select id="collapsible-state" name="satuan" class="select2 form-select"
+										data-allow-clear="true">
+										<option value="">Pilih Satuan</option>
+										<?php foreach($satuan as $s): ?>
+										<option value="<?= esc($s['id_satuan']) ?>"><?= esc($s['satuan']) ?></option>
+										<?php endforeach; ?>
+									</select>
+								</div>
+								<div class="mt-3">
+									<button type="submit" class="btn btn-primary">Simpan</button>
+								</div>
+							</form>
+						</div>
+						<div class="tab-pane fade" id="navs-pills-within-card-link" role="tabpanel">
+							<form action="/satuan/tambah" method="post">
+								<?= csrf_field() ?>
+								<div class="mb-3">
+									<label for="satuan" class="form-label">Satuan</label>
+									<input type="text" class="form-control" name="satuan" id="satuan" placeholder="Satuan">
+								</div>
+								<div class="mt-3">
+									<button type="submit" class="btn btn-primary">Simpan</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- / modal tambah barang -->
+
+	<!--/ Small table -->
+	<!-- Content wrapper -->
 </div>
 
 <script>
-    // fadeOut flashdata
-    setInterval(function () {
-        $(document).ready(function () {
-            $("#message").fadeOut("slow");
-        });
-    }, 3000)
+	$(document).ready(function () {
+		$('div#barang').hide()
+	});
 
-    // call modal
-    $("#pengajuan").click(function () {
-        $('div.ui.modal#pengajuan')
-            .modal('setting', 'transition', 'scale')
-            .modal({
-                blurring: true
-            })
-            .modal('setting', 'closable', false)
-            .modal('show');
+	let psb = () => {
+		new PerfectScrollbar(document.getElementById('vertical-example'), {
+			wheelPropagation: false
+		});
+	}
 
-    })
+	window.onload = psb;
 
-    // dropdown search
-    $(document).ready(function () {
-        $('select.ui.search.dropdown')
-            .dropdown({
-                clearable: true,
-                placeholder: 'Pilih Barang'
-            });
-    })
+	$('abutton#delete').click(function () {
+		let id = $(this).data('val');
+		alert(id);
+	});
 
-    // tab
-    $(document).ready(function () {
-        $('.menu .item').tab();
-    })
+	$('button#delete').click(function () {
+		Swal.fire({
+			title: 'Data Akan dihapus!',
+			text: "apakah kamu yakin?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Hapus Saja',
+			cancelButtonText: 'Batal'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					title: 'Data Berhasil Terhapus!',
+					icon: 'success',
+					confirmButton: 'Hapus'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							type: "POST",
+							url: "/barang/hapus",
+							headers: {
+								'X-Requested-With': 'XMLHttpRequest'
+							},
+							data: {
+								id: $(this).data('val'),
+							},
+							success: function (data) {
+								location.reload()
+							},
+							error: function (xhr, status, error) {
+								console.error(xhr);
+							}
+						});
+					}
+				})
+				$(".swal2-container.swal2-backdrop-show").css('z-index',
+					'9999'); //changes the color of the overlay
+			}
+		})
+		$(".swal2-container.swal2-backdrop-show").css('z-index', '9999'); //changes the color of the overlay
+	})
 </script>

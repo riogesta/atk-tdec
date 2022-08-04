@@ -16,7 +16,7 @@ class BarangModel extends Model
             return $this->db->query("
             SELECT *
             FROM barang
-            INNER JOIN satuan ON barang.id_satuan = satuan.id_satuan
+            LEFT JOIN satuan ON barang.id_satuan = satuan.id_satuan
             ");
         }
 

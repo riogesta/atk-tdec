@@ -9,25 +9,29 @@ class PengajuanModel extends Model
     
     protected $table = 'pengajuan';
     protected $primaryKey = 'id_pengajuan';
-    protected $allowedFields = ['id_barang', 'id_unit_prodi', 'id_satuan', 'jumlah'];
+    protected $allowedFields = ['id_barang', 'id_unit_prodi', 'id_satuan', 'jumlah', 'tanggal', 'status'];
 
     public function getPengajuan($id = null) {
 
         if ($id == null) {
             return $this->db->query("
-            SELECT barang.* , satuan.*, unit_prodi.*, pengajuan.*
-            FROM pengajuan
-            LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
-            LEFT JOIN satuan ON pengajuan.id_satuan = satuan.id_satuan
-            LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-            ORDER BY id_pengajuan DESC");
+                SELECT barang.* , unit_prodi.*, 
+                pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+                FROM pengajuan
+                LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+                LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+                ORDER BY id_pengajuan DESC
+            ");
         }
 
         return $this->db->query("SELECT * FROM pengajuan WHERE id_unit_prodi='$id'");
     }
 
     public function getBarang(){
-        return $this->db->query("SELECT * FROM barang");
+        return $this->db->query("
+            SELECT * 
+            FROM barang
+            LEFT JOIN satuan ON barang.id_satuan = satuan.id_satuan");
     }
 
     public function getUnitProdi($id = null){
@@ -38,15 +42,7 @@ class PengajuanModel extends Model
         return $this->db->query("SELECT * FROM unit_prodi WHERE id_unit_prodi='$id'");
     }
 
-    public function getSatuan(){
-        return $this->db->query("SELECT * FROM satuan");
-    }
-
-    public function add($input = null){
-        return $this->save($input);
-    }
-
-    public function edit($id, $input){
-        return $this->update($id, $input);
+    public function query($sql){
+        return $this->db->query($sql);
     }
 }
