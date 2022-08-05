@@ -83,6 +83,13 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #304256;
         }
+
+        .list-hover:hover {
+            transition: 0.3s;
+            background-color: #f3f3f3;
+            padding: 10px;
+            border-radius: 15px;
+        }
     </style>
 </head>
 
