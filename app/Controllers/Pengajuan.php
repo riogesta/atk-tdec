@@ -41,21 +41,40 @@ class Pengajuan extends BaseController
         if ($_SESSION['ROLE'] == '0') {    
             // jika role  nya adalah user
             $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
-            $sql = "
+            
+            // menampilkan pengajuan yang sedang dalam status ('proses' dan 'proses diapprove')
+            $sql_dalam_proses = "
             SELECT barang.* , unit_prodi.*, 
             pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
             FROM pengajuan
             LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-            WHERE (`pengajuan`.`id_unit_prodi` = $id_unit_prodi AND `pengajuan`.`status` != '3' AND `pengajuan`.`status` != '2' ) ORDER BY tanggal DESC";
+            WHERE `pengajuan`.`id_unit_prodi` = $id_unit_prodi AND `pengajuan`.`status` != '3' AND `pengajuan`.`status` != '2' ORDER BY tanggal DESC";
+
+            // menampilkan pengajuan yang sedang dalam status ('dikirim')
+            $sql_dikirim = "
+            SELECT pengajuan.id_pengajuan, `barang`.`id_barang`, barang.barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+            FROM pengajuan
+            LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+            LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+            WHERE `pengajuan`.`id_unit_prodi` = '2' AND `pengajuan`.`status` = '2' ORDER BY tanggal DESC";
+
+            $sql_daftar_pengajuan = "
+            SELECT pengajuan.id_pengajuan, pengajuan.id_barang, barang.barang, barang.id_satuan , pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+            FROM pengajuan
+            LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+            LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+            WHERE  `pengajuan`.`id_unit_prodi` = 2 AND `pengajuan`.`status` = '3'
+            ORDER BY id_pengajuan ";
 
             $data = [
                 'title' => 'Pengajuan',
                 'barang' => $this->model->getBarang()->getResultArray(),
-                'pengajuan' => $this->model->getPengajuan()->getResultArray(),
-                'status_belum_selesai' => $this->query($sql)->getResultArray()
+                'pengajuan_user' => $this->model->query($sql_daftar_pengajuan)->getResultArray(),
+                'status_belum_selesai' => $this->query($sql_dalam_proses)->getResultArray(),
+                'status_dikirim' => $this->query($sql_dikirim)->getResultArray()
             ];
-            
+        
         } else {
             // jika role adalah admin
             $data = [
