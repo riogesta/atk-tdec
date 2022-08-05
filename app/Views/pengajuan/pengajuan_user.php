@@ -3,19 +3,22 @@
 	<div class="row">
 		<!-- pengajuan dalam proses -->
 		<section class="col-sm-6 col-md-6 col-lg-6 mb-4">
-			<div class="card overflow-hidden" style="height: 300px">
-				<div class="card-header d-flex align-items-center justify-content-between pb-3">
+			<div class="card overflow-hidden" <?= $status_belum_selesai == null ? '' : 'style="height: 300px' ?>">
+				<div class="card-header d-flex justify-content-between pb-3">
 					<div class="card-title mb-0">
 						<h5 class="m-0 me-2">Pengajuan</h5>
 						<small class="text-muted">Status dalam proses</small>
 					</div>
-					<button type="button" id="btn-tambah" class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal"
+					<button type="button" id="btn-tambah" class="btn btn-xs btn-primary rounded-pill" data-bs-toggle="modal"
 						data-bs-target="#tambahPengajuan">
 						<i class='bx bx-plus-circle'></i>
 					</button>
 				</div>
 				<div class="card-body" id="wdgt-proccess">
 					<ul class="p-0 m-02">
+						<?php if ($status_belum_selesai == null) { ?>
+						<p class="text-center text-muted mt-2 mb-0">Tidak ada Proses</p>
+						<?php } ?>
 						<?php foreach($status_belum_selesai as $value): ?>
 						<?php 
 								$status = "";
@@ -49,45 +52,46 @@
 		<!-- pengajuan diterima -->
 		<section class="col-sm-6 col-md-6 col-lg-6 mb-4">
 			<div class="card overflow-hidden" style="height: 300px">
-				<div class="card-header d-flex align-items-center justify-content-between pb-3">
+				<div class="card-header d-flex justify-content-between pb-3">
 					<div class="card-title mb-0">
 						<h5 class="m-0 me-2">Pengajuan</h5>
 						<small class="text-muted">Status Dikirim</small>
 					</div>
-					<button type="button" id="btn-tambah" class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal"
-						data-bs-target="#tambahPengajuan">
-						<i class='bx bx-plus-circle'></i>
-					</button>
+					<div class="dropdown">
+						<button class="btn p-0" type="button" id="salesByCountry" data-bs-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							<i class="bx bx-dots-vertical-rounded"></i>
+						</button>
+						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry" style="">
+							<a class="dropdown-item" href="javascript:void(0);">Tandai telah diterima semua</a>
+						</div>
+					</div>
 				</div>
 				<div class="card-body" id="wdgt-proccess">
 					<ul class="p-0 m-02">
-						<?php foreach($status_belum_selesai as $value): ?>
+						<?php foreach($status_dikirim as $value): ?>
 						<?php 
-								$status = "";
-								if ($value['status'] == 0) {
-									$status =  "Diproses";
-	
-								} else if ($value['status'] == 1) {
-									$status = "Approve Diproses";
-									
-								} else if ($value['status'] == 2) {
+								$status = "";			
+								$color = "";						
+								if ($value['status'] == 2) {
 									$status = "Dikirim";
+									$color = "primary";
 	
 								} else if ($value['status'] == 3) {
 									$status = "Selesai";
+									$color = "success";
 	
 								}
 							?>
 						<li class="d-flex mb-2 pb-2">
-							<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+							<a href="#"
+								class="list-hover d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 								<div class="me-2">
 									<small class="text-muted d-block mb-1"><?= esc($value['tanggal']) ?></small>
 									<h6 class="mb-0"><?= esc($value['barang']) ?></h6>
 								</div>
-								<div class="user-progress d-flex align-items-center gap-1">
-									<span clas="badge bg-primary"><?= $status ?></span>
-								</div>
-							</div>
+								<span class="badge rounded-pill bg-label-<?= $color ?>"><?= $status ?></span>
+							</a>
 						</li>
 						<?php endforeach; ?>
 
@@ -109,6 +113,9 @@
 				</h2>
 				<div id="accordionWithIcon-3" class="accordion-collapse collapse">
 					<div class="accordion-body">
+						<?php if ($pengajuan_user == null) { ?>
+						<h5 class="text-center text-muted">Tidak ada data</h5>
+						<?php } else { ?>
 						<table class="table table-hover">
 							<thead>
 								<tr>
@@ -120,7 +127,7 @@
 							<tbody>
 								<?php
 							$i = 1;
-							foreach($pengajuan as $row): ?>
+							foreach($pengajuan_user as $row): ?>
 								<tr>
 									<td><?= $i++ ?></td>
 									<td><?= esc($row['barang']) ?></td>
@@ -134,7 +141,7 @@
 										$color = "secondary";
 										$icon =  "<i class='bx bxs-hourglass-top'></i>";
 										$status =  "Diproses";
-
+										
 									} else if ($row['status'] == 1) {
 										$color = "info";
 										$icon = "<i class='bx bx-list-check'></i>";
@@ -144,12 +151,12 @@
 										$color = "primary";
 										$icon = "<i class='bx bx-check-square'></i>";
 										$status = "Dikirim";
-
+										
 									} else if ($row['status'] == 3) {
 										$color = "success";
 										$icon = "<i class='bx bxs-flag-checkered'></i>";
 										$status = "Selesai";
-
+										
 									}
 									?>
 									</td>
@@ -198,71 +205,59 @@
 								<?php endforeach; ?>
 							</tbody>
 						</table>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="row">
-		<section class="col-md-12">
-			<div class="card">
-				<h4 class="card-header">Riwayat Pengajuan</h4>
-				<div class="card-body">
 
-
-
+	<!-- modal tambah -->
+	<div class="modal modal-top fade" id="tambahPengajuan" aria-hidden="true" data-bs-backdrop="static" tabindex="-1">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel4">Tambah Ajuan</h5>
+					<button type="button" class="rounded-pill btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="/pengajuan" method="post">
+						<?= csrf_field() ?>
+						<div class="row">
+							<div class="col mb-3">
+								<label for="nameExLarge" class="form-label">Barang</label>
+								<select name="barang" class="form-select select2" id="mySelect2">
+									<option></option>
+									<?php foreach($barang as $val): ?>
+									<option value="<?= esc($val['id_barang']) ?>" data-satuan="<?= $val['satuan'] ?>">
+										<?= esc($val['barang']) ?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-10 col-sm-10">
+								<label for="jumlah" class="form-label">Jumlah</label>
+								<input type="number" id="jumlah" name="jumlah" class="form-control" placeholder="Jumlah">
+							</div>
+							<div class="col col-md-2 col-2">
+								<label for="" class="form-label">&nbsp;</label>
+								<input type="text" id="satuan" readonly class="form-control-plaintext" placeholder="Satuan"
+									value="">
+							</div>
+							<p id="satuan"></p>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+					<button type="submit" class="btn btn-primary">Kirim Ajuan</button>
+					</form>
 				</div>
 			</div>
-			<!-- modal tambah -->
-			<div class="modal modal-top fade" id="tambahPengajuan" aria-hidden="true" data-bs-backdrop="static"
-				tabindex="-1">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel4">Tambah Ajuan</h5>
-							<button type="button" class="rounded-pill btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<form action="/pengajuan" method="post">
-								<?= csrf_field() ?>
-								<div class="row">
-									<div class="col mb-3">
-										<label for="nameExLarge" class="form-label">Barang</label>
-										<select name="barang" class="form-select select2" id="mySelect2">
-											<option></option>
-											<?php foreach($barang as $val): ?>
-											<option value="<?= esc($val['id_barang']) ?>" data-satuan="<?= $val['satuan'] ?>">
-												<?= esc($val['barang']) ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-10 col-sm-10">
-										<label for="jumlah" class="form-label">Jumlah</label>
-										<input type="number" id="jumlah" name="jumlah" class="form-control" placeholder="Jumlah">
-									</div>
-									<div class="col col-md-2 col-2">
-										<label for="" class="form-label">&nbsp;</label>
-										<input type="text" id="satuan" readonly class="form-control-plaintext"
-											placeholder="Satuan" value="">
-									</div>
-									<p id="satuan"></p>
-								</div>
-								<button type="submit" class="btn btn-primary rounded-pill">Kirim Ajuan</button>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- / modal tambah -->
-		</section>
+		</div>
 	</div>
+	<!-- / modal tambah -->
 </div>
 
 <!-- tippy JS -->
