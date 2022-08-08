@@ -57,22 +57,22 @@ class Pengajuan extends BaseController
             FROM pengajuan
             LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-            WHERE `pengajuan`.`id_unit_prodi` = '2' AND `pengajuan`.`status` = '2' ORDER BY tanggal DESC";
+            WHERE `pengajuan`.`id_unit_prodi` = '$id_unit_prodi' AND `pengajuan`.`status` = '2' ORDER BY tanggal DESC";
 
             $sql_daftar_pengajuan = "
             SELECT pengajuan.id_pengajuan, pengajuan.id_barang, barang.barang, barang.id_satuan , pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
             FROM pengajuan
             LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-            WHERE  `pengajuan`.`id_unit_prodi` = 2 AND `pengajuan`.`status` = '3'
+            WHERE  `pengajuan`.`id_unit_prodi` = '$id_unit_prodi' AND `pengajuan`.`status` = '3'
             ORDER BY id_pengajuan ";
 
             $data = [
                 'title' => 'Pengajuan',
                 'barang' => $this->model->getBarang()->getResultArray(),
                 'pengajuan_user' => $this->model->query($sql_daftar_pengajuan)->getResultArray(),
-                'status_belum_selesai' => $this->query($sql_dalam_proses)->getResultArray(),
-                'status_dikirim' => $this->query($sql_dikirim)->getResultArray()
+                'status_belum_selesai' => $this->model->query($sql_dalam_proses)->getResultArray(),
+                'status_dikirim' => $this->model->query($sql_dikirim)->getResultArray()
             ];
         
         } else {
@@ -83,10 +83,6 @@ class Pengajuan extends BaseController
                 'pengajuan' => $this->model->getPengajuan()->getResultArray(),
             ];
         }
-        
-
-
-        // var_dump($data['me']);die();
 
         // change view base on role
         $switch = $_SESSION['ROLE'] == '1' ? 'pengajuan/pengajuan' : 'pengajuan/pengajuan_user';
@@ -109,13 +105,19 @@ class Pengajuan extends BaseController
         ];
         
         if ($this->model->save($input)) {
-            session()->setFlashdata('msg', $this->flash());
             return redirect()->to('/pengajuan');           
         } else {
-            session()->setFlashdata('msg', $this->flash('red', 'Tidak Terkirim', 'Ajuan tidak terkirim'));
             return redirect()->to('/'); 
         };         
 
+    }
+
+    public function approve() {
+        $id = $this->request->getPost('id');
+        $data['status'] = '3';
+
+        $this->model->update($id, $data);
+        session()->setFlashdata('msg', 'Berhasil Diterima');
     }
 
     public function editStatus() {
@@ -127,30 +129,4 @@ class Pengajuan extends BaseController
         return redirect()->route('pengajuan');
     }
 
-    public function query($sql){
-        return $this->model->query($sql);
-    }
-
-    // default success flashdata can customize
-    protected function flash($color = 'success', $title = 'Terkirim', $msg = 'Ajuan Terkirim') {
-    
-        $icon = 'check';
-        if ($color != 'success') {
-            $icon = 'x icon';
-        }
-
-        $message = "
-        <div class='ui icon $color message' id='message'>
-            <i class='$icon icon'></i>
-            <div class='content'>
-                <div class='header'>
-                    $title
-                </div>
-            <p>$msg</p>
-            </div>
-        </div>
-        ";
-
-        return $message;
-    }
 }
