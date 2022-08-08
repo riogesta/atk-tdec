@@ -41,12 +41,9 @@ $routes->get('/', 'Home::index');
 $routes->group('pengajuan', static function($routes){
     $routes->match(['get','post'], '/', 'Pengajuan::index');
     $routes->post('status', 'Pengajuan::editStatus');
+    $routes->post('approve', 'Pengajuan::approve');
 });
 
-// $routes->get('barang', 'Barang::index');
-// $routes->post('barang/edit', 'Barang::edit');
-// $routes->post('barang/tambah', 'Barang::tambah');
-// $routes->post('barang/hapus', 'Barang::hapus');
 $routes->post('satuan/tambah', 'Barang::tambahSatuan');
 
 $routes->group('barang', static function($routes){
