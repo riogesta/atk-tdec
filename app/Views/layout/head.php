@@ -49,6 +49,12 @@
     <link rel="stylesheet" href="<?= base_url('/assets/vendor/perfect-scrollbar/perfect-scrollbar.css') ?>">
     <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
 
+    <!-- animation -->
+    <link rel="stylesheet" href="<?= base_url('/assets/vendor/modal-animation/animate.css') ?>">
+
+    <!-- jQuery Toast -->
+    <link rel="stylesheet" href="<?= base_url('/assets/vendor/jquery-toast/jquery.toast.min.css') ?>">
+
     <!-- Tippy CSS -->
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
 

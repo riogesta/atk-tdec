@@ -24,6 +24,9 @@
 <!-- select2 JS -->
 <script src="../assets/vendor/select2/select2.js"></script>
 
+<!-- jQuery Toast -->
+<script src="<?= base_url('/assets/vendor/jquery-toast/jquery.toast.min.js') ?>"></script>
+
 <!-- Overlay -->
 <div class="layout-overlay layout-menu-toggle"></div>
 </div>
