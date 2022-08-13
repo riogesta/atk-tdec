@@ -7,17 +7,6 @@
 <!-- / Layout page -->
 </div>
 
-
-<script>
-    document.addEventListener('mousedown', function (event) {
-        if (event.detail > 1) {
-            event.preventDefault();
-            // of course, you still do not know what you prevent here...
-            // You could also check event.ctrlKey/event.shiftKey/event.altKey
-            // to not prevent something useful.
-        }
-    }, false);
-</script>
 <!-- sweetalert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.24/dist/sweetalert2.all.min.js"></script>
 
@@ -47,6 +36,9 @@
 <!-- Vendors JS -->
 <script src="<?= base_url('/assets/vendor/perfect-scrollbar/perfect-scrollbar.js') ?>"></script>
 <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- datatables -->
+<script type="text/javascript" src="<?=  base_url('/assets/vendor/datatables/datatables.min.js') ?>"></script>
 
 <!-- Main JS -->
 <script src="../assets/js/main.js"></script>
