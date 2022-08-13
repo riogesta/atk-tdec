@@ -22,7 +22,6 @@
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet" />
 
-
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -48,6 +47,10 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?= base_url('/assets/vendor/perfect-scrollbar/perfect-scrollbar.css') ?>">
     <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css"
+        href="<?= base_url('/assets/vendor/datatables/datatables.bootstrap5.css') ?>" />
 
     <!-- animation -->
     <link rel="stylesheet" href="<?= base_url('/assets/vendor/modal-animation/animate.css') ?>">
@@ -95,6 +98,10 @@
             background-color: #f3f3f3;
             padding: 10px;
             border-radius: 15px;
+        }
+
+        .active2 {
+            font-weight: bold;
         }
     </style>
 </head>
