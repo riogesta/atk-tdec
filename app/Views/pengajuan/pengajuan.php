@@ -22,15 +22,14 @@
 		<section class="col-md-12">
 			<div class="card">
 				<h4 class="card-header">Data Pengajuan</h4>
-				<div class="card-body">
-					<table class="table table-hover">
+				<div class="card-datatable table-responsive">
+					<table class="table table-bordered table-striped" id="datatables">
 						<thead>
 							<tr>
-								<th>No.</th>
 								<th>Barang</th>
 								<th>Unit / Prodi</th>
 								<th>tanggal</th>
-								<th class="text-center">...</th>
+								<th class="text-center">status</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -38,7 +37,7 @@
 							$i = 1;
 							foreach($pengajuan as $row): ?>
 							<tr>
-								<td><?= $i++ ?></td>
+								<?php $i += 1; ?>
 								<td><?= esc($row['barang']) ?></td>
 								<td><?= esc($row['unit_prodi']) ?></td>
 								<td><?= esc($row['tanggal']) ?></td>
@@ -201,6 +200,10 @@
 		}).find(":selected").attr("data-satuan");
 		$("#satuan").val(data);
 	})
+
+	$(document).ready(function () {
+		$('#datatables').DataTable();
+	});
 
 	// .on('change', function (e) {
 	// 	let data = $('#mySelect2').select2().find(":selected").attr("data-id");
