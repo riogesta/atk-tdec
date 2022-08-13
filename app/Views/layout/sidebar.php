@@ -4,29 +4,34 @@
       <?php $uri = service('uri') ?>
       <!-- Menu -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-         <div class="app-brand demo">
-            <a class="app-brand-link">
-               <span class="app-brand-logo demo" style="margin-left: -11px;">
-                  <img src="../assets/img/icons/unicons/logo.png" width="50" />
-               </span>
-               <span class="fw-semibold d-block mx-2" style="font-size: 17px;">
-                  Alat Tulis Kantor
-               </span>
-            </a>
+         <ul class="menu-inner py-3">
+
+            <!-- user profile -->
+            <li class="menu-item">
+               <a href="javascript:void(0);" class="menu-link menu-toggle" data-bs-toggle="dropdown">
+                  <div>
+                     <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                  </div>
+                  <div class="mx-2">
+                     <span class="fw-semibold d-block"><?= esc($_SESSION['UNIT-PRODI']) ?></span>
+                     <small class="text-muted"><?= esc($_SESSION['USER']) ?></small>
+                  </div>
+               </a>
+               <ul class="menu-sub">
+                  <li class="menu-item">
+                     <a href="/logout" class="menu-link">
+                        <div data-i18n="Analytics">Logout</div>
+                     </a>
+                  </li>
+               </ul>
+            </li>
 
 
-            <a href="<?= previous_url() ?>" class="layout-menu-toggle2 menu-link text-large ms-auto d-block d-xl-none">
-               <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-            <a href="<?= previous_url() ?>" class="layout-menu-toggle menu-link text-large ms-auto">
-               <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-         </div>
+            <!-- menu layanan -->
+            <li class="menu-header small text-uppercase">
+               <span class="menu-header-text">Menu Layanan</span>
+            </li>
 
-         <div class="menu-inner-shadow"></div>
-
-         <ul class="menu-inner py-1">
-            <!-- Dashboard -->
             <li class="menu-item <?= $uri->getSegment(1) == '' ? 'active' : '' ?>">
                <a href="/" class="menu-link">
                   <i class='menu-icon tf-icons bx bxs-home'></i>
@@ -34,10 +39,6 @@
                </a>
             </li>
 
-            <!-- menu layanan -->
-            <li class="menu-header small text-uppercase">
-               <span class="menu-header-text">Menu Layanan</span>
-            </li>
             <?php if ($_SESSION['ROLE'] == '1') { ?>
             <li class="menu-item <?= $uri->getSegment(1) == 'barang' ? 'active' : '' ?>">
                <a href="/barang" class="menu-link">
