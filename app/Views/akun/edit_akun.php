@@ -40,11 +40,12 @@
 									<input type="hidden" name="username-old" value="<?= esc($user['username']) ?>">
 									<input class="form-control" type="text" id="username" name="username"
 										value="<?= esc($user['username']) ?>" autofocus="">
-									<div class="fv-plugins-message-container invalid-feedback"></div>
+									<div class="invalid-feedback username"></div>
 								</div>
 								<div class="col-md-6 fv-plugins-icon-container">
 									<label for="unit-prodi" class="form-label">Unit / Prodi</label>
-									<select name="unit-prodi" id="unit-prodi" class="form-select select2">
+									<select name="unit-prodi" id="unit-prodi" class="form-select select2"
+										data-allow-clear="true">
 										<option value=""></option>
 										<?php foreach($unit_prodi as $val): ?>
 										<option <?= $val['id_unit_prodi'] == $user['id_unit_prodi'] ? 'selected' : ''  ?>
@@ -52,7 +53,7 @@
 											<?= esc($val['unit_prodi'])?></option>
 										<?php endforeach; ?>
 									</select>
-									<div class="fv-plugins-message-container invalid-feedback"></div>
+									<div class="fv-plugins-message-container invalid-feedback unit-prodi"></div>
 								</div>
 							</div>
 					</div>
@@ -71,6 +72,7 @@
 									<span id="password-now" class="input-group-text cursor-pointer"><i
 											class="bx bx-hide"></i></span>
 								</div>
+								<div class="invalid-feedback password"></div>
 							</div>
 						</div>
 						<div class="row">
@@ -127,7 +129,7 @@
 					</div>
 				</div>
 				<div class="mt-3">
-					<button type="submit" class="btn btn-primary">Simpan</button>
+					<button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
 				</div>
 				</form>
 			</div>
@@ -144,3 +146,4 @@
 		})
 	})
 </script>
+<script src="<?= base_url('/assets/vendor/js/validation-edit-a.js') ?>"></script>
