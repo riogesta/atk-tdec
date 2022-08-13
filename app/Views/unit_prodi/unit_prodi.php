@@ -12,8 +12,8 @@
             </button>
             <!-- <small class="text-muted ">Default label</small> -->
         </div>
-        <div class="table-responsive">
-            <table class="table align-items-center mb-0">
+        <div class="card-datatable table-responsive">
+            <table class="table table-bordered table-striped" id="datatables">
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">No
@@ -118,6 +118,15 @@
     $('abutton#delete').click(function () {
         let id = $(this).data('val');
         alert(id);
+    });
+
+    $(document).ready(function () {
+        $('#datatables').DataTable({
+            "columnDefs": [{
+                "orderable": false,
+                "targets": 2
+            }]
+        });
     });
 
     $('button#delete').click(function () {
