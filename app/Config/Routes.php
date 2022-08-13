@@ -59,6 +59,8 @@ $routes->match(['get','post'], '/akun','User::index'); // Open and Add data USER
 $routes->group('akun', static function($routes){
     $routes->get('(:segment)', 'User::edit/$1'); 
     $routes->post('edit','User::edit');
+    $routes->get('user-exist/(:segment)', 'User::userExist/$1');
+    $routes->get('unit-prodi-exist/(:segment)', 'User::unitProdiExist/$1');
 });
 $routes->post('akun/hapus','User::hapus');
 
