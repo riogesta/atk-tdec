@@ -22,9 +22,12 @@ class Home extends BaseController
             return redirect()->to('/login');
         }
 
+        if ($_SESSION['ROLE'] == '0') {
+            return redirect()->route('pengajuan');
+        }
+
         $data = [
             'title'=> 'Beranda',
-            'profile' => $this->profile()
         ];
 
         return view('layout/head', $data)
@@ -34,9 +37,4 @@ class Home extends BaseController
                 .view('layout/footer');
     }
 
-    public function profile() {
-        $temp = $this->UserModel->user()->getRowArray();
-        return $temp['unit_prodi'];
-        // var_dump($temp['unit_prodi']);die();
-    }
 }
