@@ -3,7 +3,7 @@
 <div class="container-xxl flex-grow-1 container-p-y">
 	<!-- Small table -->
 
-	<div class="card overflow-hidden" style="height: 14%;">
+	<div class="card">
 		<div class="card-header d-flex align-items-center justify-content-between">
 			<h5 class="mb-0">Data Barang</h5>
 			<button type="button" class="btn rounded-pill btn-primary float-end" data-bs-target="#tambah-barang"
@@ -13,27 +13,27 @@
 			</button>
 			<!-- <small class="text-muted ">Default label</small> -->
 		</div>
-		<div class="table-responsive" id="vertical-example">
-			<table class="table align-items-center mb-0">
+
+		<div class="card-datatable table-responsive">
+			<table class="table table-bordered table-striped" id="datatables">
 				<thead>
 					<tr>
-						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">No
-						</th>
-						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
-						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Satuan</th>
-						<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+						<th class="text-center">No</th>
+						<th>Nama Barang</th>
+						<th>Satuan</th>
+						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody class="table-border-bottom-0">
 					<?php
-         		$i = 1;
-               foreach($barang as $barang): ?>
+						$i = 1;
+						foreach($barang as $barang): ?>
 					<tr>
 						<td class="mb-0 text-xs text-center"><strong><?= $i++ ?></strong></td>
 						<td class="mb-0 text-xs"><?= esc($barang['barang']) ?></td>
 						<td class="mb-0 text-xs"><?= esc($barang['satuan']) ?></td>
 						<td class="mb-0 text-xs">
-							<div class="clearfix d-flex">
+							<div class="clearfix d-flex justify-content-center">
 								<button type="button" class="rounded-pill btn btn-sm btn-success" data-bs-toggle="modal"
 									data-bs-target="#staticBackdrop<?= esc($barang['id_barang']) ?>">Edit</button>&nbsp;
 
@@ -41,7 +41,6 @@
 								<input type="hidden" name="id" value="<?= esc($barang['id_barang']) ?>">
 								<button type="button" id="delete" class="rounded-pill btn btn-sm btn-danger"
 									data-val="<?= esc($barang['id_barang']) ?>">Hapus</button>
-
 							</div>
 						</td>
 					</tr>
@@ -170,19 +169,16 @@
 		$('div#barang').hide()
 	});
 
-	let psb = () => {
-		new PerfectScrollbar(document.getElementById('vertical-example'), {
-			wheelPropagation: false
+	$(document).ready(function () {
+		$('#datatables').DataTable({
+			"columnDefs": [{
+				"orderable": false,
+				"targets": 3
+			}]
 		});
-	}
-
-	window.onload = psb;
-
-	$('abutton#delete').click(function () {
-		let id = $(this).data('val');
-		alert(id);
 	});
 
+	// sweatalert2
 	$('button#delete').click(function () {
 		Swal.fire({
 			title: 'Data Akan dihapus!',
