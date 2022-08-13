@@ -19,7 +19,8 @@
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">No
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit / Prodi</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unit / Prodi
+                  </th>
                   <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">...
                   </th>
                </tr>
@@ -57,25 +58,30 @@
                   <?= csrf_field() ?>
                   <div class="mb-2">
                      <label for="username" class="form-label">Username</label>
-                     <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+                     <input type="text" name="username" class="form-control" id="username" placeholder="Username"
+                        style="text-transform:lowercase">
+                     <div class="invalid-feedback username"></div>
                   </div>
                   <div class="mb-2">
                      <label for="password" class="form-label">Password</label>
                      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                     <div class="invalid-feedback password"></div>
                   </div>
                   <div class="mb-2">
                      <label for="unit-prodi" class="form-label">Unit / Prodi</label>
                      <select id="unit-prodi" class="select2 form-select" name="unit-prodi" data-allow-clear="true">
                         <option value=""></option>
                         <?php foreach($unit_prodi as $val): ?>
-                        <option value="<?= esc($val['id_unit_prodi']) ?>"><?= esc($val['unit_prodi']) ?></option>
+                        <option value="<?= esc($val['id_unit_prodi']) ?>"><?= esc($val['unit_prodi']) ?>
+                        </option>
                         <?php endforeach; ?>
                      </select>
+                     <div class="invalid-feedback unit-prodi"></div>
                   </div>
             </div>
             <div class="modal-footer">
-               <button type="submit" class="btn btn-primary">Simpan</button>
                </form>
+               <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
             </div>
          </div>
       </div>
@@ -91,7 +97,7 @@
       $('select.select2.form-select').select2({
          placeholder: "Pilih Unit / Prodi",
          dropdownParent: $("div#tambah-akun"),
-
       })
    });
 </script>
+<script src="<?= base_url('/assets/vendor/js/validation-akun.js') ?>"></script>
