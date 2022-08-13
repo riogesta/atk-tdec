@@ -74,6 +74,11 @@ class Pengajuan extends BaseController
                 'status_belum_selesai' => $this->model->query($sql_dalam_proses)->getResultArray(),
                 'status_dikirim' => $this->model->query($sql_dikirim)->getResultArray()
             ];
+
+            return view('layout/head', $data)
+                .view('layout/topbar')
+                .view('pengajuan/pengajuan_user', $data)
+                .view('layout/footer');
         
         } else {
             // jika role adalah admin
@@ -82,16 +87,22 @@ class Pengajuan extends BaseController
                 'barang' => $this->model->getBarang()->getResultArray(),
                 'pengajuan' => $this->model->getPengajuan()->getResultArray(),
             ];
-        }
 
-        // change view base on role
-        $switch = $_SESSION['ROLE'] == '1' ? 'pengajuan/pengajuan' : 'pengajuan/pengajuan_user';
-
-        return view('layout/head', $data)
+            return view('layout/head', $data)
                 .view('layout/sidebar')
                 .view('layout/nav')
-                .view($switch, $data)
+                .view('pengajuan/pengajuan', $data)
                 .view('layout/footer');
+        }
+
+        // // ubah view berdasarkan role
+        // $switch['pengajuan'] = $_SESSION['ROLE'] == '1' ? 'pengajuan/pengajuan' : 'pengajuan/pengajuan_user';
+
+        // return view('layout/head', $data)
+        //         .view('layout/sidebar')
+        //         .view('layout/topbar')
+        //         .view($switch, $data)
+        //         .view('layout/footer');
     }
 
     public function tambah(){
