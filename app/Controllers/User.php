@@ -29,7 +29,6 @@ class User extends BaseController
             'title' => "Akun",
             'user' => $this->model->user()->getResultArray(),
             'unit_prodi' => $this->model->unitProdi()->getResultArray(),
-            'profile' => $this->profile(),
         ];
         
 
@@ -88,7 +87,6 @@ class User extends BaseController
             'user' => $user,
             'pw' => $pw_plaintext,
             'unit_prodi' =>$this->model->unitProdi()->getResultArray(),
-            'profile' => $this->profile()
         ];
         // var_dump();die();
 
@@ -107,10 +105,21 @@ class User extends BaseController
         return redirect()->to('/akun');
     }
 
-    public function profile() {
-        $temp = $this->model->user()->getRowArray();
-        return $temp['unit_prodi'];
-        // var_dump($temp['unit_prodi']);die();
+    public function userExist($arg) {
+        
+        $isExist = $this->model->query("SELECT * FROM users WHERE username = '$arg'")->getRowArray();
+        
+        if(!empty($isExist)){
+            return "1";
+        } else {
+            return "0";
+        }
+    }
+
+    public function unitProdiExist($arg) {
+        $isExist = $this->model->query("SELECT * FROM users WHERE id_unit_prodi = $arg")->getRowArray();
+        
+        return !empty($isExist) ? '1' : '0';
     }
 
     protected function flash($color = 'success', $title = 'Terkirim', $msg = 'Ajuan Terkirim') {
