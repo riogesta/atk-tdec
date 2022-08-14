@@ -135,15 +135,15 @@
 
 	<div class="row mb-3">
 		<div class="accordion" id="accordionWithIcon">
-			<div class="accordion-item card">
+			<div class="accordion-item card active">
 				<h2 class="accordion-header d-flex align-items-center">
-					<button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
+					<button type="button" class="accordion-button" data-bs-toggle="collapse"
 						data-bs-target="#accordionWithIcon-3" aria-expanded="false">
 						<i class='bx bx-history me-2'></i>
 						Riwayat Pengajuan
 					</button>
 				</h2>
-				<div id="accordionWithIcon-3" class="accordion-collapse collapse">
+				<div id="accordionWithIcon-3" class="accordion-collapse collapse show">
 					<div class="accordion-body">
 						<?php if ($pengajuan_user == null) { ?>
 						<h5 class="text-center text-muted">Tidak ada data</h5>
@@ -326,7 +326,9 @@
 	$(document).ready(function () {
 		//perefectscroll
 		$('.wdgt-proccess').each(function () {
-			const ps = new PerfectScrollbar($(this)[0]);
+			const ps = new PerfectScrollbar($(this)[0], {
+				wheelPropagation: false
+			});
 		});
 
 		// select2
