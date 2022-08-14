@@ -38,7 +38,7 @@
 <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- datatables -->
-<script type="text/javascript" src="<?=  base_url('/assets/vendor/datatables/datatables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('/assets/vendor/datatables-bs5/datatables.js') ?>"></script>
 
 <!-- Main JS -->
 <script src="../assets/js/main.js"></script>

@@ -50,7 +50,7 @@
 
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css"
-        href="<?= base_url('/assets/vendor/datatables/datatables.bootstrap5.css') ?>" />
+        href="<?= base_url('/assets/vendor/datatables-bs5/datatables.bootstrap5.css') ?>" />
 
     <!-- animation -->
     <link rel="stylesheet" href="<?= base_url('/assets/vendor/modal-animation/animate.css') ?>">

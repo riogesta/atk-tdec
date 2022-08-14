@@ -191,7 +191,14 @@
 			placeholder: "Pilih Barang",
 			dropdownParent: $("div#tambahPengajuan"),
 
-		})
+		});
+
+		$('#datatables').DataTable({
+			"columnDefs": [{
+				"orderable": false,
+				"targets": 3
+			}]
+		});
 	})
 
 	$("#mySelect2").on('change', function () {
@@ -200,13 +207,4 @@
 		}).find(":selected").attr("data-satuan");
 		$("#satuan").val(data);
 	})
-
-	$(document).ready(function () {
-		$('#datatables').DataTable();
-	});
-
-	// .on('change', function (e) {
-	// 	let data = $('#mySelect2').select2().find(":selected").attr("data-id");
-	// 	$("p#satuan").text(data);
-	// });
 </script>
