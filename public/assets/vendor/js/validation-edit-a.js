@@ -62,7 +62,7 @@ inputUsername.addEventListener('input', () => {
                         inputUsername.classList.add('is-invalid');
                         usernameValidation.style.display = 'block';
                         usernameValidation.innerHTML = "Username sudah ada !"
-                        // btn.setAttribute('disabled', true)
+                        btn.setAttribute('disabled', true)
                      }
                   }
                });
