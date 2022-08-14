@@ -39,7 +39,7 @@
 									<label for="username" class="form-label">Username</label>
 									<input type="hidden" name="username-old" value="<?= esc($user['username']) ?>">
 									<input class="form-control" type="text" id="username" name="username"
-										value="<?= esc($user['username']) ?>" autofocus="">
+										value="<?= esc($user['username']) ?>" autofocus="" style="text-transform:lowercase">
 									<div class="invalid-feedback username"></div>
 								</div>
 								<div class="col-md-6 fv-plugins-icon-container">
