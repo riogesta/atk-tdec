@@ -42,6 +42,8 @@ $routes->group('pengajuan', static function($routes){
     $routes->match(['get','post'], '/', 'Pengajuan::index');
     $routes->post('status', 'Pengajuan::editStatus');
     $routes->post('approve', 'Pengajuan::approve');
+    $routes->post('status-dalam-proses', 'Pengajuan::tampilStatusDalamProses');
+    $routes->post('status-dikirim', 'Pengajuan::statusDikirim');
 });
 
 $routes->post('satuan/tambah', 'Barang::tambahSatuan');
