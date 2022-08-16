@@ -35,12 +35,13 @@
 						<td class="mb-0 text-xs">
 							<div class="clearfix d-flex justify-content-center">
 								<button type="button" class="rounded-pill btn btn-sm btn-success" data-bs-toggle="modal"
-									data-bs-target="#staticBackdrop<?= esc($barang['id_barang']) ?>">Edit</button>&nbsp;
+									data-bs-target="#staticBackdrop<?= esc($barang['id_barang']) ?>"><i
+										class="bx bx-edit-alt me-2"></i>Edit</button>&nbsp;
 
 
 								<input type="hidden" name="id" value="<?= esc($barang['id_barang']) ?>">
 								<button type="button" id="delete" class="rounded-pill btn btn-sm btn-danger"
-									data-val="<?= esc($barang['id_barang']) ?>">Hapus</button>
+									data-val="<?= esc($barang['id_barang']) ?>"><i class="bx bx-trash me-2"></i>Hapus</button>
 							</div>
 						</td>
 					</tr>
