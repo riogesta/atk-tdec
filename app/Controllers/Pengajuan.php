@@ -31,7 +31,7 @@ class Pengajuan extends BaseController
     public function index()
     {
         if (empty($_SESSION['USER'])) {
-           return redirect()->route('login');
+            return redirect()->route('login');
         }
 
         if ($this->request->getMethod() == 'post') {
@@ -94,19 +94,9 @@ class Pengajuan extends BaseController
                 .view('pengajuan/pengajuan', $data)
                 .view('layout/footer');
         }
-
-        // // ubah view berdasarkan role
-        // $switch['pengajuan'] = $_SESSION['ROLE'] == '1' ? 'pengajuan/pengajuan' : 'pengajuan/pengajuan_user';
-
-        // return view('layout/head', $data)
-        //         .view('layout/sidebar')
-        //         .view('layout/topbar')
-        //         .view($switch, $data)
-        //         .view('layout/footer');
     }
 
     public function tambah(){
-
         $input = [
             'id_barang' => $this->request->getPost('barang'),
             'id_unit_prodi' => $_SESSION['ID-UNIT-PRODI'],
@@ -120,7 +110,33 @@ class Pengajuan extends BaseController
         } else {
             return redirect()->to('/'); 
         };         
+    }
 
+    public function tampilStatusDalamProses(){
+        $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
+        $sql_dalam_proses = "
+            SELECT barang.* , unit_prodi.*, 
+            pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+            FROM pengajuan
+            LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+            LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+            WHERE `pengajuan`.`id_unit_prodi` = $id_unit_prodi AND `pengajuan`.`status` != '3' AND `pengajuan`.`status` != '2' ORDER BY tanggal DESC";
+
+        $data = $this->model->query($sql_dalam_proses)->getResultArray();
+        return json_encode($data);
+    }
+
+    public function statusDikirim(){
+        $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
+        $sql_dikirim = "
+        SELECT pengajuan.id_pengajuan, `barang`.`id_barang`, barang.barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        FROM pengajuan
+        LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+        WHERE `pengajuan`.`id_unit_prodi` = $id_unit_prodi AND `pengajuan`.`status` = '2' ORDER BY tanggal DESC";
+
+        $data = $this->model->query($sql_dikirim)->getResultArray();
+        return json_encode($data);
     }
 
     public function approve() {
