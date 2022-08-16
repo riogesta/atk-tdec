@@ -28,6 +28,8 @@ class Rekapitulasi extends BaseController
         ];
 
         return view('layout/head', $data)
+                .view('layout/sidebar')
+                .view('layout/nav')
                 .view('rekapitulasi/rekapitulasi', $data)
                 .view('layout/footer');
     }
@@ -40,8 +42,8 @@ class Rekapitulasi extends BaseController
             unit_prodi.*,
             satuan.*,
             barang.*
-            FROM barang
-            LEFT JOIN pengajuan ON barang.id_barang  = pengajuan.id_barang  
+            FROM barang 
+            LEFT JOIN pengajuan ON barang.id_barang  = pengajuan.id_barang 
             LEFT JOIN unit_prodi ON unit_prodi.id_unit_prodi = pengajuan.id_unit_prodi 
             LEFT JOIN satuan ON satuan.id_satuan = barang.id_satuan             
         ');
