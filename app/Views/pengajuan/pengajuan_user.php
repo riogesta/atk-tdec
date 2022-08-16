@@ -3,9 +3,8 @@
 	<div class="row">
 		<?= session()->getFlashData("msg") ? '' : '' ?>
 		<!-- pengajuan dalam proses -->
-
 		<section class="col-sm-6 col-md-6 col-lg-6 mb-4">
-			<div class="card overflow-hidden" <?= $status_belum_selesai == null ? '' : 'style="height: 300px"' ?>>
+			<div class="card overflow-hidden" id="card-status-dalam-proses">
 				<div class="card-header d-flex justify-content-between pb-3">
 					<div class="card-title mb-0">
 						<h5 class="m-0 me-2">Pengajuan</h5>
@@ -17,43 +16,17 @@
 					</button>
 				</div>
 				<div class="card-body wdgt-proccess">
-					<ul class="p-0 m-02">
-						<?php if ($status_belum_selesai == null) { ?>
-						<p class="text-center text-muted mt-2 mb-0">Tidak ada Proses</p>
-						<?php } ?>
-						<?php foreach($status_belum_selesai as $value): ?>
-						<?php 
-								$status = "";
-								$color = "";
-								if ($value['status'] == 0) {
-									$status =  "Diproses";
-									$color = "secondary";
-	
-								} else if ($value['status'] == 1) {
-									$status = "Approve Diproses";
-									$color = "info";
-									
-								}
-							?>
-						<li class="d-flex mb-2 pb-2">
-							<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-								<div class="me-2">
-									<small class="text-muted d-block mb-1"><?= esc($value['tanggal']) ?></small>
-									<h6 class="mb-0"><?= esc($value['barang']) ?></h6>
-								</div>
-								<span class="badge rounded-pill bg-label-<?= $color ?>"><?= $status ?></span>
-							</div>
-						</li>
-						<?php endforeach; ?>
+					<ul class="p-0 m-02" id="status-dalam-proses">
+						<p class="text-center text-muted mt-2 mb-0" id="alert-status-dalam-proses">Tidak ada Proses</p>
 
 					</ul>
 				</div>
 			</div>
 		</section>
 
-		<!-- pengajuan diterima -->
+		<!-- pengajuan dikirim  -->
 		<section class="col-sm-6 col-md-6 col-lg-6 mb-4">
-			<div class="card overflow-hidden" <?= $status_dikirim == null ? '' : 'style="height: 300px"' ?>>
+			<div class="card overflow-hidden" id="card-status-dikirim">
 				<div class="card-header d-flex justify-content-between pb-3">
 					<div class="card-title mb-0">
 						<h5 class="m-0 me-2">Pengajuan</h5>
@@ -63,69 +36,16 @@
 						<button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<i class="bx bx-dots-vertical-rounded"></i>
 						</button>
-						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry">
+						<div class="dropdown-menu dropdown-menu-end">
 							<a class="dropdown-item" href="">Tandai telah diterima semua</a>
 						</div>
 					</div>
 				</div>
 				<div class="card-body wdgt-proccess">
-					<ul class="p-0 m-02">
-						<?php if ($status_dikirim == null) { ?>
-						<p class="text-center text-muted mt-2 mb-0">Tidak ada Proses</p>
-						<?php } ?>
-						<!-- looping status dikirim -->
-						<?php
-						$i = 1;
-						foreach($status_dikirim as $value): 
-						?>
-						<?php 
-								$i += 1;
-								$status = "";			
-								$color = "";						
-								if ($value['status'] == 2) {
-									$status = "Dikirim";
-									$color = "primary";
-								} else if ($value['status'] == 3) {
-									$status = "Selesai";
-									$color = "success";
-								}
-							?>
-						<li class="d-flex mb-2 pb-2">
-							<a href="#"
-								class="list-hover d-flex w-100 flex-wrap align-items-center justify-content-between gap-2"
-								data-bs-toggle="modal" data-bs-target="#status-<?= $i ?>">
-								<div class="me-2">
-									<small class="text-muted d-block mb-1"><?= esc($value['tanggal']) ?></small>
-									<h6 class="mb-0"><?= esc($value['barang']) ?></h6>
-								</div>
-								<span class="badge rounded-pill bg-label-<?= $color ?>"><?= $status ?></span>
-							</a>
-						</li>
+					<ul class="p-0 m-02" id="status-dikirim">
+						<p class="text-center text-muted mt-2 mb-0" id="message-status-dikirim">Tidak ada Proses</p>
 
 						<!-- Modal -->
-						<div class="modal fade animate__animated animate__pulse" data-bs-backdrop="static"
-							id="status-<?= $i ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-								<div class="modal-content">
-									<div class="modal-header d-block">
-										<h5 class="modal-title text-center" id="exampleModalLabel"><?= esc($value['barang']) ?>
-										</h5>
-									</div>
-									<div class="modal-body">
-										<p>Tanggal Pengajuan : <b><?= esc($value['tanggal']) ?></b></p>
-										<p>jumlah : <b><?= esc($value['jumlah']) ?></b></p>
-										</p>
-										<input type="hidden" name="pengajuan" value="">
-									</div>
-									<div class="modal-footer d-block text-center">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-										<button type="button" id="btnApprove" data-pengajuan="<?= esc($value['id_pengajuan']) ?>"
-											class="btn btn-success">Diterima</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<?php endforeach; ?>
 
 					</ul>
 				</div>
@@ -355,6 +275,131 @@
 				console.error(xhr);
 			}
 		});
+
+	})
+
+	// get realtime data 'status dalam proses'
+	let StatusDalamProses = () => {
+		$.ajax({
+			url: '/pengajuan/status-dalam-proses',
+			type: "POST",
+			success: function (data) {
+				let obj = JSON.parse(data);
+				// hide message when data is empty
+				if (obj.length == 0) {
+					$('p#alert-status-dalam-proses').show()
+				} else {
+					$('p#alert-status-dalam-proses').hide()
+					$('div#card-status-dalam-proses').css('height', '300px')
+					$('ul#status-dalam-proses').html('')
+				}
+
+
+				for (let i = 0; i < obj.length; i++) {
+					let status = '';
+					let color = '';
+					if (obj[i]['status'] == '0') {
+						status = 'Diproses';
+						color = 'secondary';
+					} else if (obj[i]['status'] == '1') {
+						status = 'Proses Diapprove';
+						color = 'info';
+					}
+					let list = `
+				<li class="d-flex mb-2 pb-2">
+					<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+						<div class="me-2">
+							<small class="text-muted d-block mb-1">${obj[i]['tanggal']}</small>
+							<h6 class="mb-0">${obj[i]['barang']}</h6>
+						</div>
+						<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					</div>
+				</li>
+				`
+					$('ul#status-dalam-proses').append(list)
+				}
+			}
+		})
+	}
+	// refresh every 2s
+	setInterval(StatusDalamProses, 2000);
+	// end //
+
+	// get realtime data 'status dikirim'
+	let statusDikirim = () => {
+		$.ajax({
+			url: '/pengajuan/status-dikirim',
+			type: "POST",
+			success: function (data) {
+				let obj = JSON.parse(data);
+
+				// hide message when data is empty
+				if (obj.length == 0) {
+					$('p#message-status-dikirm').show()
+				} else {
+					$('p#message-status-dikirm').hide()
+					$('div#card-status-dikirim').css('height', '300px')
+					$('ul#status-dikirim').html('')
+				}
+
+				for (let i = 0; i < obj.length; i++) {
+					console.log(i)
+
+					let status = '';
+					let color = '';
+					if (obj[i]['status'] == '2') {
+						status = 'Dikirim';
+						color = 'primary';
+					}
+					let list = `
+					<li class="d-flex mb-2 pb-2">
+						<a href="#"
+							class="list-hover d-flex w-100 flex-wrap align-items-center justify-content-between gap-2"
+							data-bs-toggle="modal" data-bs-target="#status-${i}">
+							<div class="me-2">
+								<small class="text-muted d-block mb-1">${obj[i]['tanggal']}</small>
+								<h6 class="mb-0">${obj[i]['barang']}</h6>
+							</div>
+							<span class="badge rounded-pill bg-label-${color}">${status}</span>
+						</a>
+					</li>
+
+					<!-- Modal -->
+					<div class="modal fade animate__animated animate__pulse" data-bs-backdrop="static"
+						id="status-${i}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+							<div class="modal-content">
+								<div class="modal-header d-block">
+									<h5 class="modal-title text-center" id="exampleModalLabel">${obj[i]['barang']}</h5>
+								</div>
+								<div class="modal-body">
+									<p>Tanggal Pengajuan : <b>${obj[i]['tanggal']}</b></p>
+									<p>jumlah : <b>${obj[i]['jumlah']}</b></p>
+									</p>
+									<input type="hidden" name="pengajuan" value="">
+								</div>
+								<div class="modal-footer d-block text-center">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+									<button type="button" id="btnApprove" data-pengajuan="${obj[i]['id_pengajuan']}"
+										class="btn btn-success">Diterima</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					`
+					$('ul#status-dikirim').append(list)
+				}
+			}
+		})
+	}
+
+	$(document).ready(function () {
+		let intervalHandler = setInterval(statusDikirim, 2000);
+		$("ul#status-dikirim").hover(function () {
+			clearInterval(intervalHandler);
+		}, function () {
+			intervalHandler = setInterval(statusDikirim, 2000)
+		})
 
 	})
 </script>
