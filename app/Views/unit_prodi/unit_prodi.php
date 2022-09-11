@@ -4,7 +4,7 @@
 
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">Data Barang</h5>
+            <h5 class="mb-0">Data Unit/Prodi</h5>
             <button type="button" class="btn rounded-pill btn-primary float-end" data-bs-target="#tambah-barang"
                 data-bs-toggle="modal">
                 <i class='bx bx-plus-circle'></i>

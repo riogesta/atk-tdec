@@ -42,6 +42,7 @@ $routes->group('pengajuan', static function($routes){
     $routes->match(['get','post'], '/', 'Pengajuan::index');
     $routes->post('status', 'Pengajuan::editStatus');
     $routes->post('approve', 'Pengajuan::approve');
+    $routes->post('riwayat-pengajuan', 'Pengajuan::riwayatPengajuan');
     $routes->post('status-dalam-proses', 'Pengajuan::tampilStatusDalamProses');
     $routes->post('status-dikirim', 'Pengajuan::statusDikirim');
 });
@@ -74,6 +75,9 @@ $routes->group('unit-prodi', static function($routes){
 
 $routes->group('rekapitulasi', static function($routes){
     $routes->get('/', 'Rekapitulasi::index');
+    $routes->get('excel', 'Rekapitulasi::generateExcel');
+    $routes->get('pdf', 'Rekapitulasi::generatePdf');
+    $routes->get('dump', 'Rekapitulasi::dataTesting');
 });
 /*
  * --------------------------------------------------------------------

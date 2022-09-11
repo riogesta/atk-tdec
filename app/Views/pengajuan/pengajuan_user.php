@@ -64,100 +64,15 @@
 					</button>
 				</h2>
 				<div id="accordionWithIcon-3" class="accordion-collapse collapse show">
-					<div class="accordion-body">
-						<?php if ($pengajuan_user == null) { ?>
-						<h5 class="text-center text-muted">Tidak ada data</h5>
-						<?php } else { ?>
-						<table class="table table-hover">
+					<div class="card-datatable">
+						<table class="table table-hover" id="datatables">
 							<thead>
 								<tr>
-									<th>No.</th>
 									<th>Barang</th>
 									<th>tanggal</th>
 								</tr>
 							</thead>
-							<tbody>
-								<?php
-							$i = 1;
-							foreach($pengajuan_user as $row): ?>
-								<tr>
-									<td><?= $i++ ?></td>
-									<td><?= esc($row['barang']) ?></td>
-									<td><?= esc($row['tanggal']) ?></td>
-									<td class="text-center">
-										<?php 
-									$icon = "";
-									$status = "";
-									$color = "";
-									if ($row['status'] == 0) {
-										$color = "secondary";
-										$icon =  "<i class='bx bxs-hourglass-top'></i>";
-										$status =  "Diproses";
-										
-									} else if ($row['status'] == 1) {
-										$color = "info";
-										$icon = "<i class='bx bx-list-check'></i>";
-										$status = "Approve Diproses";
-										
-									} else if ($row['status'] == 2) {
-										$color = "primary";
-										$icon = "<i class='bx bx-check-square'></i>";
-										$status = "Dikirim";
-										
-									} else if ($row['status'] == 3) {
-										$color = "success";
-										$icon = "<i class='bx bxs-flag-checkered'></i>";
-										$status = "Selesai";
-										
-									}
-									?>
-									</td>
-								</tr>
-
-								<!-- modal info pengajuan -->
-								<div class="modal fade" id="infoPengajuan<?= $i ?>" aria-hidden="true"
-									data-bs-backdrop="static">
-									<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLabel4">Ubah Status</h5>
-												<button type="button" class="rounded-pill btn-close" data-bs-dismiss="modal"
-													aria-label="Close"></button>
-											</div>
-											<div class="modal-body text-center">
-												<form action="/pengajuan/status" method="post">
-													<?= csrf_field() ?>
-													<input type="hidden" name="id" value="<?= esc($row['id_pengajuan']) ?>">
-													<!-- status pick -->
-													<div class="" role="group" aria-label="Basic radio toggle button group">
-														<input type="radio" class="btn-check" name="status" id="2-<?= $i ?>"
-															autocomplete="off" <?= $row['status'] == '2' ? 'checked':'' ?> value="2">
-														<label class="btn btn-outline-primary" for="2-<?= $i ?>">
-															<i class='bx bx-check-square'></i>
-															Dikirim
-														</label>
-
-														<input type="radio" class="btn-check" name="status" id="3-<?= $i ?>"
-															autocomplete="off" <?= $row['status'] == '3' ? 'checked':'' ?> value="3">
-														<label class="btn btn-outline-success" for="3-<?= $i ?>">
-															<i class='bx bxs-flag-checkered'></i>
-															Selesai / Diterima
-														</label>
-													</div>
-													<!-- / status pick -->
-											</div>
-											<div class="modal-footer">
-												<button type="submit" class="btn btn-primary">Ubah Status</button>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- / modal info pengajuan -->
-								<?php endforeach; ?>
-							</tbody>
 						</table>
-						<?php } ?>
 					</div>
 				</div>
 			</div>
@@ -256,26 +171,25 @@
 			placeholder: "Pilih Barang",
 			dropdownParent: $("div#tambahPengajuan"),
 		});
+
+		// datatable
 	});
 
-	$("button#btnApprove").on('click', function () {
-		$.ajax({
-			type: "POST",
-			url: "/pengajuan/approve",
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			},
-			data: {
-				id: $(this).data('pengajuan'),
-			},
-			success: function (data) {
-				location.reload()
-			},
-			error: function (xhr, status, error) {
-				console.error(xhr);
-			}
-		});
-
+	$.ajax({
+		url: '/pengajuan/riwayat-pengajuan',
+		type: 'POST',
+		dataType: 'JSON'
+	}).done(function (data) {
+		$('#datatables').DataTable({
+			'aaData': data,
+			'columns': [{
+					'data': 'barang'
+				},
+				{
+					'data': 'tanggal'
+				}
+			]
+		})
 	})
 
 	// get realtime data 'status dalam proses'
@@ -291,8 +205,8 @@
 				} else {
 					$('p#alert-status-dalam-proses').hide()
 					$('div#card-status-dalam-proses').css('height', '300px')
-					$('ul#status-dalam-proses').html('')
 				}
+				$('ul#status-dalam-proses').html('')
 
 
 				for (let i = 0; i < obj.length; i++) {
@@ -306,16 +220,16 @@
 						color = 'info';
 					}
 					let list = `
-				<li class="d-flex mb-2 pb-2">
+					<li class="d-flex mb-2 pb-2">
 					<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-						<div class="me-2">
-							<small class="text-muted d-block mb-1">${obj[i]['tanggal']}</small>
-							<h6 class="mb-0">${obj[i]['barang']}</h6>
-						</div>
-						<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					<div class="me-2">
+					<small class="text-muted d-block mb-1">${obj[i]['tanggal']}</small>
+					<h6 class="mb-0">${obj[i]['barang']}</h6>
 					</div>
-				</li>
-				`
+					<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					</div>
+					</li>
+					`
 					$('ul#status-dalam-proses').append(list)
 				}
 			}
@@ -339,12 +253,10 @@
 				} else {
 					$('p#message-status-dikirm').hide()
 					$('div#card-status-dikirim').css('height', '300px')
-					$('ul#status-dikirim').html('')
 				}
+				$('ul#status-dikirim').html('')
 
 				for (let i = 0; i < obj.length; i++) {
-					console.log(i)
-
 					let status = '';
 					let color = '';
 					if (obj[i]['status'] == '2') {
@@ -380,8 +292,8 @@
 								</div>
 								<div class="modal-footer d-block text-center">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-									<button type="button" id="btnApprove" data-pengajuan="${obj[i]['id_pengajuan']}"
-										class="btn btn-success">Diterima</button>
+									<button type="button" data-pengajuan="${obj[i]['id_pengajuan']}"
+										class="btn btn-success btn-approve">Diterima</button>
 								</div>
 							</div>
 						</div>
@@ -393,14 +305,36 @@
 		})
 	}
 
+	// pause when cursor hover on list 'status dikirim'
 	$(document).ready(function () {
 		let intervalHandler = setInterval(statusDikirim, 2000);
 		$("ul#status-dikirim").hover(function () {
+			$(this).click(function () {
+				return clearInterval(intervalHandler);
+			})
 			clearInterval(intervalHandler);
 		}, function () {
 			intervalHandler = setInterval(statusDikirim, 2000)
 		})
+	})
 
+	$(document).on('click', 'button.btn-approve', function () {
+		$.ajax({
+			type: "POST",
+			url: "/pengajuan/approve",
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			data: {
+				id: $(this).data('pengajuan'),
+			},
+			success: function (data) {
+				location.reload()
+			},
+			error: function (xhr, status, error) {
+				console.error(xhr);
+			}
+		});
 	})
 </script>
 <script src="<?= base_url("/assets/vendor/js/validation-pengajuan.js") ?>">

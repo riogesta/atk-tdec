@@ -112,9 +112,24 @@ class Pengajuan extends BaseController
         };         
     }
 
+    public function riwayatPengajuan(){
+        $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
+        $sql = "
+        SELECT pengajuan.id_pengajuan, pengajuan.id_barang, barang.barang, barang.id_satuan , pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        FROM pengajuan
+        LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+        WHERE  `pengajuan`.`id_unit_prodi` = '$id_unit_prodi' AND `pengajuan`.`status` = '3'
+        ORDER BY id_pengajuan DESC
+        ";
+
+        $data = $this->model->query($sql)->getResultObject();
+        return json_encode($data);
+    }
+
     public function tampilStatusDalamProses(){
         $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
-        $sql_dalam_proses = "
+        $sql = "
             SELECT barang.* , unit_prodi.*, 
             pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
             FROM pengajuan
@@ -122,7 +137,7 @@ class Pengajuan extends BaseController
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
             WHERE `pengajuan`.`id_unit_prodi` = $id_unit_prodi AND `pengajuan`.`status` != '3' AND `pengajuan`.`status` != '2' ORDER BY tanggal DESC";
 
-        $data = $this->model->query($sql_dalam_proses)->getResultArray();
+        $data = $this->model->query($sql)->getResultArray();
         return json_encode($data);
     }
 

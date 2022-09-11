@@ -26,12 +26,20 @@ class ComposerStaticInitec1c5d326741bbdde71baf1d9d21c96d
         array (
             'Tests\\Support\\' => 14,
         ),
+        'S' => 
+        array (
+            'Svg\\' => 4,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
+        ),
+        'M' => 
+        array (
+            'Masterminds\\' => 12,
         ),
         'L' => 
         array (
@@ -43,10 +51,12 @@ class ComposerStaticInitec1c5d326741bbdde71baf1d9d21c96d
         ),
         'F' => 
         array (
+            'FontLib\\' => 8,
             'Faker\\' => 6,
         ),
         'D' => 
         array (
+            'Dompdf\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
@@ -71,6 +81,10 @@ class ComposerStaticInitec1c5d326741bbdde71baf1d9d21c96d
         array (
             0 => __DIR__ . '/../..' . '/tests/_support',
         ),
+        'Svg\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -87,6 +101,10 @@ class ComposerStaticInitec1c5d326741bbdde71baf1d9d21c96d
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
         'Laminas\\Escaper\\' => 
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-escaper/src',
@@ -95,9 +113,17 @@ class ComposerStaticInitec1c5d326741bbdde71baf1d9d21c96d
         array (
             0 => __DIR__ . '/..' . '/kint-php/kint/src',
         ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
+        ),
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -121,10 +147,18 @@ class ComposerStaticInitec1c5d326741bbdde71baf1d9d21c96d
                 0 => __DIR__ . '/..' . '/mikey179/vfsstream/src/main/php',
             ),
         ),
+        'S' => 
+        array (
+            'Sabberworm\\CSS' => 
+            array (
+                0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
+            ),
+        ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\ActualValueIsNotAnObjectException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ActualValueIsNotAnObjectException.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',

@@ -11,7 +11,7 @@
                <div class="col-md-8">
                   <div class="card-body">
                      <h5 class="card-title text-primary">Jumlah User</h5>
-                     <p class="card-text">$84.111k<p class="card-text">
+                     <p class="card-text"><?= esc($totalUsers) ?><p class="card-text">
                   </div>
                </div>
                <div class="col-md-4 px-2 py-2">
@@ -29,7 +29,7 @@
                <div class="col-md-8">
                   <div class="card-body">
                      <h5 class="card-title text-primary">Jumlah Pengajuan</h5>
-                     <p class="card-text">$84.111k<p class="card-text">
+                     <p class="card-text"><?= esc($totalPengajuan) ?><p class="card-text">
                   </div>
                </div>
                <div class="col-md-4 px-2 py-2">
@@ -47,7 +47,7 @@
                <div class="col-md-8">
                   <div class="card-body">
                      <h5 class="card-title text-primary">Jumlah Barang</h5>
-                     <p class="card-text">$84.111k<p class="card-text">
+                     <p class="card-text"><?= esc($totalBarang) ?><p class="card-text">
                   </div>
                </div>
                <div class="col-md-4 px-2 py-2">
@@ -63,29 +63,30 @@
    <div class="col-xxl">
       <div class="card mb-4">
          <div class="card-header d-flex align-items justify-content-between">
-            <h5 class="mb-0">Daftar Pengajuan</h5>
+            <h5 class="mb-0">Daftar Pengajuan <br>
+               <small class="text-muted">Proses Dikirim</small>
+            </h5>
             <!-- <small class="text-muted ">Default label</small> -->
          </div>
          <div class="table-responsive text-nowrap">
-            <table class="table table-sm">
+            <table class="table">
                <thead>
                   <tr>
-                     <th class="px-4">No</th>
-                     <th class="text-center">Nama Barang</th>
-                     <th class="text-center">Satuan</th>
-                     <th class="text-center">Tanggal Pengajuan</th>
-                     <th class="text-center">Unit / Prodi</th>
+                     <th>Nama Barang</th>
+                     <th>Satuan</th>
+                     <th>Tanggal Pengajuan</th>
+                     <th>Unit / Prodi</th>
                   </tr>
                </thead>
                <tbody class="table-border-bottom-0">
+                  <?php foreach($pengajuan as $row): ?>
                   <tr>
-                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong>
-                     </td>
-                     <td class="text-center">Amplop Coklat Polos</td>
-                     <td class="text-center">Lembar</td>
-                     <td class="text-center">04 Agustus 2022</td>
-                     <td class="text-center">Akuntansi</td>
+                     <td><?= esc($row['barang']) ?> </td>
+                     <td><?= esc($row['satuan']) ?> </td>
+                     <td><?= esc($row['tanggal']) ?> </td>
+                     <td><?= esc($row['unit_prodi']) ?> </td>
                   </tr>
+                  <?php endforeach; ?>
                </tbody>
             </table>
          </div>
