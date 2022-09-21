@@ -33,11 +33,13 @@
                         <td class="mb-0 text-xs">
                             <div class="clearfix d-flex">
                                 <button type="button" class="rounded-pill btn btn-sm btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop<?= $i ?>">Edit</button>&nbsp;
+                                    data-bs-target="#staticBackdrop<?= $i ?>"><i
+                                        class="bx bx-edit-alt me-2"></i>Edit</button>&nbsp;
 
 
                                 <button type="button" id="delete" class="rounded-pill btn btn-sm btn-danger"
-                                    data-val="<?= esc($row['id_unit_prodi']) ?>">Hapus</button>
+                                    data-val="<?= esc($row['id_unit_prodi']) ?>"><i
+                                        class="bx bx-trash me-2"></i>Hapus</button>
 
                             </div>
                         </td>

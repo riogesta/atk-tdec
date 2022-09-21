@@ -1,0 +1,9 @@
+CRITICAL - 2022-09-16 00:24:41 --> Undefined array key "ID-UNIT-PRODI"
+in APPPATH/Controllers/Rekapitulasi.php on line 218.
+ 1 APPPATH/Controllers/Rekapitulasi.php(218): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Rekapitulasi.php(178): App\Controllers\Rekapitulasi->rekapitulasiUser()
+ 3 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Rekapitulasi->generateExcel()
+ 4 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')

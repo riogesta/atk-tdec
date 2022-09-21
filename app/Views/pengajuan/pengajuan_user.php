@@ -10,8 +10,8 @@
 						<h5 class="m-0 me-2">Pengajuan</h5>
 						<small class="text-muted">Status dalam proses</small>
 					</div>
-					<button type="button" id="btn-tambah" class="btn btn-xs btn-primary rounded-pill" data-bs-toggle="modal"
-						data-bs-target="#tambahPengajuan">
+					<button type="button" id="btn-tambah" class="btn btn-xs btn-primary rounded-pill"
+						data-bs-toggle="modal" data-bs-target="#tambahPengajuan">
 						<i class='bx bx-plus-circle'></i>
 					</button>
 				</div>
@@ -65,14 +65,28 @@
 				</h2>
 				<div id="accordionWithIcon-3" class="accordion-collapse collapse show">
 					<div class="card-datatable">
+						<?php if (empty($pengajuan_user)) { ?>
+						<h6 class="text-center">Belum Ada Aktifitas Pengajuan</h6>
+						<?php } else { ?>
 						<table class="table table-hover" id="datatables">
 							<thead>
 								<tr>
 									<th>Barang</th>
-									<th>tanggal</th>
+									<th>Jumlah</th>
+									<th>Tanggal</th>
 								</tr>
 							</thead>
+							<tbody>
+								<?php foreach($pengajuan_user as $val): ?>
+								<tr>
+									<td><?= esc($val['barang']) ?></td>
+									<td><?= esc($val['jumlah']) ?></td>
+									<td><?= esc($val['tanggal']) ?></td>
+								</tr>
+								<?php endforeach; ?>
+							</tbody>
 						</table>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
@@ -87,7 +101,8 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel4">Tambah Ajuan</h5>
-					<button type="button" class="rounded-pill btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="rounded-pill btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form action="/pengajuan" method="post">
@@ -95,7 +110,8 @@
 						<div class="row">
 							<div class="col mb-3">
 								<label for="nameExLarge" class="form-label">Barang</label>
-								<select name="barang" class="form-select select2" id="selectBarang" data-allow-clear="true">
+								<select name="barang" class="form-select select2" id="selectBarang"
+									data-allow-clear="true">
 									<option></option>
 									<?php foreach($barang as $val): ?>
 									<option value="<?= esc($val['id_barang']) ?>" data-satuan="<?= $val['satuan'] ?>">
@@ -108,13 +124,14 @@
 						<div class="row">
 							<div class="col-md-10 col-sm-10">
 								<label for="jumlah" class="form-label">Jumlah</label>
-								<input type="number" id="jumlah" name="jumlah" class="form-control" placeholder="Jumlah">
+								<input type="number" id="jumlah" name="jumlah" class="form-control"
+									placeholder="Jumlah">
 								<div class="invalid-feedback jumlah"></div>
 							</div>
 							<div class="col col-md-2 col-2">
 								<label for="" class="form-label">&nbsp;</label>
-								<input type="text" id="satuan" readonly class="form-control-plaintext" placeholder="Satuan"
-									value="">
+								<input type="text" id="satuan" readonly class="form-control-plaintext"
+									placeholder="Satuan" value="">
 							</div>
 							<p id="satuan"></p>
 						</div>

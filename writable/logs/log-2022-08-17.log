@@ -1,0 +1,16 @@
+CRITICAL - 2022-08-17 21:38:53 --> Undefined array key "ID-UNIT-PRODI"
+in APPPATH/Controllers/Pengajuan.php on line 131.
+ 1 APPPATH/Controllers/Pengajuan.php(131): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Pengajuan->tampilStatusDalamProses()
+ 3 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 5 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-08-17 21:38:54 --> Undefined array key "ID-UNIT-PRODI"
+in APPPATH/Controllers/Pengajuan.php on line 145.
+ 1 APPPATH/Controllers/Pengajuan.php(145): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Pengajuan->statusDikirim()
+ 3 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 5 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')

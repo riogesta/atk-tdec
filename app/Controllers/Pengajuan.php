@@ -21,9 +21,6 @@ class Pengajuan extends BaseController
     }
 
     public function tanggalSekarang() {
-        // $time = 43200;
-        // $tanggal = strtotime(date("h:i:s A"))+$time;
-        // $tanggal = date('Y-m-d', $tanggal);
         $tanggal = Time::now('Asia/Jakarta', 'en_US');
         return $tanggal; //tahun-bulan-tanggal
     }

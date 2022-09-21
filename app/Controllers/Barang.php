@@ -35,8 +35,7 @@ class Barang extends BaseController
             'title' => 'Barang',
             'count' => $count,
             'satuan' => $this->model->getSatuan()->getResultArray(),
-            'barang' => $this->model->getBarang()->getResultArray(),
-            'profile' => $this->profile(),
+            'barang' => $this->model->getBarang()->getResultArray()
         ];
 
         return view('layout/head', $data)
@@ -88,12 +87,6 @@ class Barang extends BaseController
         // var_dump();die();
         $this->model->delete($id);
         return redirect()->to('/barang');
-    }
-
-    public function profile() {
-        $temp = $this->UserModel->user()->getRowArray();
-        return $temp['unit_prodi'];
-        // var_dump($temp['unit_prodi']);die();
     }
 
     // default success flashdata can customize

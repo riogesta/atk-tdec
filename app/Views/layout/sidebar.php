@@ -38,25 +38,6 @@
                   <div> Dashboard</div>
                </a>
             </li>
-
-            <?php if ($_SESSION['ROLE'] == '1') { ?>
-            <li class="menu-item <?= $uri->getSegment(1) == 'barang' ? 'active' : '' ?>">
-               <a href="/barang" class="menu-link">
-                  <i class='menu-icon tf-icons bx bxs-package'></i>
-                  <div>Data Barang</div>
-               </a>
-            </li>
-            <?php } ?>
-
-            <?php if ($_SESSION['ROLE'] == '1') { ?>
-            <li class="menu-item <?= $uri->getSegment(1) == 'unit-prodi' ? 'active' : '' ?>">
-               <a href="/unit-prodi" class="menu-link">
-                  <i class='menu-icon tf-icons bx bxs-school'></i>
-                  <div>Unit / Prodi</div>
-               </a>
-            </li>
-            <?php } ?>
-
             <li class=" menu-item <?= $uri->getSegment(1) == 'pengajuan' ? 'active' : '' ?>">
                <a href="/pengajuan" class="menu-link">
                   <i class='menu-icon tf-icons bx bxs-notepad'></i>
@@ -75,6 +56,50 @@
                   <i class='menu-icon tf-icons bx bxs-user'></i>
                   <div>Kelola Pengguna</div>
                </a>
+            </li>
+            <?php } ?>
+            <?php if ($_SESSION['ROLE'] == '1') { ?>
+            <?php 
+            $active = "";
+            if ($uri->getSegment(1) == 'barang' || $uri->getSegment(1) == 'unit-prodi') {
+               $active = "active open";
+            }?>
+            <li class="menu-item <?= $active ?>">
+               <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bxs-customize"></i>
+                  <div data-i18n="Icons">Master Data</div>
+               </a>
+               <ul class="menu-sub">
+                  <?php if ($_SESSION['ROLE'] == '1') { ?>
+                  <li class="menu-item <?= $uri->getSegment(1) == 'barang' ? 'active' : '' ?>">
+                     <a href="/barang" class="menu-link">Barang</a>
+                  </li>
+                  <?php } ?>
+                  <?php if ($_SESSION['ROLE'] == '1') { ?>
+                  <li class="menu-item <?= $uri->getSegment(1) == 'unit-prodi' ? 'active' : '' ?>">
+                     <a href="/unit-prodi" class="menu-link">Unit/Prodi</a>
+                  </li>
+                  <?php } ?>
+               </ul>
+            </li>
+
+            <?php 
+            $active = "";
+            if ($uri->getSegment(1) == 'akademik') {
+               $active = "active open";
+            }?>
+            <li class="menu-item <?= $active ?>">
+               <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bxs-cog"></i>
+                  <div data-i18n="Icons">Pengaturan</div>
+               </a>
+               <ul class="menu-sub">
+                  <?php if ($_SESSION['ROLE'] == '1') { ?>
+                  <li class="menu-item <?= $uri->getSegment(1) == 'akademik' ? 'active' : '' ?>">
+                     <a href="/akademik" class="menu-link">Tahun Akademik</a>
+                  </li>
+                  <?php } ?>
+               </ul>
             </li>
             <?php } ?>
          </ul>

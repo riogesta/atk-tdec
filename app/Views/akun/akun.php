@@ -80,8 +80,8 @@
                   </div>
             </div>
             <div class="modal-footer">
-               </form>
                <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
+               </form>
             </div>
          </div>
       </div>

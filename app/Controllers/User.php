@@ -61,6 +61,9 @@ class User extends BaseController
         $encrypter = \Config\Services::encrypter();
         $user = $this->model->user($arg)->getRowArray();
 
+        // jika terjadi terjadi perubahan dan tombol di tekan
+        // akan menyimpan username, password, unit_prodi, dan role
+        // dengan nilai baru
         if($this->request->getMethod() == 'post') {
             $input = [
                 'username' => $this->request->getPost('username'),

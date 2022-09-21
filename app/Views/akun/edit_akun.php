@@ -7,15 +7,15 @@
 			<div class="nav-align-top">
 				<ul class="nav nav-pills mb-3" role="tablist">
 					<li class="nav-item">
-						<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#akun"
-							aria-controls="akun" aria-selected="true">
+						<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+							data-bs-target="#akun" aria-controls="akun" aria-selected="true">
 							<i class="bx bx-user me-1"></i>
 							Akun
 						</button>
 					</li>
 					<li class="nav-item">
-						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#keamanan"
-							aria-controls="keamanan" aria-selected="false">
+						<button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+							data-bs-target="#keamanan" aria-controls="keamanan" aria-selected="false">
 							<i class="bx bx-lock-alt me-1"></i>
 							Keamanan
 						</button>
@@ -39,7 +39,8 @@
 									<label for="username" class="form-label">Username</label>
 									<input type="hidden" name="username-old" value="<?= esc($user['username']) ?>">
 									<input class="form-control" type="text" id="username" name="username"
-										value="<?= esc($user['username']) ?>" autofocus="" style="text-transform:lowercase">
+										value="<?= esc($user['username']) ?>" autofocus=""
+										style="text-transform:lowercase">
 									<div class="invalid-feedback username"></div>
 								</div>
 								<div class="col-md-6 fv-plugins-icon-container">
@@ -48,7 +49,8 @@
 										data-allow-clear="true">
 										<option value=""></option>
 										<?php foreach($unit_prodi as $val): ?>
-										<option <?= $val['id_unit_prodi'] == $user['id_unit_prodi'] ? 'selected' : ''  ?>
+										<option
+											<?= $val['id_unit_prodi'] == $user['id_unit_prodi'] ? 'selected' : ''  ?>
 											value="<?= esc($val['id_unit_prodi'])?>">
 											<?= esc($val['unit_prodi'])?></option>
 										<?php endforeach; ?>
@@ -64,7 +66,7 @@
 
 						<div class="row">
 							<div class="mb-3 form-password-toggle">
-								<label class="form-label" for="password-now">Password Sekarang</label>
+								<label class="form-label" for="password-now">Password</label>
 								<div class="input-group">
 									<input type="password" name="password" class="form-control" id="password-now"
 										placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -75,7 +77,7 @@
 								<div class="invalid-feedback password"></div>
 							</div>
 						</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="mb-3 col-6 form-password-toggle">
 								<label class="form-label" for="new-password">Password Baru</label>
 								<div class="input-group">
@@ -97,17 +99,7 @@
 								</div>
 							</div>
 
-							<div class="col-12 mb-">
-								<p class="fw-semibold mt-2">Password Requirements:</p>
-								<ul class="ps-3 mb-0">
-									<li class="mb-1">
-										Minimum 8 characters long - the more, the better
-									</li>
-									<li class="mb-1">At least one lowercase character</li>
-									<li>At least one number, symbol, or whitespace character</li>
-								</ul>
-							</div>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="tab-pane fade show" id="role" role="tabpanel">

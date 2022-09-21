@@ -69,6 +69,9 @@
             <!-- <small class="text-muted ">Default label</small> -->
          </div>
          <div class="table-responsive text-nowrap">
+            <?php if (empty($pengajuan)) { ?>
+            <h6 class="text-center">Belum ada Proses yang dikirim</h6>
+            <?php } else { ?>
             <table class="table">
                <thead>
                   <tr>
@@ -89,6 +92,7 @@
                   <?php endforeach; ?>
                </tbody>
             </table>
+            <?php } ?>
          </div>
       </div>
       <!--/ Small table -->

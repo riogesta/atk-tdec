@@ -47,7 +47,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.2.3';
+    public const CI_VERSION = '4.2.6';
 
     /**
      * App startup time.
@@ -489,20 +489,26 @@ class CodeIgniter
             $this->response = $response;
         }
 
-        // Cache it without the performance metrics replaced
-        // so that we can have live speed updates along the way.
-        // Must be run after filters to preserve the Response headers.
-        if (static::$cacheTTL > 0) {
-            $this->cachePage($cacheConfig);
+        // Skip unnecessary processing for special Responses.
+        if (! $response instanceof DownloadResponse && ! $response instanceof RedirectResponse) {
+            // Cache it without the performance metrics replaced
+            // so that we can have live speed updates along the way.
+            // Must be run after filters to preserve the Response headers.
+            if (static::$cacheTTL > 0) {
+                $this->cachePage($cacheConfig);
+            }
+
+            // Update the performance metrics
+            $body = $this->response->getBody();
+            if ($body !== null) {
+                $output = $this->displayPerformanceMetrics($body);
+                $this->response->setBody($output);
+            }
+
+            // Save our current URI as the previous URI in the session
+            // for safer, more accurate use with `previous_url()` helper function.
+            $this->storePreviousURL(current_url(true));
         }
-
-        // Update the performance metrics
-        $output = $this->displayPerformanceMetrics($this->response->getBody());
-        $this->response->setBody($output);
-
-        // Save our current URI as the previous URI in the session
-        // for safer, more accurate use with `previous_url()` helper function.
-        $this->storePreviousURL(current_url(true));
 
         unset($uri);
 
@@ -724,9 +730,12 @@ class CodeIgniter
         }
 
         $uri = $this->request->getUri();
-
         if ($config->cacheQueryString) {
-            $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
+            if (is_array($config->cacheQueryString)) {
+                $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(['only' => $config->cacheQueryString]));
+            } else {
+                $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
+            }
         } else {
             $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
         }
@@ -939,11 +948,9 @@ class CodeIgniter
         $this->response->setStatusCode($e->getCode());
 
         if (ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
             if (ob_get_level() > 0) {
-                ob_end_flush();
+                ob_end_flush(); // @codeCoverageIgnore
             }
-            // @codeCoverageIgnoreEnd
         }
         // When testing, one is for phpunit, another is for test case.
         elseif (ob_get_level() > 2) {
@@ -976,8 +983,10 @@ class CodeIgniter
 
         if ($returned instanceof DownloadResponse) {
             // Turn off output buffering completely, even if php.ini output_buffering is not off
-            while (ob_get_level() > 0) {
-                ob_end_clean();
+            if (ENVIRONMENT !== 'testing') {
+                while (ob_get_level() > 0) {
+                    ob_end_clean();
+                }
             }
 
             $this->response = $returned;

@@ -41,19 +41,22 @@
 
 								<input type="hidden" name="id" value="<?= esc($barang['id_barang']) ?>">
 								<button type="button" id="delete" class="rounded-pill btn btn-sm btn-danger"
-									data-val="<?= esc($barang['id_barang']) ?>"><i class="bx bx-trash me-2"></i>Hapus</button>
+									data-val="<?= esc($barang['id_barang']) ?>"><i
+										class="bx bx-trash me-2"></i>Hapus</button>
 							</div>
 						</td>
 					</tr>
 
 					<!-- modals edit barang-->
-					<div class="modal fade" id="staticBackdrop<?= esc($barang['id_barang']) ?>" data-bs-backdrop="static"
-						data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					<div class="modal fade" id="staticBackdrop<?= esc($barang['id_barang']) ?>"
+						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+						aria-labelledby="staticBackdropLabel" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header text-center">
 									<h5 class="modal-title" id="staticBackdropLabel">Edit Barang</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
 									<form action="/barang/edit" method="post">
@@ -80,8 +83,6 @@
 													<?php endforeach; ?>
 												</select>
 											</div>
-
-
 										</div>
 								</div>
 								<div class="modal-footer">
@@ -100,20 +101,21 @@
 		</div>
 	</div>
 	<!-- modal tambah barang -->
-	<div class="modal modal-top fade" id="tambah-barang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal modal-top fade" id="tambah-barang" data-bs-backdrop="static" data-bs-keyboard="false"
+		tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<ul class="nav nav-pills " role="tablist">
 						<li class="nav-item">
 							<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-								data-bs-target="#form-barang" aria-controls="form-barang" aria-selected="true">Barang</button>
+								data-bs-target="#form-barang" aria-controls="form-barang"
+								aria-selected="true">Barang</button>
 						</li>
 						<li class="nav-item">
 							<button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-								data-bs-target="#navs-pills-within-card-link" aria-controls="navs-pills-within-card-link"
-								aria-selected="false">Satuan</button>
+								data-bs-target="#navs-pills-within-card-link"
+								aria-controls="navs-pills-within-card-link" aria-selected="false">Satuan</button>
 						</li>
 					</ul>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -125,20 +127,23 @@
 								<?= csrf_field() ?>
 								<div class="mb-3">
 									<label for="barang" class="form-label">Nama Barang</label>
-									<input type="text" name="barang" class="form-control" id="barang" placeholder="Nama Barang">
+									<input type="text" name="barang" class="form-control" id="tambah-barang"
+										placeholder="Nama Barang">
+									<div class="invalid-feedback barang"></div>
 								</div>
 								<div class="md-3">
 									<label for="satuan" class="form-label">Satuan</label>
-									<select id="collapsible-state" name="satuan" class="select2 form-select"
-										data-allow-clear="true">
+									<select id="collapsible-state" name="satuan" id="pilih-satuan"
+										class="select2 form-select" data-allow-clear="true">
 										<option value="">Pilih Satuan</option>
 										<?php foreach($satuan as $s): ?>
 										<option value="<?= esc($s['id_satuan']) ?>"><?= esc($s['satuan']) ?></option>
 										<?php endforeach; ?>
 									</select>
+									<div class="invalid-feedback satuan"></div>
 								</div>
 								<div class="mt-3">
-									<button type="submit" class="btn btn-primary">Simpan</button>
+									<button type="submit" class="btn btn-primary" id="barang-simpan">Simpan</button>
 								</div>
 							</form>
 						</div>
@@ -147,10 +152,11 @@
 								<?= csrf_field() ?>
 								<div class="mb-3">
 									<label for="satuan" class="form-label">Satuan</label>
-									<input type="text" class="form-control" name="satuan" id="satuan" placeholder="Satuan">
+									<input type="text" class="form-control" name="satuan" id="satuan"
+										placeholder="Satuan">
 								</div>
 								<div class="mt-3">
-									<button type="submit" class="btn btn-primary">Simpan</button>
+									<button type="submit" class="btn btn-primary" id="satuan-simpan">Simpan</button>
 								</div>
 							</form>
 						</div>
@@ -166,6 +172,33 @@
 </div>
 
 <script>
+	// validasi barang
+	let btnSimpanBarang = document.querySelector("button#barang-simpan")
+	let btnSimpanSatuan = document.querySelector("button#satuan-simpan")
+	let btnModalBarang = document.querySelector("button[data-bs-target='#tambah-barang']")
+
+	let inputBarang = document.querySelector("input#tambah-barang")
+	let feedbackInputBarang = document.querySelector('div.invalid-feedback.barang')
+
+	btnModalBarang.addEventListener('click', () => {
+		btnSimpanBarang.setAttribute('disabled', true)
+	})
+
+	inputBarang.addEventListener('input', () => {
+		if (inputBarang.value.length < 4) {
+			inputBarang.classList.add('is-invalid')
+			feedbackInputBarang.innerHTML = 'Minimal terdiri dari 4 kata atau lebih'
+			btnSimpanBarang.setAttribute('disabled', true)
+		} else {
+			inputBarang.classList.remove('is-invalid')
+			// feedbackInputBarang.removeAttribute('')
+			btnSimpanBarang.removeAttribute('disabled')
+		}
+	})
+
+	//
+
+
 	$(document).ready(function () {
 		$('div#barang').hide()
 	});

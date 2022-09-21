@@ -25,22 +25,68 @@ class Rekapitulasi extends BaseController
 
     public function index()
     {
-        $data = [
-            'title' => 'rekapitulasi',
-            'total' => $this->totalBarangPengajuan()->getResultArray(),
-            'rekap' => $this->rekapitulasiData()->getResultArray()
-        ];
+        if ($_SESSION['ROLE'] == '0') {
+            //halaman rekapitulasi untuk non admin
 
-        return view('layout/head', $data)
-                .view('layout/sidebar')
-                .view('layout/nav')
+            $data = [
+                'title' => 'rekapitulasi',
+                'rekap' => $this->rekapitulasiUser()->getResultArray()
+            ];
+
+            // var_dump($data['rekap']);die();
+
+            return view('layout/head', $data)
+                .view('layout/topbar')
                 .view('rekapitulasi/rekapitulasi', $data)
                 .view('layout/footer');
+
+        } else {
+            //halaman rekapitulasi untuk admin
+            $sql = "
+            SELECT
+                barang.id_barang,
+                barang.barang,
+                satuan.satuan,
+                unit_prodi.unit_prodi,
+                pengajuan.status,
+                sum(pengajuan.jumlah) jumlah
+                
+
+            FROM pengajuan
+            LEFT JOIN barang ON barang.id_barang = pengajuan.id_barang
+            LEFT JOIN satuan ON satuan.id_satuan = barang.id_satuan
+            LEFT JOIN unit_prodi ON unit_prodi.id_unit_prodi = pengajuan.id_unit_prodi
+
+            WHERE status = '0'
+            GROUP BY barang.barang
+            ";
+            
+            $total = $this->model->query($sql)->getResultArray();
+
+            $arrayJumlah = [];
+
+            foreach ($total as $val) {
+                array_push($arrayJumlah, $val['jumlah']);
+            }
+
+            $data = [
+                'title' => 'rekapitulasi',
+                'total' => $arrayJumlah
+            ];
+            
+            return view('layout/head', $data)
+            .view('layout/sidebar')
+            .view('layout/nav')
+            .view('rekapitulasi/rekapitulasi', $data)
+            .view('layout/footer');
+        }
     }
 
+    // rekaputliasi data untuk admin
     public function rekapitulasiData(){
         $sql = "
         SELECT
+            barang.id_barang,
             barang.barang,
             satuan.satuan,
             unit_prodi.unit_prodi,
@@ -54,10 +100,18 @@ class Rekapitulasi extends BaseController
         LEFT JOIN unit_prodi ON unit_prodi.id_unit_prodi = pengajuan.id_unit_prodi
 
         WHERE status = '0'
-        GROUP BY barang.barang, unit_prodi.unit_prodi
+        GROUP BY barang.barang
         ";
+        
+        $total = $this->model->query($sql)->getResultArray();
 
-        return $this->model->query($sql);
+        $arrayJumlah = [];
+
+        foreach ($total as $val) {
+            array_push($arrayJumlah, $val['jumlah']);
+        }
+
+        return $arrayJumlah;
     }
 
     public function totalBarangPengajuan() {
@@ -83,45 +137,33 @@ class Rekapitulasi extends BaseController
     public function dataTesting() {
         $sql = "
         SELECT
+            barang.id_barang,
             barang.barang,
             satuan.satuan,
             unit_prodi.unit_prodi,
             pengajuan.status,
-            sum(pengajuan.jumlah) total
-        
+            sum(pengajuan.jumlah) jumlah
+            
+
         FROM pengajuan
         LEFT JOIN barang ON barang.id_barang = pengajuan.id_barang
         LEFT JOIN satuan ON satuan.id_satuan = barang.id_satuan
         LEFT JOIN unit_prodi ON unit_prodi.id_unit_prodi = pengajuan.id_unit_prodi
-        
+
         WHERE status = '0'
         GROUP BY barang.barang
         ";
+        
+        $total = $this->model->query($sql)->getResultArray();
 
-        $data = $this->model->query($sql)->getResultArray();
+        $arrayJumlah = [];
 
-        $unit_prodi = [];
-        $barang = [];
-        $satuan = [];
-        $jumlah = [];
-
-        foreach($data as $val) {
-
-                array_push($unit_prodi, $val['unit_prodi']);
-                array_push($barang, $val['barang']);
-                array_push($satuan, $val['satuan']);
-                array_push($jumlah, $val['total']);
+        foreach ($total as $val) {
+            array_push($arrayJumlah, $val['jumlah']);
         }
 
-        $unit_prodi = array_unique($unit_prodi);
-
-        var_dump($unit_prodi);
-
         $data = [
-            'barang' => $barang,
-            'unit_prodi' => $unit_prodi,
-            'satuan' => $satuan,
-            'jumlah' => $jumlah,
+            'total' => $arrayJumlah
         ];
 
         return view('rekapitulasi/dataTest', $data);
@@ -129,8 +171,13 @@ class Rekapitulasi extends BaseController
     }
 
     public function generateExcel () {
+        $date = new Time('now', 'Asia/Jakarta', 'en_US');
+        $date = $date->toLocalizedString('dd-MMMM-yyyy');
+
         $data = [
-            'rekap' => $this->rekapitulasiData()->getResultArray()
+            'rekap' => $this->rekapitulasiUser()->getResultArray(),
+            'total' => $this->rekapitulasiData(),
+            'date' => $date
         ];
 
         return view('rekapitulasi/inExcel.php', $data);
@@ -139,19 +186,25 @@ class Rekapitulasi extends BaseController
     public function generatePdf() {
 
         $date = new Time('now', 'Asia/Jakarta', 'en_US');
-        $date = $date->toLocalizedString('dd - MMMM - yyyy');
+        $date = $date->toLocalizedString('dd MMMM yyyy');
 
-        // var_dump($date);die();
+        if ($_SESSION['ROLE'] == '0') {
+            // non admin data rekap
+            $unit_prodi = $_SESSION['UNIT-PRODI'];
+            $filename = $date.' - rekapitulasi - '.$unit_prodi;
+            $data = [
+                'rekap' => $this->rekapitulasiUser()->getResultArray(),
+                'date' => $date
+            ];  
 
-        $filename = $date.' - rekapitulasi';
-        $data = [
-            'rekap' => $this->rekapitulasiData()->getResultArray(),
-            'date' => $date
-        ];
-
+        } else {
+            $filename = $date.' - rekapitulasi';
+            $data = [
+                'total' => $this->rekapitulasiData(),
+                'date' => $date
+            ];   
+        }
         // return view('rekapitulasi/inPdf', $data);
-
-        // /*
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml(view('rekapitulasi/inPdf', $data));
@@ -159,6 +212,29 @@ class Rekapitulasi extends BaseController
         $dompdf->render();
         $dompdf->stream($filename);
 
-        // */
+    }
+
+    public function rekapitulasiUser() {
+        $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
+        $sql = "
+        SELECT
+            barang.barang,
+            satuan.satuan,
+            pengajuan.id_unit_prodi,
+            unit_prodi.unit_prodi,
+            pengajuan.status,
+            sum(pengajuan.jumlah) jumlah
+
+
+        FROM pengajuan
+        LEFT JOIN barang ON barang.id_barang = pengajuan.id_barang
+        LEFT JOIN satuan ON satuan.id_satuan = barang.id_satuan
+        LEFT JOIN unit_prodi ON unit_prodi.id_unit_prodi = pengajuan.id_unit_prodi
+
+        WHERE pengajuan.status = '0' AND pengajuan.id_unit_prodi = '$id_unit_prodi'
+        GROUP BY barang.barang, unit_prodi.unit_prodi
+        ";
+
+        return $this->model->query($sql);
     }
 }

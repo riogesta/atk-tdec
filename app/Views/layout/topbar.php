@@ -9,9 +9,9 @@
       <div class="collapse navbar-collapse" id="navbar-ex-1">
          <div class="navbar-nav me-auto">
             <a class="nav-item nav-link <?= $uri->getSegment(1) == 'pengajuan' ? 'active2' : '' ?>"
-               href="javascript:void(0)">Pengajuan Barang</a>
-            <a class="nav-item nav-link <?= $uri->getSegment(1) == '' ? 'active2' : '' ?>"
-               href="javascript:void(0)">Rekapitulasi</a>
+               href="/pengajuan">Pengajuan Barang</a>
+            <a class="nav-item nav-link <?= $uri->getSegment(1) == 'rekapitulasi' ? 'active2' : '' ?>"
+               href="/rekapitulasi">Rekapitulasi</a>
          </div>
          <hr>
          <ul class="navbar-nav ms-lg-auto">
