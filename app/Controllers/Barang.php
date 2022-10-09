@@ -49,7 +49,8 @@ class Barang extends BaseController
         
         $input = [
             'barang' => $this->request->getPost('barang'),
-            'id_satuan'=> $this->request->getPost('satuan')
+            'id_satuan'=> $this->request->getPost('satuan'),
+            'stok'=> $this->request->getPost('stok')
         ];
 
         $this->model->add($input);
@@ -62,7 +63,8 @@ class Barang extends BaseController
         $id = $this->request->getPost('id');
         $input = [
             'barang' => $this->request->getPost('barang'),
-            'id_satuan'=> $this->request->getPost('satuan')
+            'id_satuan'=> $this->request->getPost('satuan'),
+            'stok' => $this->request->getPost('stok')
         ];
 
         // var_dump($input);die();

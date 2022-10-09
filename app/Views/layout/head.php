@@ -16,11 +16,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet" />
+        rel="stylesheet" /> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -42,7 +48,6 @@
     <link rel="stylesheet"
         href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/assets/vendor/css/rtl/theme-semi-dark.css">
     <link rel="stylesheet" href="../assets/css/demo.css" />
-
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?= base_url('/assets/vendor/perfect-scrollbar/perfect-scrollbar.css') ?>">
@@ -102,6 +107,10 @@
 
         .active2 {
             font-weight: bold;
+        }
+
+        body {
+            font-family: 'Rubik', 'sans-serif';
         }
     </style>
 </head>

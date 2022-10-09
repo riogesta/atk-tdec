@@ -35,7 +35,7 @@
 
 <!-- Vendors JS -->
 <script src="<?= base_url('/assets/vendor/perfect-scrollbar/perfect-scrollbar.js') ?>"></script>
-<script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<!-- <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script> -->
 
 <!-- datatables -->
 <script type="text/javascript" src="<?= base_url('/assets/vendor/datatables-bs5/datatables.js') ?>"></script>

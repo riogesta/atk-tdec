@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\I18n\Time;
 use App\Models\PengajuanModel;
+use App\Models\PengaturanModel;
 use App\Models\UserModel;
 
 class Pengajuan extends BaseController
@@ -17,12 +18,41 @@ class Pengajuan extends BaseController
     function __construct(){
         $this->model = new PengajuanModel;
         $this->UserModel = new UserModel;
+        $this->PengaturanModel = new PengaturanModel();
         $this->session = session();
     }
 
     public function tanggalSekarang() {
         $tanggal = Time::now('Asia/Jakarta', 'en_US');
         return $tanggal; //tahun-bulan-tanggal
+    }
+
+    //tampilan untuk merubah status
+    public function ubahStatus($id)
+    {
+        
+        if($this->request->getMethod() == 'post')
+        {
+            $input = [
+                'status' => $this->request->getPost('status')
+            ]; 
+        }
+
+        $pengajuan = $this->model->getPengajuan($id)->getRowArray();
+        
+        
+        $data = [
+            'title' => 'Status '.$pengajuan['barang'].'',
+            'pengajuan' => $pengajuan
+        ];
+
+        // var_dump($pengajuan);die();
+        
+        return view('layout/head', $data)
+                .view('layout/sidebar')
+                .view('layout/nav')
+                .view('pengajuan/ubah_status', $data)
+                .view('layout/footer');
     }
 
     public function index()
@@ -94,12 +124,16 @@ class Pengajuan extends BaseController
     }
 
     public function tambah(){
+
+        $tahun_akademik = $this->PengaturanModel->getPengaturan()->getRowArray();
+
         $input = [
             'id_barang' => $this->request->getPost('barang'),
             'id_unit_prodi' => $_SESSION['ID-UNIT-PRODI'],
             // 'id_satuan' => $this->request->getPost('satuan'),
             'jumlah' => $this->request->getPost('jumlah'),
-            'tanggal' => $this->tanggalSekarang()
+            'tanggal' => $this->tanggalSekarang(),
+            'id_tahun_akademik' => $tahun_akademik['id_tahun_akademik']
         ];
         
         if ($this->model->save($input)) {
@@ -163,8 +197,10 @@ class Pengajuan extends BaseController
         
         $id = $this->request->getPost('id');
         $input['status'] = $this->request->getPost('status');
+        $input['jumlah_approve'] = $this->request->getPost('jumlah-approve');
 
-        $this->model->update($id, $input);
+        // var_dump($id, $input);die();
+        $this->model->ubah($id, $input);
         return redirect()->route('pengajuan');
     }
 

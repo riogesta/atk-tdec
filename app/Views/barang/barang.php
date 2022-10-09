@@ -21,6 +21,7 @@
 						<th class="text-center">No</th>
 						<th>Nama Barang</th>
 						<th>Satuan</th>
+						<th>Stok</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
@@ -32,7 +33,8 @@
 						<td class="mb-0 text-xs text-center"><strong><?= $i++ ?></strong></td>
 						<td class="mb-0 text-xs"><?= esc($barang['barang']) ?></td>
 						<td class="mb-0 text-xs"><?= esc($barang['satuan']) ?></td>
-						<td class="mb-0 text-xs">
+						<td class="mb-0 text-xs"><?= esc($barang['stok']) ?></td>
+						<td class="mb-0 text-xs" style="width : 20%">
 							<div class="clearfix d-flex justify-content-center">
 								<button type="button" class="rounded-pill btn btn-sm btn-success" data-bs-toggle="modal"
 									data-bs-target="#staticBackdrop<?= esc($barang['id_barang']) ?>"><i
@@ -71,7 +73,7 @@
 												<div id="barang" class="form-text">We'll never share your details with
 													anyone else.</div>
 											</div>
-											<div class="md-3">
+											<div class="mb-3">
 												<label for="satuan" class="form-label">Satuan</label>
 												<select id="collapsible-state" class="select2 form-select" name="satuan"
 													data-allow-clear="true">
@@ -82,6 +84,11 @@
 														<?= esc($s['satuan']) ?></option>
 													<?php endforeach; ?>
 												</select>
+											</div>
+											<div class="">
+												<label for="Stok" class="form-label">Stok</label>
+												<input type="number" class="form-control" name="stok" id="stok"
+													placeholder="stok" value="<?= esc($barang['stok']) ?>">
 											</div>
 										</div>
 								</div>
@@ -131,7 +138,7 @@
 										placeholder="Nama Barang">
 									<div class="invalid-feedback barang"></div>
 								</div>
-								<div class="md-3">
+								<div class="mb-3">
 									<label for="satuan" class="form-label">Satuan</label>
 									<select id="collapsible-state" name="satuan" id="pilih-satuan"
 										class="select2 form-select" data-allow-clear="true">
@@ -141,6 +148,12 @@
 										<?php endforeach; ?>
 									</select>
 									<div class="invalid-feedback satuan"></div>
+								</div>
+								<div class="">
+									<label for="stok" class="form-label">Stok</label>
+									<input type="number" name="stok" class="form-control" id="stok"
+										placeholder="Nama Barang">
+									<div class="invalid-feedback stok"></div>
 								</div>
 								<div class="mt-3">
 									<button type="submit" class="btn btn-primary" id="barang-simpan">Simpan</button>

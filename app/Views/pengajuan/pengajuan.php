@@ -4,7 +4,7 @@
 		<section class="col-md-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center justify-content-between">
-					<h5 class="mb-0">Data Pengajuan</h5>
+					<h5 class="m-0">Data Pengajuan</h5>
 					<button type="button" class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal"
 						data-bs-target="#tambahPengajuan" type="button" class="btn btn-primary">
 						<i class='bx bx-plus-circle'></i>
@@ -56,11 +56,11 @@
 
 									}
 									?>
-									<button type="button" class="btn btn-sm rounded-pill btn-<?= $color ?>"
-										data-bs-toggle="modal" data-bs-target="#infoPengajuan<?= $i ?>" type="button">
+									<a href="/pengajuan/<?= esc($row['id_pengajuan']) ?>"
+										class="btn btn-sm rounded-pill btn-<?= $color ?>">
 										<?= $icon ?>
-										<?= $status ?>
-									</button>
+										<strong><?= $status ?></strong>
+									</a>
 								</td>
 							</tr>
 
@@ -75,44 +75,45 @@
 												aria-label="Close"></button>
 										</div>
 										<div class="modal-body text-center">
-											<form action="/pengajuan/status" method="post">
-												<?= csrf_field() ?>
-												<input type="hidden" name="id" value="<?= esc($row['id_pengajuan']) ?>">
-												<!-- status pick -->
-												<div class="" role="group" aria-label="Basic radio toggle button group">
-													<input type="radio" class="btn-check" name="status" id="0-<?= $i ?>"
-														autocomplete="off" <?= $row['status'] == '0' ? 'checked':'' ?>
-														value="0">
-													<label class="btn btn-outline-secondary" for="0-<?= $i ?>">
-														<i class='bx bxs-hourglass-top'></i>
-														Diproses
-													</label>
 
-													<input type="radio" class="btn-check" name="status" id="1-<?= $i ?>"
-														autocomplete="off" <?= $row['status'] == '1' ? 'checked':'' ?>
-														value="1">
-													<label class="btn btn-outline-info" for="1-<?= $i ?>">
-														<i class='bx bx-list-check'></i>
-														Approve Proses
-													</label>
+											<!--  -->
+											<div class="" role="group" aria-label="Basic radio toggle button group">
+												<input type="radio" class="btn-check" name="status" id="0-<?= $i ?>"
+													autocomplete="off" <?= $row['status'] == '0' ? 'checked':'' ?>
+													value="0">
+												<label class="btn btn-outline-secondary" for="0-<?= $i ?>">
+													<i class='bx bxs-hourglass-top'></i>
+													Diproses
+												</label>
 
-													<input type="radio" class="btn-check" name="status" id="2-<?= $i ?>"
-														autocomplete="off" <?= $row['status'] == '2' ? 'checked':'' ?>
-														value="2">
-													<label class="btn btn-outline-primary" for="2-<?= $i ?>">
-														<i class='bx bx-check-square'></i>
-														Dikirim
-													</label>
+												<input type="radio" class="btn-check" name="status" id="1-<?= $i ?>"
+													autocomplete="off" <?= $row['status'] == '1' ? 'checked':'' ?>
+													value="1">
+												<label class="btn btn-outline-info" for="1-<?= $i ?>">
+													<i class='bx bx-list-check'></i>
+													Approve Proses
+												</label>
 
-													<input type="radio" class="btn-check" name="status" id="3-<?= $i ?>"
-														autocomplete="off" <?= $row['status'] == '3' ? 'checked':'' ?>
-														value="3">
-													<label class="btn btn-outline-success" for="3-<?= $i ?>">
-														<i class='bx bxs-flag-checkered'></i>
-														Selesai / Diterima
-													</label>
-												</div>
-												<!-- / status pick -->
+												<input type="radio" class="btn-check" name="status" id="2-<?= $i ?>"
+													autocomplete="off" <?= $row['status'] == '2' ? 'checked':'' ?>
+													value="2">
+												<label class="btn btn-outline-primary" for="2-<?= $i ?>">
+													<i class='bx bx-check-square'></i>
+													Dikirim
+												</label>
+
+												<input type="radio" class="btn-check" name="status" id="3-<?= $i ?>"
+													autocomplete="off" <?= $row['status'] == '3' ? 'checked':'' ?>
+													value="3">
+												<label class="btn btn-outline-success" for="3-<?= $i ?>">
+													<i class='bx bxs-flag-checkered'></i>
+													Selesai / Diterima
+												</label>
+											</div>
+											<!--  -->
+
+
+											<!-- / status pick -->
 										</div>
 										<div class="modal-footer">
 											<button type="submit" class="btn btn-primary">Ubah Status</button>
@@ -193,6 +194,7 @@
 				"orderable": false,
 			}]
 		});
+
 	})
 
 	$("#mySelect2").on('change', function () {

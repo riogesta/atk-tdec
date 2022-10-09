@@ -85,7 +85,7 @@
 
             <?php 
             $active = "";
-            if ($uri->getSegment(1) == 'akademik') {
+            if ($uri->getSegment(1) == 'tahun-akademik') {
                $active = "active open";
             }?>
             <li class="menu-item <?= $active ?>">
@@ -95,8 +95,8 @@
                </a>
                <ul class="menu-sub">
                   <?php if ($_SESSION['ROLE'] == '1') { ?>
-                  <li class="menu-item <?= $uri->getSegment(1) == 'akademik' ? 'active' : '' ?>">
-                     <a href="/akademik" class="menu-link">Tahun Akademik</a>
+                  <li class="menu-item <?= $uri->getSegment(1) == 'tahun-akademik' ? 'active' : '' ?>">
+                     <a href="/tahun-akademik" class="menu-link">Tahun Akademik</a>
                   </li>
                   <?php } ?>
                </ul>
