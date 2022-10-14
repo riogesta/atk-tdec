@@ -1,0 +1,46 @@
+ERROR - 2022-10-14 01:42:34 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'rot'@'localhost' (using password: YES) in /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php:171
+Stack trace:
+#0 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(171): mysqli->real_connect('localhost', 'rot', 'Dns215900', 'db_atk', 3306, '', 0)
+#1 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/Database/BaseConnection.php(382): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/Database/BaseConnection.php(588): CodeIgniter\Database\BaseConnection->initialize()
+#3 /Users/denis/Sites/localhost/atk-tedc/app/Models/UserModel.php(17): CodeIgniter\Database\BaseConnection->query('SELECT * FROM u...')
+#4 /Users/denis/Sites/localhost/atk-tedc/app/Controllers/Login.php(52): App\Models\UserModel->user('root')
+#5 /Users/denis/Sites/localhost/atk-tedc/app/Controllers/Login.php(38): App\Controllers\Login->isAvailable(Array)
+#6 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/CodeIgniter.php(902): App\Controllers\Login->index()
+#7 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#8 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /Users/denis/Sites/localhost/atk-tedc/index.php(55): CodeIgniter\CodeIgniter->run()
+#10 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php:215
+Stack trace:
+#0 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/Database/BaseConnection.php(382): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/Database/BaseConnection.php(588): CodeIgniter\Database\BaseConnection->initialize()
+#2 /Users/denis/Sites/localhost/atk-tedc/app/Models/UserModel.php(17): CodeIgniter\Database\BaseConnection->query('SELECT * FROM u...')
+#3 /Users/denis/Sites/localhost/atk-tedc/app/Controllers/Login.php(52): App\Models\UserModel->user('root')
+#4 /Users/denis/Sites/localhost/atk-tedc/app/Controllers/Login.php(38): App\Controllers\Login->isAvailable(Array)
+#5 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/CodeIgniter.php(902): App\Controllers\Login->index()
+#6 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#7 /Users/denis/Sites/localhost/atk-tedc/vendor/codeigniter4/framework/system/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /Users/denis/Sites/localhost/atk-tedc/index.php(55): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2022-10-14 01:42:34 --> Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: YES)
+in SYSTEMPATH/Database/BaseConnection.php on line 418.
+ 1 SYSTEMPATH/Database/BaseConnection.php(588): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH/Models/UserModel.php(17): CodeIgniter\Database\BaseConnection->query('SELECT * FROM users WHERE username = \'root\'')
+ 3 APPPATH/Controllers/Login.php(52): App\Models\UserModel->user('root')
+ 4 APPPATH/Controllers/Login.php(38): App\Controllers\Login->isAvailable([...])
+ 5 SYSTEMPATH/CodeIgniter.php(902): App\Controllers\Login->index()
+ 6 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 7 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-10-14 01:46:28 --> syntax error, unexpected token "}", expecting ";"
+in APPPATH/Controllers/Login.php on line 58.
+ 1 SYSTEMPATH/Autoloader/Autoloader.php(259): CodeIgniter\Autoloader\Autoloader->includeFile('APPPATH/Controllers/Login.php')
+ 2 SYSTEMPATH/Autoloader/Autoloader.php(237): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Login')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Login')
+ 4 SYSTEMPATH/CodeIgniter.php(852): class_exists('\\App\\Controllers\\Login', true)
+ 5 SYSTEMPATH/CodeIgniter.php(444): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
