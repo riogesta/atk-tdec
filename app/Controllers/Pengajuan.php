@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\BarangModel;
 use CodeIgniter\I18n\Time;
 use App\Models\PengajuanModel;
 use App\Models\PengaturanModel;
@@ -11,12 +12,9 @@ use App\Models\UserModel;
 class Pengajuan extends BaseController
 {
 
-    protected $model;
-    protected $UserModel;
-    protected $session;
-
     function __construct(){
         $this->model = new PengajuanModel;
+        $this->BarangModel = new BarangModel;
         $this->UserModel = new UserModel;
         $this->PengaturanModel = new PengaturanModel();
         $this->session = session();
@@ -196,11 +194,22 @@ class Pengajuan extends BaseController
     public function editStatus() {
         
         $id = $this->request->getPost('id');
+        $id_barang = $this->request->getPost('id_barang');
         $input['status'] = $this->request->getPost('status');
         $input['jumlah_approve'] = $this->request->getPost('jumlah-approve');
 
-        // var_dump($id, $input);die();
+        // var_dump($id, $id_barang, $input);die();
+        
+        // ambil jumlah stok barang
+        $totalStok = $this->BarangModel->getBarang($id_barang)->getRowArray();
+        $totalStok = $totalStok['stok'];
+
+        $totalStok = $totalStok - $input['jumlah_approve'];
+
+        // var_dump($totalStok);die();
+
         $this->model->ubah($id, $input);
+        $this->BarangModel->updateStok($id_barang, $totalStok);
         return redirect()->route('pengajuan');
     }
 
