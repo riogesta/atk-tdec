@@ -33,26 +33,26 @@
             </li>
 
             <li class="menu-item <?= $uri->getSegment(1) == '' ? 'active' : '' ?>">
-               <a href="/" class="menu-link">
+               <a href="<?= base_url('/')?>" class="menu-link">
                   <i class='menu-icon tf-icons bx bxs-home'></i>
                   <div> Dashboard</div>
                </a>
             </li>
             <li class=" menu-item <?= $uri->getSegment(1) == 'pengajuan' ? 'active' : '' ?>">
-               <a href="/pengajuan" class="menu-link">
+               <a href="<?= base_url('/pengajuan')?>" class="menu-link">
                   <i class='menu-icon tf-icons bx bxs-notepad'></i>
                   <div>Pengajuan Barang</div>
                </a>
             </li>
             <li class="menu-item <?= $uri->getSegment(1) == 'rekapitulasi' ? 'active' : '' ?>">
-               <a href="/rekapitulasi" class="menu-link">
+               <a href="<?= base_url('/rekapitulasi')?>" class="menu-link">
                   <i class='menu-icon tf-icons bx bxs-report'></i>
                   <div>Rekapitulasi</div>
                </a>
             </li>
             <?php if ($_SESSION['ROLE'] == '1') { ?>
             <li class="menu-item <?= $uri->getSegment(1) == 'akun' ? 'active' : '' ?>">
-               <a href="/akun" class="menu-link">
+               <a href="<?= base_url('/akun')?>" class="menu-link">
                   <i class='menu-icon tf-icons bx bxs-user'></i>
                   <div>Kelola Pengguna</div>
                </a>
@@ -72,12 +72,12 @@
                <ul class="menu-sub">
                   <?php if ($_SESSION['ROLE'] == '1') { ?>
                   <li class="menu-item <?= $uri->getSegment(1) == 'barang' ? 'active' : '' ?>">
-                     <a href="/barang" class="menu-link">Barang</a>
+                     <a href="<?= base_url('/barang')?>" class="menu-link">Barang</a>
                   </li>
                   <?php } ?>
                   <?php if ($_SESSION['ROLE'] == '1') { ?>
                   <li class="menu-item <?= $uri->getSegment(1) == 'unit-prodi' ? 'active' : '' ?>">
-                     <a href="/unit-prodi" class="menu-link">Unit/Prodi</a>
+                     <a href="<?= base_url('/unit-prodi')?>" class="menu-link">Unit/Prodi</a>
                   </li>
                   <?php } ?>
                </ul>
@@ -96,7 +96,7 @@
                <ul class="menu-sub">
                   <?php if ($_SESSION['ROLE'] == '1') { ?>
                   <li class="menu-item <?= $uri->getSegment(1) == 'tahun-akademik' ? 'active' : '' ?>">
-                     <a href="/tahun-akademik" class="menu-link">Tahun Akademik</a>
+                     <a href="<?= base_url('/tahun-akademik')?>" class="menu-link">Tahun Akademik</a>
                   </li>
                   <?php } ?>
                </ul>

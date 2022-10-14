@@ -9,9 +9,9 @@
       <div class="collapse navbar-collapse" id="navbar-ex-1">
          <div class="navbar-nav me-auto">
             <a class="nav-item nav-link <?= $uri->getSegment(1) == 'pengajuan' ? 'active2' : '' ?>"
-               href="/pengajuan">Pengajuan Barang</a>
+               href="<?= base_url('/pengajuan')?>">Pengajuan Barang</a>
             <a class="nav-item nav-link <?= $uri->getSegment(1) == 'rekapitulasi' ? 'active2' : '' ?>"
-               href="/rekapitulasi">Rekapitulasi</a>
+               href="<?= base_url('/rekapitulasi')?>">Rekapitulasi</a>
          </div>
          <hr>
          <ul class="navbar-nav ms-lg-auto">
@@ -20,7 +20,7 @@
                   <?= esc($_SESSION['USER']) ?></a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="/logout" onClick="return logout()"><i
+               <a class="nav-link" href="<?= base_url('/logout')?>" onClick="return logout()"><i
                      class="tf-icons navbar-icon bx bx-lock-open-alt"></i>
                   Logout</a>
             </li>

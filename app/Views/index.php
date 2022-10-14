@@ -15,7 +15,7 @@
                   </div>
                </div>
                <div class="col-md-4 px-2 py-2">
-                  <img class="card-img card-img-right-center" src="../assets/img/icons/unicons/man.png"
+                  <img class="card-img card-img-right-center" src="<?= base_url('public/assets/img/icons/unicons/man.png')?>"
                      alt="Card image" />
                </div>
             </div>
@@ -33,7 +33,7 @@
                   </div>
                </div>
                <div class="col-md-4 px-2 py-2">
-                  <img class="card-img card-img-right" src="../assets/img/icons/unicons/checklist.png"
+                  <img class="card-img card-img-right" src="<?= base_url('public/assets/img/icons/unicons/checklist.png')?>"
                      alt="Card image" />
                </div>
             </div>
@@ -51,7 +51,7 @@
                   </div>
                </div>
                <div class="col-md-4 px-2 py-2">
-                  <img class="card-img card-img-right" src="../assets/img/icons/unicons/box.png" alt="Card image" />
+                  <img class="card-img card-img-right" src="<?= base_url('public/assets/img/icons/unicons/box.png')?>" alt="Card image" />
                </div>
             </div>
          </div>
