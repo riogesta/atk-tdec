@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="<?= base_url('public/assets/')?>"
     data-template="vertical-menu-template-free">
 
 <head>
@@ -12,7 +12,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?= base_url('/assets/img/favicon/favicon.ico') ?>" />
+    <link rel="icon" type="image/x-icon" href="<?= base_url('public/assets/img/favicon/favicon.ico')?>" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <!-- Fonts -->
@@ -33,45 +33,45 @@
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="<?= base_url('assets/vendor/fonts/boxicons.css')?>" />
+    <link rel="stylesheet" href="<?= base_url('public/assets/vendor/fonts/boxicons.css')?>" />
 
     <!-- sweetalert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.24/dist/sweetalert2.min.css">
 
     <!-- select2 -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
-    <link rel="stylesheet" href="../assets/vendor/select2/select2.css">
+    <link rel="stylesheet" href="<?= base_url('public/assets/vendor/select2/select2.css')?>">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="<?= base_url('public/assets/vendor/css/core.css')?>" class="template-customizer-core-css" />
     <!-- <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" /> -->
     <link rel="stylesheet"
         href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/assets/vendor/css/rtl/theme-semi-dark.css">
-    <link rel="stylesheet" href="<?= base_url('assets/css/demo.css')?>" />
+    <link rel="stylesheet" href="<?= base_url('public/assets/css/demo.css')?>" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="<?= base_url('/assets/vendor/perfect-scrollbar/perfect-scrollbar.css') ?>">
-    <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="<?= base_url('public/assets/vendor/perfect-scrollbar/perfect-scrollbar.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/assets/vendor/libs/apex-charts/apex-charts.css')?>" />
 
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css"
-        href="<?= base_url('/assets/vendor/datatables-bs5/datatables.bootstrap5.css') ?>" />
+        href="<?= base_url('public/assets/vendor/datatables-bs5/datatables.bootstrap5.css') ?>" />
 
     <!-- animation -->
-    <link rel="stylesheet" href="<?= base_url('/assets/vendor/modal-animation/animate.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/assets/vendor/modal-animation/animate.css') ?>">
 
     <!-- jQuery Toast -->
-    <link rel="stylesheet" href="<?= base_url('/assets/vendor/jquery-toast/jquery.toast.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/assets/vendor/jquery-toast/jquery.toast.min.css') ?>">
 
     <!-- Tippy CSS -->
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
 
     <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+    <script src=".<?= base_url('public/assets/vendor/js/helpers.js')?>"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
+    <script src="<?= base_url('public/assets/js/config.js')?>"></script>
 
     <style>
         /* width */

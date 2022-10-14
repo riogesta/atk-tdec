@@ -11,10 +11,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.24/dist/sweetalert2.all.min.js"></script>
 
 <!-- select2 JS -->
-<script src="../assets/vendor/select2/select2.js"></script>
+<script src="<?= base_url('public/assets/vendor/select2/select2.js')?>"></script>
 
 <!-- jQuery Toast -->
-<script src="<?= base_url('/assets/vendor/jquery-toast/jquery.toast.min.js') ?>"></script>
+<script src="<?= base_url('public/assets/vendor/jquery-toast/jquery.toast.min.js') ?>"></script>
 
 <!-- Overlay -->
 <div class="layout-overlay layout-menu-toggle"></div>
@@ -30,21 +30,21 @@
     integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
 </script>
 
-<script src="../assets/vendor/js/menu.js"></script>
+<script src="<?= base_url('public/assets/vendor/js/menu.js')?>"></script>
 
 
 <!-- Vendors JS -->
-<script src="<?= base_url('/assets/vendor/perfect-scrollbar/perfect-scrollbar.js') ?>"></script>
+<script src="<?= base_url('public/assets/vendor/perfect-scrollbar/perfect-scrollbar.js') ?>"></script>
 <!-- <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script> -->
 
 <!-- datatables -->
 <script type="text/javascript" src="<?= base_url('/assets/vendor/datatables-bs5/datatables.js') ?>"></script>
 
 <!-- Main JS -->
-<script src="../assets/js/main.js"></script>
+<script src="<?= base_url('public/assets/js/main.js')?>"></script>
 
 <!-- Page JS -->
-<script src="../assets/js/dashboards-analytics.js"></script>
+<script src="<?= base_url('public/assets/js/dashboards-analytics.js')?>"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
