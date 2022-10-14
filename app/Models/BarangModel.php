@@ -39,4 +39,9 @@ class BarangModel extends Model
     public function add($input) {
         return $this->save($input);
     }
+
+    public function updateStok($id, $input) {
+        $sql = "UPDATE barang SET stok = $input WHERE id_barang = $id";
+        return $this->query($sql);
+    }
 }
