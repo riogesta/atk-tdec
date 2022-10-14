@@ -96,6 +96,7 @@
                                 <dd class="col-sm-9"><?= esc($pengajuan['unit_prodi']) ?></dd>
                                 <dt class="col-sm-3">Jumlah Approve</dt>
                                 <dd class="col-sm-2">
+                                    <input type="hidden" name="id_barang" value="<?= $pengajuan['id_barang'] ?>">
                                     <input type="number" class="form-control form-control-sm" name="jumlah-approve"
                                         value="<?= $pengajuan['jumlah_approve'] ?>">
                                 </dd>
