@@ -10,7 +10,7 @@
             <li class="menu-item">
                <a href="javascript:void(0);" class="menu-link menu-toggle" data-bs-toggle="dropdown">
                   <div>
-                     <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                     <img src="<?= base_url('assets/img/avatars/1.png') ?>" alt class="w-px-40 h-auto rounded-circle" />
                   </div>
                   <div class="mx-2">
                      <span class="fw-semibold d-block"><?= esc($_SESSION['UNIT-PRODI']) ?></span>

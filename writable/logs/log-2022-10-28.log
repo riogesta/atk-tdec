@@ -1,0 +1,22 @@
+CRITICAL - 2022-10-28 04:27:47 --> Too few arguments to function App\Models\PengajuanModel::stokPerPengajuan(), 0 passed in /home/rgsvt/Developments/kp/atk-tdec/app/Controllers/Pengajuan.php on line 40 and exactly 1 expected
+in APPPATH/Models/PengajuanModel.php on line 83.
+ 1 APPPATH/Controllers/Pengajuan.php(40): App\Models\PengajuanModel->stokPerPengajuan()
+ 2 SYSTEMPATH/CodeIgniter.php(907): App\Controllers\Pengajuan->ubahStatus()
+ 3 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 5 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-28 04:28:26 --> Call to a member function getRowArray() on string
+in APPPATH/Controllers/Pengajuan.php on line 40.
+ 1 SYSTEMPATH/CodeIgniter.php(907): App\Controllers\Pengajuan->ubahStatus()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')
+CRITICAL - 2022-10-28 04:31:41 --> Call to a member function getRowArray() on string
+in APPPATH/Controllers/Pengajuan.php on line 41.
+ 1 SYSTEMPATH/CodeIgniter.php(907): App\Controllers\Pengajuan->ubahStatus()
+ 2 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(43): require_once('FCPATH/index.php')

@@ -84,35 +84,47 @@
                                 <h6 class="mb-0">Status Approve Diproses</h6>
                                 <small>Detail Pengajuan.</small>
                             </div>
-                            <dl class="row">
-                                <dt class="col-sm-3">Barang</dt>
-                                <dd class="col-sm-9"><?= esc($pengajuan['barang']) ?></dd>
-                                <dt class="col-sm-3">Jumlah</dt>
-                                <dd class="col-sm-9"><?= esc($pengajuan['jumlah']) ?></dd>
-                                <dt class="col-sm-3">Tanggal</dt>
-                                <dd class="col-sm-9"><?= esc($pengajuan['tanggal']) ?></dd>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <dl class="row">
+                                        <dt class="col-sm-3">Barang</dt>
+                                        <dd class="col-sm-9"><?= esc($pengajuan['barang']) ?></dd>
+                                        <dt class="col-sm-3">Jumlah</dt>
+                                        <dd class="col-sm-9"><?= esc($pengajuan['jumlah']) ?></dd>
+                                        <dt class="col-sm-3">Tanggal</dt>
+                                        <dd class="col-sm-9"><?= esc($pengajuan['tanggal']) ?></dd>
 
-                                <dt class="col-sm-3">Unit / Prodi</dt>
-                                <dd class="col-sm-9"><?= esc($pengajuan['unit_prodi']) ?></dd>
-                                <dt class="col-sm-3">Jumlah Approve</dt>
-                                <dd class="col-sm-2">
-                                    <input type="hidden" name="id_barang" value="<?= $pengajuan['id_barang'] ?>">
-                                    <input type="number" class="form-control form-control-sm" name="jumlah-approve"
-                                        value="<?= $pengajuan['jumlah_approve'] ?>">
-                                </dd>
-                                <dd class="col-sm-3 d-flex align-items-center">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="jumlah-approve2"
-                                            value="<?= esc($pengajuan['jumlah']) ?>" id="jumlah-approve-semua">
-                                        <label class="form-check-label" for="jumlah-approve-semua">
-                                            semua
-                                        </label>
-                                    </div>
-                                </dd>
+                                        <dt class="col-sm-3">Unit / Prodi</dt>
+                                        <dd class="col-sm-9"><?= esc($pengajuan['unit_prodi']) ?></dd>
+                                        <dt class="col-sm-3">Jumlah Approve</dt>
+                                        <dd class="col-sm-2">
+                                            <input type="hidden" name="id_barang"
+                                                value="<?= $pengajuan['id_barang'] ?>">
+                                            <input type="number" class="form-control form-control-sm"
+                                                name="jumlah-approve" value="<?= $pengajuan['jumlah_approve'] ?>">
+                                        </dd>
+                                        <dd class="col-sm-3 d-flex align-items-center">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="jumlah-approve2"
+                                                    value="<?= esc($pengajuan['jumlah']) ?>" id="jumlah-approve-semua">
+                                                <label class="form-check-label" for="jumlah-approve-semua">
+                                                    semua
+                                                </label>
+                                            </div>
+                                        </dd>
 
-                                <input type="radio" name="status" <?= $pengajuan['status'] == '1' ? 'checked' : '' ?>
-                                    value="1" id="rd-1">
-                            </dl>
+                                        <input type="radio" name="status"
+                                            <?= $pengajuan['status'] == '1' ? 'checked' : '' ?> value="1" id="rd-1">
+                                    </dl>
+                                </div>
+                                <div class="col-lg-4">
+                                    <dl class="row">
+                                        <dt class="col-sm-3">Stok</dt>
+                                        <dd class="col-sm-9"><?= esc($stok) ?></dd>
+
+                                    </dl>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade <?= $pengajuan['status'] == '2' ? 'show active' : '' ?>"
                             id="navs-pills-top-dikirim" role="tabpanel">

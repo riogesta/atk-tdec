@@ -25,7 +25,7 @@ class Pengajuan extends BaseController
         return $tanggal; //tahun-bulan-tanggal
     }
 
-    //tampilan untuk merubah status
+    //tampil form untuk merubah status
     public function ubahStatus($id)
     {
         
@@ -36,12 +36,13 @@ class Pengajuan extends BaseController
             ]; 
         }
 
-        $pengajuan = $this->model->getPengajuan($id)->getRowArray();
-        
+        $pengajuan = $this->model->perPengajuan($id)->getRowArray();
+        $stokbarang = $this->model->stokPerPengajuan($pengajuan['id_pengajuan']);
         
         $data = [
             'title' => 'Status '.$pengajuan['barang'].'',
-            'pengajuan' => $pengajuan
+            'pengajuan' => $pengajuan,
+            'stok' => $stokbarang
         ];
 
         // var_dump($pengajuan);die();
@@ -90,11 +91,11 @@ class Pengajuan extends BaseController
             LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
             WHERE  `pengajuan`.`id_unit_prodi` = '$id_unit_prodi' AND `pengajuan`.`status` = '3'
-            ORDER BY id_pengajuan ";
+            ORDER BY id_pengajuan";
 
             $data = [
                 'title' => 'Pengajuan',
-                'barang' => $this->model->getBarang()->getResultArray(),
+                'barang' => $this->model->getBarang(),
                 'pengajuan_user' => $this->model->query($sql_daftar_pengajuan)->getResultArray(),
                 'status_belum_selesai' => $this->model->query($sql_dalam_proses)->getResultArray(),
                 'status_dikirim' => $this->model->query($sql_dikirim)->getResultArray()
@@ -107,10 +108,14 @@ class Pengajuan extends BaseController
         
         } else {
             // jika role adalah admin
+
+            $tahun_akademik = $this->PengaturanModel->getAkademik()->getRowArray();
+
             $data = [
                 'title' => 'Pengajuan',
-                'barang' => $this->model->getBarang()->getResultArray(),
-                'pengajuan' => $this->model->getPengajuan()->getResultArray(),
+                'barang' => $this->model->getBarang(),
+                'filterUnit' => $this->model->FilterUnitProdi($tahun_akademik['id_tahun_akademik'])->getResultArray(),
+                'pengajuan' => $this->model->getPengajuan($tahun_akademik['id_tahun_akademik'])->getResultArray(),
             ];
 
             return view('layout/head', $data)
@@ -121,9 +126,48 @@ class Pengajuan extends BaseController
         }
     }
 
+    // filter unit prodi
+    public function filUnitProdi($id) {
+        
+        $tahun_akademik = $this->PengaturanModel->getAkademik()->getRowArray();
+        $tahun_akademik = $tahun_akademik['id_tahun_akademik'];
+
+        $sql = "
+        SELECT barang.* , unit_prodi.*, 
+                pengajuan.id_pengajuan,
+                pengajuan.id_barang,
+                pengajuan.id_unit_prodi,
+                pengajuan.jumlah,
+                DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal,
+                pengajuan.status,
+                pengajuan.id_tahun_akademik
+        FROM pengajuan
+        LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+        WHERE id_tahun_akademik = '$tahun_akademik' AND unit_prodi.id_unit_prodi = '$id'
+        ORDER BY id_pengajuan DESC
+        ";
+
+        // $data = $this->model->query($sql)->getResult();
+        // return json_encode($data);
+
+        $data = [
+            'title' => 'Pengajuan',
+            'barang' => $this->model->getBarang(),
+            'filterUnit' => $this->model->FilterUnitProdi($tahun_akademik)->getResultArray(),
+            'pengajuan' => $this->model->query($sql)->getResultArray(),
+        ];
+
+        return view('layout/head', $data)
+            .view('layout/sidebar')
+            .view('layout/nav')
+            .view('pengajuan/pengajuan', $data)
+            .view('layout/footer');
+    }
+
     public function tambah(){
 
-        $tahun_akademik = $this->PengaturanModel->getPengaturan()->getRowArray();
+        $tahun_akademik = $this->PengaturanModel->getAkademik()->getRowArray();
 
         $input = [
             'id_barang' => $this->request->getPost('barang'),
@@ -159,15 +203,30 @@ class Pengajuan extends BaseController
     public function tampilStatusDalamProses(){
         $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
         $sql = "
-            SELECT barang.* , unit_prodi.*, 
-            pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
-            FROM pengajuan
-            LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
-            LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-            WHERE `pengajuan`.`id_unit_prodi` = $id_unit_prodi AND `pengajuan`.`status` != '3' AND `pengajuan`.`status` != '2' ORDER BY tanggal DESC";
+        SELECT barang.* , unit_prodi.*, 
+        pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        FROM pengajuan
+        LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+        WHERE pengajuan.id_unit_prodi = '$id_unit_prodi' AND pengajuan.status = '0' ORDER BY tanggal DESC";
 
-        $data = $this->model->query($sql)->getResultArray();
+        $data['proses'] = $this->model->query($sql)->getResultArray();
+        $data['approve'] = $this->tampilStatusApprove();
         return json_encode($data);
+    }
+
+    public function tampilStatusApprove() {
+        $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
+        $sql = "
+        SELECT barang.* , unit_prodi.*, 
+        pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        FROM pengajuan
+        LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+        WHERE pengajuan.id_unit_prodi = '$id_unit_prodi' AND pengajuan.status = '1' ORDER BY tanggal DESC";
+
+        return $this->model->query($sql)->getResultArray();
+        // return json_encode($data);
     }
 
     public function statusDikirim(){
@@ -211,6 +270,57 @@ class Pengajuan extends BaseController
         $this->model->ubah($id, $input);
         $this->BarangModel->updateStok($id_barang, $totalStok);
         return redirect()->route('pengajuan');
+    }
+
+    // edit pengajuan user
+    // yang statusnya dalam proses
+    public function ubahPengajuan() {
+        $id = $this->request->getPost('id');
+        // return $id;
+
+        $sql = "
+        SELECT
+            pengajuan.id_pengajuan,
+            barang.barang,
+            pengajuan.jumlah,
+            satuan.satuan
+
+        FROM pengajuan
+        INNER JOIN barang ON barang.id_barang = pengajuan.id_barang
+        INNER JOIN satuan ON satuan.id_satuan = barang.id_satuan
+        INNER JOIN unit_prodi ON unit_prodi.id_unit_prodi = pengajuan.id_unit_prodi
+
+        WHERE pengajuan.id_pengajuan = '$id'";
+
+        
+        $pengajuan = $this->model->query($sql)->getRowArray();
+        
+        // var_dump($pengajuan);die();
+        
+        $data = [
+            'title' => 'ubah pengajuan',
+            'barang' => $this->model->getBarang(),
+            'pengajuan' => $pengajuan
+        ];
+        
+        return view('layout/head', $data)
+                .view('layout/topbar')
+                .view('pengajuan/ubah_pengajuan_user', $data)
+                .view('layout/footer');
+    }
+
+    public function simpanPerubahanPengajuan(){
+        $input = [
+            'id_pengajuan' => $this->request->getPost('id'),
+            'id_barang' => $this->request->getPost('barang'),
+            'jumlah' => $this->request->getPost('jumlah'),
+        ];
+
+        // var_dump($input);die();
+
+        $this->model->save($input);
+
+        return redirect()->to('pengajuan');
     }
 
 }

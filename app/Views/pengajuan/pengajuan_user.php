@@ -225,35 +225,96 @@
 				}
 				$('ul#status-dalam-proses').html('')
 
-
-				for (let i = 0; i < obj.length; i++) {
+				for (let i = 0; i < obj.proses.length; i++) {
 					let status = '';
 					let color = '';
-					if (obj[i]['status'] == '0') {
+					if (obj['proses'][i]['status'] == '0') {
 						status = 'Diproses';
 						color = 'secondary';
-					} else if (obj[i]['status'] == '1') {
+					} else if (obj['proses'][i]['status'] == '1') {
 						status = 'Proses Diapprove';
 						color = 'info';
 					}
+
 					let list = `
 					<li class="d-flex mb-2 pb-2">
-					<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+					<a href="#" class="list-hover proses d-flex w-100 flex-wrap align-items-center justify-content-between gap-2" data-pengajuan="${obj['proses'][i]['id_pengajuan']}">
 					<div class="me-2">
-					<small class="text-muted d-block mb-1">${obj[i]['tanggal']}</small>
-					<h6 class="mb-0">${obj[i]['barang']}</h6>
+					<small class="text-muted d-block mb-1">${obj['proses'][i]['tanggal']}</small>
+					<h6 class="mb-0">${obj['proses'][i]['barang']} <strong>(${obj['proses'][i]['jumlah']})</strong></h6> 
+					</div>
+					<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					</a>
+					</li>
+					`
+
+					$('ul#status-dalam-proses').append(list)
+				}
+
+				// item status approve
+				for (let i = 0; i < obj.approve.length; i++) {
+					let status = '';
+					let color = '';
+					if (obj['approve'][i]['status'] == '0') {
+						status = 'Diproses';
+						color = 'secondary';
+					} else if (obj['approve'][i]['status'] == '1') {
+						status = 'Proses Diapprove';
+						color = 'info';
+					}
+
+					let list = `
+					<li class="d-flex mb-2 pb-2">
+					<div class="proses d-flex w-100 flex-wrap align-items-center justify-content-between gap-2" data-pengajuan="${obj['approve'][i]['id_pengajuan']}">
+					<div class="me-2">
+					<small class="text-muted d-block mb-1">${obj['approve'][i]['tanggal']}</small>
+					<h6 class="mb-0">${obj['approve'][i]['barang']} <strong>(${obj['approve'][i]['jumlah']})</strong></h6> 
 					</div>
 					<span class="badge rounded-pill bg-label-${color}">${status}</span>
 					</div>
 					</li>
 					`
+
 					$('ul#status-dalam-proses').append(list)
 				}
 			}
 		})
 	}
+
 	// refresh every 2s
-	setInterval(StatusDalamProses, 2000);
+	// pause when cursor hover on list 'status dalam proses'
+	$(document).ready(function () {
+		let intervalHandler = setInterval(StatusDalamProses, 2000);
+		$("ul#status-dalam-proses").hover(function () {
+			$(this).click(function () {
+				return clearInterval(intervalHandler);
+			})
+			clearInterval(intervalHandler);
+		}, function () {
+			intervalHandler = setInterval(StatusDalamProses, 2000)
+		})
+	})
+	// end //
+
+	// buka halaman edit pengajuan yang dalam status dalam proses
+	$(document).on('click', 'a.list-hover.proses', function () {
+
+		let form = document.createElement("form");
+		let element1 = document.createElement("input");
+		element1.type = 'hidden';
+
+		form.method = "POST";
+		form.action = "pengajuan/ubah-pengajuan";
+
+		element1.value = $(this).data('pengajuan');
+		element1.name = "id";
+		form.appendChild(element1);
+
+		document.body.appendChild(form);
+
+		form.submit();
+
+	})
 	// end //
 
 	// get realtime data 'status dikirim'

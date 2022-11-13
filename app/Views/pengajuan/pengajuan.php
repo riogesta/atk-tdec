@@ -5,10 +5,19 @@
 			<div class="card">
 				<div class="card-header d-flex align-items-center justify-content-between">
 					<h5 class="m-0">Data Pengajuan</h5>
-					<button type="button" class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal"
-						data-bs-target="#tambahPengajuan" type="button" class="btn btn-primary">
-						<i class='bx bx-plus-circle'></i>
-					</button>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<label for="smallSelect" class="form-label"><strong>Unit/Prodi</strong></label>
+							<select id="smallSelect" class="form-select select2">
+								<option></option>
+								<?php foreach($filterUnit as $unit): ?>
+								<option value="<?= $unit['id_unit_prodi'] ?>"><?= $unit['unit_prodi'] ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="card-datatable table-responsive">
 					<table class="table table-bordered table-striped" id="datatables">
@@ -183,11 +192,19 @@
 
 <script>
 	$(document).ready(function () {
-		$('select.form-select.select2').select2({
-			placeholder: "Pilih Barang",
-			dropdownParent: $("div#tambahPengajuan"),
+		$('select.select2').select2({
+			placeholder: "Pilih Unit/Prodi",
+			// dropdownParent: $("div#tambahPengajuan"),
 
 		});
+
+		// get select2
+		$('select.select2').on('change', function () {
+			let unit_prodi = $('select.select2 option:selected').val()
+
+			let targetLink = `/pengajuan/unit-prodi/${unit_prodi}`
+			location.href = targetLink
+		})
 
 		$('#datatables').DataTable({
 			"columnDefs": [{
@@ -197,10 +214,7 @@
 
 	})
 
-	$("#mySelect2").on('change', function () {
-		let data = $('#mySelect2').select2({
-			dropdownParent: $("div#tambahPengajuan"),
-		}).find(":selected").attr("data-satuan");
-		$("#satuan").val(data);
-	})
+	// console.log(unit_prodi)
+
+	// unit
 </script>

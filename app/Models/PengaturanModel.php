@@ -10,7 +10,7 @@ class PengaturanModel extends Model
     protected $primaryKey       = 'id_pengaturan';
     protected $allowedFields    = ['id_tahun_akademik'];
     
-    public function getPengaturan() {
+    public function getAkademik() {
         $sql = "SELECT * FROM pengaturan";
         return $this->query($sql);
     }
