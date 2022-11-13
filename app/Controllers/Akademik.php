@@ -35,7 +35,7 @@ class Akademik extends BaseController
 
     // ambil tahun akademik aktif
     public function getTahunAkademikAktif() {
-        return $this->PengaturanModel->getPengaturan()->getRowArray();
+        return $this->PengaturanModel->getAkademik()->getRowArray();
     }
     // ganti tahun akademik
     public function gantiTahunAkademikAktif() {
