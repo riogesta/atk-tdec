@@ -51,7 +51,8 @@ class User extends BaseController
             'id_unit_prodi' => $this->request->getPost('unit-prodi')
         ];
         
-        // var_dump($input);die();
+        session()->setFlashdata('msg', 'Akun Tersimpan !');
+        
         $this->model->insert($input);
         return redirect()->to('/akun');
     }
@@ -78,7 +79,7 @@ class User extends BaseController
             $user = $this->model->query("SELECT * FROM users WHERE username = '$user'")->getRowArray();
 
             $this->model->update($user, $input);
-            // session()->setFlashdata('msg', $this->flash('success', 'Berubah', 'User Berhasil Terubah!'));
+            session()->setFlashdata('msg', 'Perubahan Tersimpan !');
             return redirect()->to('/akun');
         }
 
@@ -101,11 +102,10 @@ class User extends BaseController
     }
 
     public function hapus() {
-        $id = $this->request->getPost("id_user");
+        $id = $this->request->getPost("id");
         $this->model->delete($id);
-
-        session()->setFlashdata('msg', $this->flash('success', 'Terhapus', 'User Berhasil terhapus!'));
-        return redirect()->to('/akun');
+        // return redirect()->to('/akun');
+        // return json_encode($id);
     }
 
     public function userExist($arg) {

@@ -5,7 +5,7 @@
    <div class="card">
       <div class="card-header d-flex align-items-center justify-content-between">
          <h5 class="mb-0">Akun</h5>
-         <button type="button" class="btn rounded-pill btn-primary float-end" data-bs-target="#tambah-akun"
+         <button type="button" class="tambah_ btn rounded-pill btn-primary float-end" data-bs-target="#tambah-akun"
             data-bs-toggle="modal">
             <i class='bx bx-plus-circle'></i>
             Tambah
@@ -34,8 +34,10 @@
                   <td class="text-xs"><?= esc($val['username']) ?></td>
                   <td class="text-xs"><?= esc($val['unit_prodi']) ?></td>
                   <td class="text-xs text-center">
-                     <a href="/akun/<?= esc($val['username'], 'url')?>"
+                     <a href="akun/<?= esc($val['username'], 'url')?>"
                         class="bx bxs-cog rounded-pill btn btn-sm btn-success"></a>
+                     <button type="button" data-val="<?= esc($val['id_user']) ?>"
+                        class="hapus bx bxs-trash rounded-pill btn btn-sm btn-danger"></button>
                   </td>
                </tr>
                <?php endforeach; ?>
@@ -99,5 +101,64 @@
          dropdownParent: $("div#tambah-akun"),
       })
    });
+
+
+   // sweatalert2
+   // simpan/update alert
+   let isSave = '<?= session()->getFlashdata("msg") ?>'
+   if (isSave != '') {
+      $(document).ready(function () {
+         Swal.fire(
+            '<?= session()->getFlashdata('msg') ?>',
+            '',
+            'success'
+         )
+         $(".swal2-container.swal2-backdrop-show").css('z-index', '9999'); //changes the color of the overlay
+      })
+   }
+
+   // hapus alert
+   $('button.hapus').click(function () {
+      Swal.fire({
+         title: 'Data Akan dihapus!',
+         text: "apakah kamu yakin?",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Hapus',
+         cancelButtonText: 'Batal'
+      }).then((result) => {
+         if (result.isConfirmed) {
+            Swal.fire({
+               title: 'Data Berhasil Terhapus!',
+               icon: 'success',
+               confirmButton: 'Hapus'
+            }).then((result) => {
+               if (result.isConfirmed) {
+                  $.ajax({
+                     type: "POST",
+                     url: "akun/hapus",
+                     headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                     },
+                     data: {
+                        id: $(this).data('val'),
+                     },
+                     success: function (data) {
+                        location.reload()
+                     },
+                     error: function (xhr, status, error) {
+                        console.error(xhr);
+                     }
+                  });
+               }
+            })
+            $(".swal2-container.swal2-backdrop-show").css('z-index',
+               '9999'); //changes the color of the overlay
+         }
+      })
+      $(".swal2-container.swal2-backdrop-show").css('z-index', '9999'); //changes the color of the overlay
+   })
 </script>
 <script src="<?= base_url('/assets/vendor/js/validation-akun.js') ?>"></script>
