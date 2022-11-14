@@ -85,6 +85,7 @@
                                 <small>Detail Pengajuan.</small>
                             </div>
                             <div class="row">
+                                <span id="alert"></span>
                                 <div class="col-lg-8">
                                     <dl class="row">
                                         <dt class="col-sm-3">Barang</dt>
@@ -102,6 +103,7 @@
                                                 value="<?= $pengajuan['id_barang'] ?>">
                                             <input type="number" class="form-control form-control-sm"
                                                 name="jumlah-approve" value="<?= $pengajuan['jumlah_approve'] ?>">
+
                                         </dd>
                                         <dd class="col-sm-3 d-flex align-items-center">
                                             <div class="form-check">
@@ -183,16 +185,32 @@
 <script>
     let check = document.querySelector("input[name='jumlah-approve2']")
     let jumlah_approve = document.querySelector("input[name='jumlah-approve']")
+    let submit = document.querySelector("button[type='submit']")
 
     let jumlah = "<?= $pengajuan['jumlah'] ?>"
     let jumlah_app = "<?= $pengajuan['jumlah_approve']?>"
+
+    let alert = document.querySelector("span#alert")
+
+    jumlah_approve.addEventListener('input', () => {
+        if (parseInt(jumlah_approve.value) > jumlah || parseInt(jumlah_approve.value) < 0) {
+            alert.innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                Jumlah Approve tidak boleh lebih dari Jumlah Pengajuan !
+            </div>`
+            // $("button[type='submit']").prop('disabled', true);
+            submit.disabled = true
+        } else {
+            alert.innerHTML = ''
+            submit.disabled = false
+        }
+    })
 
     check.addEventListener('change', (event) => {
         if (event.currentTarget.checked) {
             jumlah_approve.value = jumlah
         } else {
             jumlah_approve.value = jumlah_app
-
         }
     })
     //
