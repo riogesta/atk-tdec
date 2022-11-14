@@ -38,9 +38,16 @@ $routes->set404Override();
 
 $routes->get('/', 'Home::index');
 
-// routes pengajauan //
+// routes pengajauan user//
+// $routes->get('pengajuan/unit-prodi/(:segment)', 'Pengajuan::test/$1');
 $routes->group('pengajuan', static function($routes){
     $routes->match(['get','post'], '/', 'Pengajuan::index');
+    // halaman user
+    $routes->post('ubah-pengajuan', 'Pengajuan::ubahPengajuan');
+    $routes->post('ubah-pengajuan/simpan-perubahan', 'Pengajuan::simpanPerubahanPengajuan');
+    // end halaman user
+    $routes->post('edit', 'Pengajuan::ubahPengajuan');
+    $routes->get('unit-prodi/(:segment)', 'Pengajuan::filUnitProdi/$1');
     $routes->get('(:segment)', 'Pengajuan::ubahStatus/$1');
     $routes->post('status', 'Pengajuan::editStatus');
     $routes->post('approve', 'Pengajuan::approve');
@@ -70,6 +77,7 @@ $routes->match(['get','post'], '/akun','User::index'); // Open and Add data USER
 $routes->group('akun', static function($routes){
     $routes->get('(:segment)', 'User::edit/$1'); 
     $routes->post('edit','User::edit');
+    $routes->post('hapus','User::hapus');
     $routes->get('user-exist/(:segment)', 'User::userExist/$1');
     $routes->get('unit-prodi-exist/(:segment)', 'User::unitProdiExist/$1');
 });
