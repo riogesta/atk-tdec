@@ -27,6 +27,7 @@
 							Hak Akses
 						</button>
 					</li>
+
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="akun" role="tabpanel">
@@ -105,20 +106,21 @@
 					<div class="tab-pane fade show" id="role" role="tabpanel">
 						<h4 class="card-title">Ubah Hak Akses</h4>
 						<hr class="my-0 my-3">
-						<form action="/akun/edit" method="POST">
-							<?= csrf_field() ?>
-							<div class="row">
-								<div class="btn-group">
-									<input type="radio" class="btn-check" name="role" id="0" autocomplete="off"
-										<?= $user['role'] == '0' ? 'checked' : '' ?> value="0" />
-									<label class="btn btn-outline-primary" for="0">User</label>
+						<!-- <form action="/akun/edit" method="POST"> -->
+						<?= csrf_field() ?>
+						<div class="row">
+							<div class="btn-group">
+								<input type="radio" class="btn-check" name="role" id="0" autocomplete="off"
+									<?= $user['role'] == '0' ? 'checked' : '' ?> value="0" />
+								<label class="btn btn-outline-primary" for="0">User</label>
 
-									<input type="radio" class="btn-check" name="role" id="1" autocomplete="off"
-										<?= $user['role'] == '1' ? 'checked' : '' ?> value="1" />
-									<label class="btn btn-outline-primary" for="1">Admin</label>
-								</div>
+								<input type="radio" class="btn-check" name="role" id="1" autocomplete="off"
+									<?= $user['role'] == '1' ? 'checked' : '' ?> value="1" />
+								<label class="btn btn-outline-primary" for="1">Admin</label>
 							</div>
+						</div>
 					</div>
+
 				</div>
 				<div class="mt-3">
 					<button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
