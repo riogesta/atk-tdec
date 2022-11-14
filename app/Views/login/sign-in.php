@@ -31,7 +31,11 @@
 							<div class="card card-plain">
 								<div class="card-header pb-0 text-start">
 									<h4 class="font-weight-bolder">Sign In</h4>
+									<?php if (session()->getFlashdata('msg')) { ?>
+									<p><strong><?= session()->getFlashdata('msg') ?></strong></p>
+									<?php } else {?>
 									<p class="mb-0">Masukkan username dan password yang terdaftar</p>
+									<?php } ?>
 								</div>
 								<div class="card-body">
 									<form action="/login" method="post">

@@ -9,7 +9,6 @@ class Login extends BaseController
 {
 
     protected $UserModel;
-    protected $session;
 
     function __construct(){
         $this->UserModel = new UserModel();
@@ -52,7 +51,9 @@ class Login extends BaseController
         $result = $this->UserModel->user($input['username'])->getRowArray();
         
         if ($result == NULL) {
-            return var_dump("username is not available");die();
+            session()->setFlashdata('msg', 'Username / Password Salah !');
+            // var_dump(session()->getFlashdata('msg'));die();
+            return redirect()->to('login');
             
         } else {
             
@@ -76,7 +77,8 @@ class Login extends BaseController
                     return redirect()->to('/');
 
                 } else {
-                    return var_dump("password is wrong");die();
+                    session()->setFlashdata('msg', 'Username / Password Salah !');
+                    return redirect()->to('login');
                 }
             }
         }
