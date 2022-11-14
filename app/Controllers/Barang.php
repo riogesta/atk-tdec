@@ -54,7 +54,7 @@ class Barang extends BaseController
         ];
 
         $this->model->add($input);
-        session()->setFlashdata('msg', $this->flash());
+        session()->setFlashdata('msg', 'Tersimpan !');
         return redirect()->to('/barang');    
 
     }
@@ -69,7 +69,7 @@ class Barang extends BaseController
 
         // var_dump($input);die();
         $this->model->update($id, $input);
-        session()->setFlashdata('msg', $this->flash());
+        session()->setFlashdata('msg', 'Perubahan Tersimpan !');
         return redirect()->to('/barang'); 
     }
 
@@ -79,7 +79,7 @@ class Barang extends BaseController
         ];
 
         $this->SatuanModel->add($input);
-        session()->setFlashdata('msg', $this->flash('success', 'Tersimpan', 'Satuan Tersimpan'));
+        // session()->setFlashdata('msg', $this->flash('success', 'Tersimpan', 'Satuan Tersimpan'));
         return redirect()->to('/barang');    
     }
 
@@ -89,28 +89,5 @@ class Barang extends BaseController
         // var_dump();die();
         $this->model->delete($id);
         return redirect()->to('/barang');
-    }
-
-    // default success flashdata can customize
-    protected function flash($color = 'success', $title = 'Tersimpan', $msg = 'Data Tersimpan') {
-    
-        $icon = 'check';
-        if ($color != 'success') {
-            $icon = 'x icon';
-        }
-
-        $message = "
-        <div class='ui icon $color message' id='message'>
-            <i class='$icon icon'></i>
-            <div class='content'>
-                <div class='header'>
-                    $title
-                </div>
-            <p>$msg</p>
-            </div>
-        </div>
-        ";
-
-        return $message;
     }
 }

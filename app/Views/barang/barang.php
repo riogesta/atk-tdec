@@ -226,6 +226,20 @@
 	});
 
 	// sweatalert2
+	// alert simpan / edit
+	let isSave = '<?= session()->getFlashdata("msg") ?>'
+	if (isSave != '') {
+		$(document).ready(function () {
+			Swal.fire(
+				'<?= session()->getFlashdata('msg') ?>',
+				'',
+				'success'
+			)
+			$(".swal2-container.swal2-backdrop-show").css('z-index', '9999'); //changes the color of the overlay
+		})
+	}	
+
+	// alert hapus
 	$('button#delete').click(function () {
 		Swal.fire({
 			title: 'Data Akan dihapus!',
@@ -234,7 +248,7 @@
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Hapus Saja',
+			confirmButtonText: 'Hapus',
 			cancelButtonText: 'Batal'
 		}).then((result) => {
 			if (result.isConfirmed) {
