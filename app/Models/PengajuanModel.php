@@ -11,6 +11,42 @@ class PengajuanModel extends Model
     protected $primaryKey = 'id_pengajuan';
     protected $allowedFields = ['id_barang', 'id_unit_prodi', 'id_satuan', 'jumlah', 'tanggal', 'status','id_tahun_akademik', 'jumlah_approve'];
 
+
+    // admin
+
+    public function pengajuanProses($limit = null, $offset = null){ // pengajuan status diproses
+        return $this->table("pengajuan")
+                ->select("barang.* , unit_prodi.*, pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status")
+                ->join("barang", "barang.id_barang = pengajuan.id_barang", "left")
+                ->join("unit_prodi", "unit_prodi.id_unit_prodi = pengajuan.id_unit_prodi", "left")
+                ->where("pengajuan.status", "0")
+                // ->orderBy("tanggal", "DESC")
+                ->limit($limit, $offset)
+                ->get();
+    }
+
+    public function jumlahPengajuanProses(){
+        return $this->table("pengajuan")
+                ->selectCount("id_pengajuan")
+                ->where("status", "0")
+                ->get();
+    }
+
+    public function FilterUnitProdi($akademik) {
+        $sql = "
+        SELECT 
+                pengajuan.id_unit_prodi,
+                unit_prodi.unit_prodi,
+                pengajuan.id_tahun_akademik
+        FROM pengajuan
+        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+        WHERE id_tahun_akademik = '$akademik'
+        GROUP BY pengajuan.id_unit_prodi
+        ";
+
+        return $this->query($sql);
+    }
+
     public function getPengajuan($akademik = null, $id_unit_prodi = null) {
 
         if ($akademik) {
@@ -33,21 +69,6 @@ class PengajuanModel extends Model
             echo "tidak ada akadmik";
         }
 
-    }
-
-    public function FilterUnitProdi($akademik) {
-        $sql = "
-        SELECT 
-                pengajuan.id_unit_prodi,
-                unit_prodi.unit_prodi,
-                pengajuan.id_tahun_akademik
-        FROM pengajuan
-        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-        WHERE id_tahun_akademik = '$akademik'
-        GROUP BY pengajuan.id_unit_prodi
-        ";
-
-        return $this->query($sql);
     }
 
     public function perPengajuan($id){
