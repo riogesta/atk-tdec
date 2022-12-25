@@ -26,7 +26,7 @@
                                 aria-controls="navs-pills-top-approve"
                                 aria-selected="<?= $pengajuan['status'] == '1' ? 'true' : 'false' ?>" id="approve">
                                 <i class='bx bx-fw bx-list-check'></i>
-                                Proses diaprove
+                                Proses di approved
                             </button>
                         </li>
                         <li class="d-flex align-items-center">
@@ -81,7 +81,7 @@
                         <div class="tab-pane fade <?= $pengajuan['status'] == '1' ? 'show active' : '' ?>"
                             id="navs-pills-top-approve" role="tabpanel">
                             <div class="content-header mb-3">
-                                <h6 class="mb-0">Status Approve Diproses</h6>
+                                <h6 class="mb-0">Status Approved Diproses</h6>
                                 <small>Detail Pengajuan.</small>
                             </div>
                             <div class="row">
@@ -97,7 +97,7 @@
 
                                         <dt class="col-sm-3">Unit / Prodi</dt>
                                         <dd class="col-sm-9"><?= esc($pengajuan['unit_prodi']) ?></dd>
-                                        <dt class="col-sm-3">Jumlah Approve</dt>
+                                        <dt class="col-sm-3">Jumlah Approved</dt>
                                         <dd class="col-sm-2">
                                             <input type="hidden" name="id_barang"
                                                 value="<?= $pengajuan['id_barang'] ?>">
@@ -196,7 +196,7 @@
         if (parseInt(jumlah_approve.value) > jumlah || parseInt(jumlah_approve.value) < 0) {
             alert.innerHTML = `
             <div class="alert alert-danger" role="alert">
-                Jumlah Approve tidak boleh lebih dari Jumlah Pengajuan !
+                Jumlah Approved tidak boleh lebih dari Jumlah Pengajuan !
             </div>`
             // $("button[type='submit']").prop('disabled', true);
             submit.disabled = true

@@ -17,7 +17,7 @@
 				</div>
 				<div class="card-body wdgt-proccess">
 					<ul class="p-0 m-02" id="status-dalam-proses">
-						<p class="text-center text-muted mt-2 mb-0" id="alert-status-dalam-proses">Tidak ada Proses</p>
+						<!-- <p class="text-center text-muted mt-2 mb-0" id="alert-status-dalam-proses">Tidak ada Proses</p> -->
 
 					</ul>
 				</div>
@@ -37,13 +37,14 @@
 							<i class="bx bx-dots-vertical-rounded"></i>
 						</button>
 						<div class="dropdown-menu dropdown-menu-end">
-							<a class="dropdown-item" href="">Tandai telah diterima semua</a>
+							<button type="button" class="approve-all_ dropdown-item"
+								data-id="<?= $_SESSION['ID-UNIT-PRODI'] ?>">Tandai telah diterima semua</button>
 						</div>
 					</div>
 				</div>
 				<div class="card-body wdgt-proccess">
 					<ul class="p-0 m-02" id="status-dikirim">
-						<p class="text-center text-muted mt-2 mb-0" id="message-status-dikirim">Tidak ada Proses</p>
+						<!-- <p class="text-center text-muted mt-2 mb-0" id="message-status-dikirim">Tidak ada Proses</p> -->
 
 						<!-- Modal -->
 
@@ -72,7 +73,7 @@
 							<thead>
 								<tr>
 									<th>Barang</th>
-									<th>Jumlah</th>
+									<th>Jumlah Approve</th>
 									<th>Tanggal</th>
 								</tr>
 							</thead>
@@ -80,7 +81,7 @@
 								<?php foreach($pengajuan_user as $val): ?>
 								<tr>
 									<td><?= esc($val['barang']) ?></td>
-									<td><?= esc($val['jumlah']) ?></td>
+									<td><?= esc($val['jumlah_approve']) ?></td>
 									<td><?= esc($val['tanggal']) ?></td>
 								</tr>
 								<?php endforeach; ?>
@@ -105,7 +106,7 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<form action="/pengajuan" method="post">
+					<form action="<?= base_url('pengajuan') ?>" method="post">
 						<?= csrf_field() ?>
 						<div class="row">
 							<div class="col mb-3">
@@ -114,7 +115,8 @@
 									data-allow-clear="true">
 									<option></option>
 									<?php foreach($barang as $val): ?>
-									<option value="<?= esc($val['id_barang']) ?>" data-satuan="<?= $val['satuan'] ?>">
+									<option value="<?= esc($val['id_barang']) ?>" data-stok="<?= esc($val['stok']) ?>"
+										data-satuan="<?= $val['satuan'] ?>">
 										<?= esc($val['barang']) ?></option>
 									<?php endforeach; ?>
 								</select>
@@ -137,8 +139,7 @@
 						</div>
 				</div>
 				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-					<button type="submit" class="btn btn-primary" id="simpanPengajuan">Kirim Ajuan</button>
+					<button type="submit" class="btn btn-primary" id="simpanPengajuan">Ajukan Barang</button>
 					</form>
 				</div>
 			</div>
@@ -151,6 +152,9 @@
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
 <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 
+<!-- ajax -->
+<script src=""></script>
+
 <script>
 	tippy('#btn-tambah', {
 		content: 'Mengajukan Barang',
@@ -161,18 +165,39 @@
 	});
 
 	//menampilkan flashdata saat user menerima barang / approve
-	let text = '<?= session()->getFlashdata("msg") ?>'
-	if (text != '') {
+	// alert simpan / edit
+	let isSave = '<?= session()->getFlashdata("msg") ?>'
+	if (isSave != '') {
 		$(document).ready(function () {
-			$.toast({
-				text: `${text}`,
-				showHideTransition: 'slide',
-				loaderBg: '#6a8cdc',
-				hideAfter: 3000,
-				position: 'top-right'
-			})
+			Swal.fire(
+				'<?= session()->getFlashdata('
+				msg ')?>',
+				'',
+				'success'
+			)
+			$(".swal2-container.swal2-backdrop-show").css('z-index', '9999'); //changes the color of the overlay
 		})
 	}
+
+	// approve semua status "dikirim"
+	$(document).ready(function () {
+		$('button.approve-all_').on('click', function () {
+			let form = document.createElement("form");
+			let element1 = document.createElement("input");
+			element1.type = 'hidden';
+
+			form.method = "POST";
+			form.action = "pengajuan/approve-semua";
+
+			element1.value = $(this).data('id');
+			element1.name = "id";
+			form.appendChild(element1);
+
+			document.body.appendChild(form);
+
+			form.submit();
+		})
+	})
 
 
 	$(document).ready(function () {
@@ -187,6 +212,10 @@
 		$('select.form-select#selectBarang').select2({
 			placeholder: "Pilih Barang",
 			dropdownParent: $("div#tambahPengajuan"),
+		});
+
+		$("select.form-select#selectBarang").on("select2:select", function (e) {
+			let select_val = $("select.form-select :selected").attr('data-stok')
 		});
 
 		// datatable
@@ -241,9 +270,12 @@
 					<a href="#" class="list-hover proses d-flex w-100 flex-wrap align-items-center justify-content-between gap-2" data-pengajuan="${obj['proses'][i]['id_pengajuan']}">
 					<div class="me-2">
 					<small class="text-muted d-block mb-1">${obj['proses'][i]['tanggal']}</small>
-					<h6 class="mb-0">${obj['proses'][i]['barang']} <strong>(${obj['proses'][i]['jumlah']})</strong></h6> 
+					<h6 class="mb-0">${obj['proses'][i]['barang']}</h6> 
 					</div>
-					<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					<div>
+						<span class="badge rounded-pill bg-label-${color}">${obj['proses'][i]['jumlah']}</span>
+						<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					</div>
 					</a>
 					</li>
 					`
@@ -267,10 +299,13 @@
 					<li class="d-flex mb-2 pb-2">
 					<div class="proses d-flex w-100 flex-wrap align-items-center justify-content-between gap-2" data-pengajuan="${obj['approve'][i]['id_pengajuan']}">
 					<div class="me-2">
-					<small class="text-muted d-block mb-1">${obj['approve'][i]['tanggal']}</small>
-					<h6 class="mb-0">${obj['approve'][i]['barang']} <strong>(${obj['approve'][i]['jumlah']})</strong></h6> 
+						<small class="text-muted d-block mb-1">${obj['approve'][i]['tanggal']}</small>
+						<h6 class="mb-0">${obj['approve'][i]['barang']}</h6> 
 					</div>
-					<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					<div>
+						<span class="badge rounded-pill bg-label-${color}">${obj['approve'][i]['jumlah_approve']}</span>
+						<span class="badge rounded-pill bg-label-${color}">${status}</span>
+					</div>
 					</div>
 					</li>
 					`
@@ -321,10 +356,11 @@
 	let statusDikirim = () => {
 		$.ajax({
 			url: '/pengajuan/status-dikirim',
-			type: "POST",
+			type: 'POST',
 			success: function (data) {
 				let obj = JSON.parse(data);
 
+				// console.log(obj);
 				// hide message when data is empty
 				if (obj.length == 0) {
 					$('p#message-status-dikirm').show()
@@ -350,7 +386,10 @@
 								<small class="text-muted d-block mb-1">${obj[i]['tanggal']}</small>
 								<h6 class="mb-0">${obj[i]['barang']}</h6>
 							</div>
+							<div>
+							<span class="badge rounded-pill bg-label-${color}">${obj[i]['jumlah_approve']}</span>
 							<span class="badge rounded-pill bg-label-${color}">${status}</span>
+							</div>
 						</a>
 					</li>
 
@@ -364,7 +403,7 @@
 								</div>
 								<div class="modal-body">
 									<p>Tanggal Pengajuan : <b>${obj[i]['tanggal']}</b></p>
-									<p>jumlah : <b>${obj[i]['jumlah']}</b></p>
+									<p>jumlah Approve: <b>${obj[i]['jumlah_approve']}</b></p>
 									</p>
 									<input type="hidden" name="pengajuan" value="">
 								</div>

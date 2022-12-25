@@ -1,6 +1,28 @@
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
 	<div class="row">
+
+		<?php if (isset($diproses)): ?>
+		<section class="col-md-12">
+			<div class="card mb-3">
+				<div class="card-body">
+					<div class="d-flex justify-content-between">
+						<h5 class="card-title d-inline">Pengajuan Masuk</h5>
+						<span>pengajuan baru</span>
+					</div>
+					<div class="demo-inline-spacing">
+						<div class="list-group" id="pengajuan-proses">
+
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<?php endif; ?>
+
 		<section class="col-md-12">
 			<div class="card">
 				<div class="card-header d-flex align-items-center justify-content-between">
@@ -51,7 +73,7 @@
 									} else if ($row['status'] == 1) {
 										$color = "info";
 										$icon = "<i class='bx bx-list-check'></i>";
-										$status = "Approve Diproses";
+										$status = "Approved Diproses";
 										
 									} else if ($row['status'] == 2) {
 										$color = "primary";
@@ -100,7 +122,7 @@
 													value="1">
 												<label class="btn btn-outline-info" for="1-<?= $i ?>">
 													<i class='bx bx-list-check'></i>
-													Approve Proses
+													Approved Proses
 												</label>
 
 												<input type="radio" class="btn-check" name="status" id="2-<?= $i ?>"
@@ -214,7 +236,70 @@
 
 	})
 
-	// console.log(unit_prodi)
+	let jumlahPengajuanProses = () => {
+		let jumlah = null
+		$.ajax({
+			url: `/pengajuan/jumlah-status-proses`,
+			type: 'POST',
+			async: false,
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			dataType: 'JSON',
+		}).done(function (data) {
+			jumlah = data.id_pengajuan
+		})
+		return jumlah
+	}
+
+	let pengajuanProses = () => {
+
+		let jumlahProses = jumlahPengajuanProses()
+		let halaman = 4
+
+		$.ajax({
+			url: `/pengajuan/status-proses/${5}/${0}`,
+			type: "GET",
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			dataType: "JSON",
+			success: function (pengajuan) {
+				console.log(pengajuan)
+				let data = pengajuan.data
+
+				data.forEach(function (data) {
+					let list = `
+					<a href="javascript:void(0);"
+						class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+						<div class="li-wrapper d-flex justify-content-start align-items-center">
+							<div class="avatar avatar-sm me-3">
+								<span class="avatar-initial rounded-circle bg-label-dark">
+									${data.jumlah}
+								</span>
+							</div>
+							<div class="list-content">
+								<h6 class="mb-1"><b>${data.barang}</b></h6>
+								<small class="text-mute">${data.unit_prodi}</small>
+							</div>
+						</div>
+						<small>${data.tanggal}</small>
+					</a>`
+
+					$("div.list-group#pengajuan-proses").append(list)
+				})
+
+				let pages = jumlahProses / halaman
+
+				console.log(pages)
+			}
+		})
+	}
+
+	$(document).ready(function () {
+		// let interval = setInterval(pengajuanProses, 2000);
+		pengajuanProses()
+	})
 
 	// unit
 </script>
