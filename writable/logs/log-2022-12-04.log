@@ -1,0 +1,14 @@
+CRITICAL - 2022-12-04 19:16:59 --> Call to undefined method CodeIgniter\Database\MySQLi\Result::paginate()
+in APPPATH/Controllers/Pengajuan.php on line 147.
+ 1 SYSTEMPATH/CodeIgniter.php(927): App\Controllers\Pengajuan->index()
+ 2 SYSTEMPATH/CodeIgniter.php(482): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
+CRITICAL - 2022-12-04 19:17:22 --> Call to undefined method CodeIgniter\Database\MySQLi\Result::paginate()
+in APPPATH/Controllers/Pengajuan.php on line 147.
+ 1 SYSTEMPATH/CodeIgniter.php(927): App\Controllers\Pengajuan->index()
+ 2 SYSTEMPATH/CodeIgniter.php(482): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest()
+ 4 FCPATH/index.php(55): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Commands/Server/rewrite.php(46): require_once('FCPATH/index.php')
