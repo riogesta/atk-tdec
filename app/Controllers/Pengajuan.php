@@ -56,6 +56,8 @@ class Pengajuan extends BaseController
 
     public function index()
     {
+        $pager = service('pager');
+
         if (empty($_SESSION['USER'])) {
             return redirect()->route('login');
         }
@@ -71,7 +73,7 @@ class Pengajuan extends BaseController
             // menampilkan pengajuan yang sedang dalam status ('proses' dan 'proses diapprove')
             $sql_dalam_proses = "
             SELECT barang.* , unit_prodi.*, 
-            pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+            pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status, pengajuan.jumlah_approve
             FROM pengajuan
             LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
@@ -79,14 +81,14 @@ class Pengajuan extends BaseController
 
             // menampilkan pengajuan yang sedang dalam status ('dikirim')
             $sql_dikirim = "
-            SELECT pengajuan.id_pengajuan, `barang`.`id_barang`, barang.barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+            SELECT pengajuan.id_pengajuan, `barang`.`id_barang`, barang.barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status, pengajuan.jumlah_approve
             FROM pengajuan
             LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
             WHERE `pengajuan`.`id_unit_prodi` = '$id_unit_prodi' AND `pengajuan`.`status` = '2' ORDER BY tanggal DESC";
 
             $sql_daftar_pengajuan = "
-            SELECT pengajuan.id_pengajuan, pengajuan.id_barang, barang.barang, barang.id_satuan , pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+            SELECT pengajuan.id_pengajuan, pengajuan.id_barang, barang.barang, barang.id_satuan , pengajuan.id_unit_prodi, pengajuan.jumlah, pengajuan.jumlah_approve, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
             FROM pengajuan
             LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
             LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
@@ -110,13 +112,34 @@ class Pengajuan extends BaseController
             // jika role adalah admin
 
             $tahun_akademik = $this->PengaturanModel->getAkademik()->getRowArray();
+            $tahun_akademik = $tahun_akademik['id_tahun_akademik'];
 
+            $sql = "
+            SELECT barang.* , unit_prodi.*, 
+                    pengajuan.id_pengajuan,
+                    pengajuan.id_barang,
+                    pengajuan.id_unit_prodi,
+                    pengajuan.jumlah,
+                    DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal,
+                    pengajuan.status,
+                    pengajuan.id_tahun_akademik
+            FROM pengajuan
+            LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+            LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+            WHERE id_tahun_akademik = '$tahun_akademik' AND pengajuan.status = '3'
+            ORDER BY tanggal DESC";
+            
             $data = [
                 'title' => 'Pengajuan',
                 'barang' => $this->model->getBarang(),
-                'filterUnit' => $this->model->FilterUnitProdi($tahun_akademik['id_tahun_akademik'])->getResultArray(),
-                'pengajuan' => $this->model->getPengajuan($tahun_akademik['id_tahun_akademik'])->getResultArray(),
+                'filterUnit' => $this->model->FilterUnitProdi($tahun_akademik)->getResultArray(),
+                'pengajuan' => $this->model->getPengajuan($tahun_akademik)->getResultArray(),
+                'pengajuan_selesai' => $this->model->query($sql)->getResultArray(),
+                'diproses' => $this->model->pengajuanProses(),
+                // 'pager' => $this->model->pager
             ];
+
+            // var_dump($this->model->jumlahPengajuanProses());die();
 
             return view('layout/head', $data)
                 .view('layout/sidebar')
@@ -124,6 +147,22 @@ class Pengajuan extends BaseController
                 .view('pengajuan/pengajuan', $data)
                 .view('layout/footer');
         }
+    }
+
+    public function pengajuanProses($limit = null, $offset = null){
+        
+        if ($limit == null) {
+            $data = $this->model->jumlahPengajuanProses()->getRowArray();
+            
+        } else {
+            $data = [
+                "data" => $this->model->pengajuanProses($limit, $offset)->getResultArray(),
+                "jumlah" => $this->model->jumlahPengajuanProses()->getRowArray()
+            ];
+        }
+
+        return json_encode($data);
+
     }
 
     // filter unit prodi
@@ -144,8 +183,8 @@ class Pengajuan extends BaseController
         FROM pengajuan
         LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
         LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
-        WHERE id_tahun_akademik = '$tahun_akademik' AND unit_prodi.id_unit_prodi = '$id'
-        ORDER BY id_pengajuan DESC
+        WHERE id_tahun_akademik = '$tahun_akademik' AND unit_prodi.id_unit_prodi = '$id' AND pengajuan.status != '3'
+        ORDER BY tanggal DESC
         ";
 
         // $data = $this->model->query($sql)->getResult();
@@ -178,6 +217,7 @@ class Pengajuan extends BaseController
             'id_tahun_akademik' => $tahun_akademik['id_tahun_akademik']
         ];
         
+        session()->setFlashdata('msg','Pengajuan Terkirim');
         if ($this->model->save($input)) {
             return redirect()->to('/pengajuan');           
         } else {
@@ -204,7 +244,7 @@ class Pengajuan extends BaseController
         $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
         $sql = "
         SELECT barang.* , unit_prodi.*, 
-        pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status, pengajuan.jumlah_approve
         FROM pengajuan
         LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
         LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
@@ -219,7 +259,7 @@ class Pengajuan extends BaseController
         $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
         $sql = "
         SELECT barang.* , unit_prodi.*, 
-        pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        pengajuan.id_pengajuan, pengajuan.id_barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status, pengajuan.jumlah_approve
         FROM pengajuan
         LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
         LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
@@ -232,7 +272,7 @@ class Pengajuan extends BaseController
     public function statusDikirim(){
         $id_unit_prodi = $_SESSION['ID-UNIT-PRODI'];
         $sql_dikirim = "
-        SELECT pengajuan.id_pengajuan, `barang`.`id_barang`, barang.barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        SELECT pengajuan.id_pengajuan, `barang`.`id_barang`, barang.barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status, pengajuan.jumlah_approve
         FROM pengajuan
         LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
         LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
@@ -260,15 +300,19 @@ class Pengajuan extends BaseController
         // var_dump($id, $id_barang, $input);die();
         
         // ambil jumlah stok barang
-        $totalStok = $this->BarangModel->getBarang($id_barang)->getRowArray();
-        $totalStok = $totalStok['stok'];
+        // if(!empty($input['jumlah_approve'])) {
 
-        $totalStok = $totalStok - $input['jumlah_approve'];
-
-        // var_dump($totalStok);die();
-
-        $this->model->ubah($id, $input);
-        $this->BarangModel->updateStok($id_barang, $totalStok);
+            $totalStok = $this->BarangModel->getBarang($id_barang)->getRowArray();
+            $totalStok = $totalStok['stok'];
+            
+            $totalStok = $totalStok - $input['jumlah_approve'];
+            
+            // var_dump($totalStok);die();
+            
+            $this->model->ubah($id, $input);
+            $this->BarangModel->updateStok($id_barang, $totalStok);
+        // }
+        // session()->setFlashdata('alert', 'Proses approve tidak boleh di lewati !');
         return redirect()->route('pengajuan');
     }
 
@@ -319,8 +363,45 @@ class Pengajuan extends BaseController
         // var_dump($input);die();
 
         $this->model->save($input);
-
+        session()->setFlashdata('msg','Perubahan Berhasil Tersimpan');
         return redirect()->to('pengajuan');
     }
 
-}
+    // pembatalan pengajuan untuk user
+    public function pembatalanPengajuan (){
+        $id = $this->request->getPost('id');
+        // return json_encode($id);
+        // var_dump($id);die();
+        $this->model->delete($id);
+        return redirect()->to('pengajuan');
+    }
+
+    // approve semua status dikirim
+    public function approveDikirim(){
+        $id = $this->request->getPost('id');
+
+        $sql = "
+        SELECT pengajuan.id_pengajuan, `barang`.`id_barang`, barang.barang, pengajuan.id_unit_prodi, pengajuan.jumlah, DATE_FORMAT(pengajuan.tanggal, '%d %M %Y') AS tanggal, pengajuan.status  
+        FROM pengajuan
+        LEFT JOIN barang ON pengajuan.id_barang = barang.id_barang
+        LEFT JOIN unit_prodi ON pengajuan.id_unit_prodi = unit_prodi.id_unit_prodi
+        WHERE `pengajuan`.`id_unit_prodi` = '1' AND `pengajuan`.`status` = '2' ORDER BY tanggal DESC";
+
+        $data = $this->model->query($sql)->getResultArray();
+
+        foreach ($data as $pengajuan) {
+            echo $pengajuan['id_pengajuan'];
+
+            $input = [
+                'id_pengajuan' => $pengajuan['id_pengajuan'],
+                'status' => '3'
+            ];
+
+            $this->model->save($input);
+        }
+
+        session()->setFlashdata('msg','Approve Berhasil !');
+        return redirect()->to('pengajuan');
+    }
+
+} 
