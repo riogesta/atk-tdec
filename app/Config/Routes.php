@@ -45,6 +45,7 @@ $routes->group('pengajuan', static function($routes){
     // halaman user
     $routes->post('ubah-pengajuan', 'Pengajuan::ubahPengajuan');
     $routes->post('ubah-pengajuan/simpan-perubahan', 'Pengajuan::simpanPerubahanPengajuan');
+    $routes->post('pembatalan-pengajuan','Pengajuan::pembatalanPengajuan');
     // end halaman user
     $routes->post('edit', 'Pengajuan::ubahPengajuan');
     $routes->get('unit-prodi/(:segment)', 'Pengajuan::filUnitProdi/$1');
@@ -54,6 +55,8 @@ $routes->group('pengajuan', static function($routes){
     $routes->post('riwayat-pengajuan', 'Pengajuan::riwayatPengajuan');
     $routes->post('status-dalam-proses', 'Pengajuan::tampilStatusDalamProses');
     $routes->post('status-dikirim', 'Pengajuan::statusDikirim');
+    $routes->get('status-proses/(:segment)/(:segment)', 'Pengajuan::pengajuanProses/$1/$2');
+    $routes->post('jumlah-status-proses', 'Pengajuan::pengajuanProses');
 });
 // end //
 
